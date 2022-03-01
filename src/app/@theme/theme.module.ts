@@ -1,82 +1,83 @@
-import { ModuleWithProviders, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatRippleModule } from '@angular/material/core';
-import {
-  NbActionsModule,
-  NbLayoutModule,
-  NbMenuModule,
-  NbSearchModule,
-  NbSidebarModule,
-  NbUserModule,
-  NbContextMenuModule,
-  NbButtonModule,
-  NbSelectModule,
-  NbIconModule,
-  NbThemeModule,
-} from '@nebular/theme';
+import { ModuleWithProviders, NgModule } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { NbSecurityModule } from '@nebular/security';
-
 import {
-  FooterComponent,
-  HeaderComponent,
-  SearchInputComponent,
-  TinyMCEComponent,
+  NbActionsModule, NbAlertModule, NbButtonGroupModule, NbButtonModule,
+  NbCardModule, NbCheckboxModule, NbContextMenuModule, NbDialogModule,
+  NbIconModule, NbInputModule, NbLayoutModule, NbListModule, NbFormFieldModule,
+  NbMenuModule, NbPopoverModule, NbSidebarModule, NbThemeModule, NbToggleModule, NbUserModule,
+} from '@nebular/theme';
+import {
+  NgbDateAdapter, NgbDateParserFormatter,
+  NgbDatepickerModule, NgbNavModule,
+  NgbPaginationModule,
+} from '@ng-bootstrap/ng-bootstrap';
+// import { NgSelectModule } from '@ng-select/ng-select';
+// import { NgxSpinnerModule } from 'ngx-spinner';
+import {
+  FooterComponent, HeaderComponent, LayoutComponent,
 } from './components';
-import {
-  CapitalizePipe,
-  PluralPipe,
-  RoundPipe,
-  TimingPipe,
-  NumberWithCommasPipe,
-} from './pipes';
-import {
-  OneColumnLayoutComponent,
-  ThreeColumnsLayoutComponent,
-  TwoColumnsLayoutComponent,
-} from './layouts';
-import { DEFAULT_THEME } from './styles/theme.default';
-import { COSMIC_THEME } from './styles/theme.cosmic';
-import { CORPORATE_THEME } from './styles/theme.corporate';
-import { DARK_THEME } from './styles/theme.dark';
-import { MATERIAL_LIGHT_THEME } from './styles/material/theme.material-light';
-import { MATERIAL_DARK_THEME } from './styles/material/theme.material-dark';
+
+import { NgxSortableHeaderDirective } from './directives';
+import { CustomDateAdapter, NgbDateCustomParserFormatter } from './utils';
+import { ClipboardModule } from '@angular/cdk/clipboard';
+
+
+const ANGULAR_MODULES = [CommonModule, FormsModule, RouterModule, ReactiveFormsModule, ClipboardModule ];
 
 const NB_MODULES = [
-  NbLayoutModule,
-  NbMenuModule,
-  NbUserModule,
   NbActionsModule,
-  NbSearchModule,
-  NbSidebarModule,
-  NbContextMenuModule,
-  NbSecurityModule,
+  NbAlertModule,
   NbButtonModule,
-  NbSelectModule,
-  NbIconModule,
+  NbCardModule,
+  NbContextMenuModule,
+  NbDialogModule,
   NbEvaIconsModule,
-];
-const COMPONENTS = [
-  HeaderComponent,
-  FooterComponent,
-  SearchInputComponent,
-  TinyMCEComponent,
-  OneColumnLayoutComponent,
-  ThreeColumnsLayoutComponent,
-  TwoColumnsLayoutComponent,
-];
-const PIPES = [
-  CapitalizePipe,
-  PluralPipe,
-  RoundPipe,
-  TimingPipe,
-  NumberWithCommasPipe,
+  NbIconModule,
+  NbInputModule,
+  NbLayoutModule,
+  NbListModule,
+  NbMenuModule,
+  NbSecurityModule,
+  NbSidebarModule,
+  NbUserModule,
+  NbToggleModule,
+  NbCheckboxModule,
+  NbPopoverModule,
+  NbButtonGroupModule,
+  NbFormFieldModule,
 ];
 
+const OTHERS_MODULES = [
+  //NgSelectModule,
+  NgbPaginationModule,
+  NgbDatepickerModule,
+  //NgxSpinnerModule,
+  NgbNavModule,
+];
+
+const COMPONENTS = [
+  FooterComponent,
+  HeaderComponent,
+  LayoutComponent,
+];
+
+const DIRECTIVE = [
+  NgxSortableHeaderDirective,
+];
+
+
 @NgModule({
-  imports: [CommonModule, MatRippleModule, ...NB_MODULES],
-  exports: [CommonModule, MatRippleModule, ...PIPES, ...COMPONENTS],
-  declarations: [...COMPONENTS, ...PIPES],
+  imports: [...ANGULAR_MODULES, ...NB_MODULES, ...OTHERS_MODULES],
+  exports: [...ANGULAR_MODULES, ...NB_MODULES, ...OTHERS_MODULES, ...COMPONENTS, ...DIRECTIVE],
+  declarations: [...COMPONENTS, ...DIRECTIVE],
+  providers: [
+    { provide: NgbDateParserFormatter, useClass: NgbDateCustomParserFormatter },
+    { provide: NgbDateAdapter, useClass: CustomDateAdapter },
+  ],
 })
 export class ThemeModule {
   static forRoot(): ModuleWithProviders<ThemeModule> {
@@ -87,7 +88,6 @@ export class ThemeModule {
           {
             name: 'material-light',
           },
-          [ DEFAULT_THEME, COSMIC_THEME, CORPORATE_THEME, DARK_THEME, MATERIAL_LIGHT_THEME, MATERIAL_DARK_THEME ],
         ).providers,
       ],
     };

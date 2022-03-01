@@ -4,11 +4,9 @@
       href="#"
       class="sidebar-toggle"
       matRipple
-      [matRippleUnbounded]="true"
-      [matRippleCentered]="true"
       (click)="toggleSidebar()"
     >
-      <nb-icon [icon]="(materialTheme$ | async) ? 'menu-outline' : 'menu-2-outline'"></nb-icon>
+      <nb-icon [icon]="'menu-outline'"></nb-icon>
     </a>
     <a class="logo" href="#" (click)="navigateHome()">Sartorelli <span>ArqInm</span></a>
   </div>
@@ -20,8 +18,6 @@
       class="control-item"
       icon="bell-outline"
       matRipple
-      [matRippleUnbounded]="true"
-      [matRippleCentered]="true"
     ></nb-action>
     <nb-action
       class="user-action"
