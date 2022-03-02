@@ -32,7 +32,7 @@ const routes: Routes = [
       {
         path: 'change-password',
         component: ResetPasswordComponent,
-        canActivate: [TemporalTokenGuard],
+        //canActivate: [TemporalTokenGuard],
       },
     ],
   },

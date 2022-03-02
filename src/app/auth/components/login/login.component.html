@@ -24,7 +24,7 @@
            [attr.aria-invalid]="email.invalid && email.touched ? true : null">
     <ng-container *ngIf="email.invalid && email.touched">
       <p class="caption status-danger" *ngIf="email.errors?.required">
-        Email es requerido
+        El email es requerido
       </p>
       <p class="caption status-danger" *ngIf="email.errors?.pattern">
         Ingrese un email válido
@@ -51,7 +51,7 @@
            [attr.aria-invalid]="password.invalid && password.touched ? true : null">
     <ng-container *ngIf="password.invalid && password.touched ">
       <p class="caption status-danger" *ngIf="password.errors?.required">
-        Contraseña es requerida
+        La contraseña es requerida
       </p>
     </ng-container>
   </div>

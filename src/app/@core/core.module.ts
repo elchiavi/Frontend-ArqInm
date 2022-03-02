@@ -22,7 +22,7 @@ export const NB_CORE_PROVIDERS = [
           endpoint: '/users/login',
           method: 'post',
           redirect: {
-            success: 'pages/current-reports/list',
+            success: 'pages/dashboard',
             failure: null,
           },
         },
@@ -53,13 +53,10 @@ export const NB_CORE_PROVIDERS = [
   NbSecurityModule.forRoot({
     accessControl: {
       admin: {
-        view:   ['current-reports', 'user', 'products','customers'],
-        create: ['current-reports', 'user', 'products','customers'],
-        edit:   ['current-reports', 'user', 'products','customers'],
-        remove: ['current-reports', 'user', 'products','customers'],
-        status: ['send-qc'],
-        change: ['qceaded','analysis', 'finished'],
-        audit:  ['download'],
+        view:   [],
+        create: [],
+        edit:   [],
+        remove: [],
       },
     },
   }).providers,
@@ -77,9 +74,9 @@ export const NB_CORE_PROVIDERS = [
   ],
   declarations: [],
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: SpinnerInterceptor, multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: NbAuthJWTInterceptor, multi: true },
+     // { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true },
+     { provide: HTTP_INTERCEPTORS, useClass: SpinnerInterceptor, multi: true },
+     { provide: HTTP_INTERCEPTORS, useClass: NbAuthJWTInterceptor, multi: true },
   ],
 })
 export class CoreModule {

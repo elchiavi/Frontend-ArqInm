@@ -10,9 +10,24 @@ import { map } from 'rxjs/operators';
 export class RoleService implements NbRoleProvider {
 
   constructor(private authService: NbAuthService) { }
-    getRole(): Observable<string | string[]> {
-        throw new Error('Method not implemented.');
-    }
+
+
+  getRole(): Observable<string> {
+    return this.authService.onTokenChange()
+      .pipe(
+        map((token: NbAuthJWTToken) => {
+          if (token.isValid()) {
+            let activeRole = localStorage.getItem('activeRole');
+            if (!activeRole) {
+              activeRole = token.getPayload().role;
+              console.log(activeRole);
+            }
+            const roleName: string = token.getPayload().role;
+            return roleName?.replace('_ROLE', '').toLowerCase();
+          }
+        }),
+      );
+  }
 
   getEmail(): Observable<string> {
     return this.authService.getToken()
@@ -51,9 +66,6 @@ export class RoleService implements NbRoleProvider {
     return this.authService.onTokenChange()
       .pipe(
         map((token: NbAuthJWTToken) => {
-          if (token.isValid()) {
-            return !token.getPayload().groups.length;
-          }
           return false;
         }),
       );
