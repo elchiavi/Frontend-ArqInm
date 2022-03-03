@@ -60,7 +60,7 @@ export class ResetPasswordComponent implements OnDestroy {
         if (redirect) {
           setTimeout(() => this.router.navigateByUrl(redirect), this.redirectDelay);
         }
-        this.cd.detectChanges();
+        4000;
       });
   }
 

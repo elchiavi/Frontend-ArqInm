@@ -4,7 +4,7 @@ import { ModuleWithProviders, NgModule, Optional, SkipSelf } from '@angular/core
 import { NbAuthJWTToken, NbAuthModule, NbPasswordAuthStrategy } from '@nebular/auth';
 import { NbRoleProvider, NbSecurityModule } from '@nebular/security';
 import { environment } from '../../environments/environment';
-import { NbAuthJWTInterceptor, HttpErrorInterceptor, SpinnerInterceptor } from './interceptors';
+import { NbAuthJWTInterceptor, SpinnerInterceptor } from './interceptors';
 import { throwIfAlreadyLoaded } from './module-import-guard';
 import { RoleService } from './services/role.service';
 

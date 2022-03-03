@@ -47,12 +47,12 @@ export class RequestPasswordComponent implements OnDestroy {
           this.errors = result.getErrors();
         }
 
-        const redirect = result.getRedirect();
-        if (redirect) {
-          setTimeout(() => {
-            this.router.navigateByUrl(redirect);
-          }, this.redirectDelay);
-        }
+        // const redirect = result.getRedirect();
+        // if (redirect) {
+        //   setTimeout(() => {
+        //     this.router.navigateByUrl(redirect);
+        //   }, this.redirectDelay);
+        // }
         this.cd.detectChanges();
       });
   }

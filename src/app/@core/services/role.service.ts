@@ -11,7 +11,6 @@ export class RoleService implements NbRoleProvider {
 
   constructor(private authService: NbAuthService) { }
 
-
   getRole(): Observable<string> {
     return this.authService.onTokenChange()
       .pipe(
@@ -20,7 +19,6 @@ export class RoleService implements NbRoleProvider {
             let activeRole = localStorage.getItem('activeRole');
             if (!activeRole) {
               activeRole = token.getPayload().role;
-              console.log(activeRole);
             }
             const roleName: string = token.getPayload().role;
             return roleName?.replace('_ROLE', '').toLowerCase();
@@ -34,7 +32,7 @@ export class RoleService implements NbRoleProvider {
       .pipe(
         map((token: NbAuthJWTToken) => {
           if (token.isValid()) {
-            return token.getPayload().upn;
+            return token.getPayload().email;
           }
         }),
       );
@@ -56,7 +54,7 @@ export class RoleService implements NbRoleProvider {
       .pipe(
         map((token: NbAuthJWTToken) => {
           if (token.isValid()) {
-            return token.getPayload().given_name;
+            return token.getPayload().name;
           }
         }),
       );
@@ -66,6 +64,9 @@ export class RoleService implements NbRoleProvider {
     return this.authService.onTokenChange()
       .pipe(
         map((token: NbAuthJWTToken) => {
+          if (token.isValid()) {
+            return true;
+          }
           return false;
         }),
       );
@@ -92,5 +93,4 @@ export class RoleService implements NbRoleProvider {
         }),
       );
   }
-
 }

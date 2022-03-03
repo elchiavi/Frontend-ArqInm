@@ -5,7 +5,7 @@ import { DueChangePasswordGuard } from './@core/guards/due-change-password-guard
 export const routes: Routes = [
   {
     path: 'pages',
-    //canActivate: [],
+    canActivate: [ DueChangePasswordGuard ],
     loadChildren: () => import('./pages/pages.module')
       .then(m => m.PagesModule),
   },
