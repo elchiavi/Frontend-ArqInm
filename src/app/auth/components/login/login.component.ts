@@ -20,6 +20,7 @@ export class LoginComponent implements OnDestroy {
   user: any = {};
   submitted = false;
   rememberMe = false;
+  hide = true;
 
   constructor(protected service: NbAuthService,
     @Inject(NB_AUTH_OPTIONS) protected options = {},
@@ -62,5 +63,10 @@ export class LoginComponent implements OnDestroy {
 
   getConfigValue(key: string): any {
     return getDeepFromObject(this.options, key, null);
+  }
+
+  show(event: Event, hide: boolean) {
+    event.preventDefault();
+    this.hide = !hide;
   }
 }
