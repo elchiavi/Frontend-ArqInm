@@ -24,6 +24,8 @@ import {
 import { NgxSortableHeaderDirective } from './directives';
 import { CustomDateAdapter, NgbDateCustomParserFormatter } from './utils';
 import { ClipboardModule } from '@angular/cdk/clipboard';
+import { ModalConfirmComponent } from './components/modal-confirm/modal-confirm.component';
+import { ErrorBlockComponent } from './components/error-block/error-block.component';
 
 
 const ANGULAR_MODULES = [CommonModule, FormsModule, RouterModule, ReactiveFormsModule, ClipboardModule ];
@@ -63,6 +65,8 @@ const COMPONENTS = [
   FooterComponent,
   HeaderComponent,
   LayoutComponent,
+  ModalConfirmComponent,
+  ErrorBlockComponent,
 ];
 
 const DIRECTIVE = [

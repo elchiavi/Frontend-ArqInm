@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { CoreModule } from './@core/core.module';
 import { ThemeModule } from './@theme/theme.module';
+import { ToastrModule } from 'ngx-toastr';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import {
@@ -11,7 +12,6 @@ import {
   NbDialogModule,
   NbMenuModule,
   NbSidebarModule,
-  NbToastrModule,
   NbWindowModule,
 } from '@nebular/theme';
 
@@ -27,9 +27,9 @@ import {
     NbSidebarModule.forRoot(),
     NbMenuModule.forRoot(),
     NbDatepickerModule.forRoot(),
+    ToastrModule.forRoot(),
     NbDialogModule.forRoot(),
     NbWindowModule.forRoot(),
-    NbToastrModule.forRoot(),
   ],
   bootstrap: [AppComponent],
 })

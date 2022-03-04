@@ -4,7 +4,7 @@ import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { FormUtils } from '../../@theme/utils/form';
 import { Router } from '@angular/router';
-import { ToastService,  } from '../../@theme/utils';
+import { ToastService } from '../../@theme/utils/toast.service';
 
 @Injectable({
   providedIn: 'root',
@@ -16,6 +16,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(request)
       .pipe(
+        // retry(1),
         catchError((httpError: HttpErrorResponse) => {
           let errorMessage = '';
           if (httpError.error instanceof ErrorEvent) {
@@ -33,16 +34,9 @@ export class HttpErrorInterceptor implements HttpInterceptor {
                 this.toastService.error(errorMessage);
               }
             } else {
-              if (httpError.status === 409) {
-                if (httpError.error.type === 'application/json') {
-                  this.toastService.error('No se puede cerrar el informe porque hay uno o más' + '\n' +
-                    'países que no se encuentran en estado Terminado');
-                }
-              } else {
                 errorMessage = `Error Code: ${httpError.status}\nMessage: ${httpError.message}`;
               }
             }
-          }
           return throwError(errorMessage);
         }),
       );

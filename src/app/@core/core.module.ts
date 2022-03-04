@@ -4,7 +4,7 @@ import { ModuleWithProviders, NgModule, Optional, SkipSelf } from '@angular/core
 import { NbAuthJWTToken, NbAuthModule, NbPasswordAuthStrategy } from '@nebular/auth';
 import { NbRoleProvider, NbSecurityModule } from '@nebular/security';
 import { environment } from '../../environments/environment';
-import { NbAuthJWTInterceptor, SpinnerInterceptor } from './interceptors';
+import { HttpErrorInterceptor, NbAuthJWTInterceptor, SpinnerInterceptor } from './interceptors';
 import { throwIfAlreadyLoaded } from './module-import-guard';
 import { RoleService } from './services/role.service';
 
@@ -22,7 +22,7 @@ export const NB_CORE_PROVIDERS = [
           endpoint: '/users/login',
           method: 'post',
           redirect: {
-            success: 'pages/dashboard',
+            success: 'pages/users',
             failure: null,
           },
         },
@@ -52,9 +52,15 @@ export const NB_CORE_PROVIDERS = [
 
   NbSecurityModule.forRoot({
     accessControl: {
-      admin: {
-        view:   [],
+      user: {
+        view:   ['user'],
         create: [],
+        edit:   [],
+        remove: [],
+      },
+      admin: {
+        view:   ['user'],
+        create: ['user'],
         edit:   [],
         remove: [],
       },
@@ -74,7 +80,7 @@ export const NB_CORE_PROVIDERS = [
   ],
   declarations: [],
   providers: [
-     // { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true },
+     { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true },
      { provide: HTTP_INTERCEPTORS, useClass: SpinnerInterceptor, multi: true },
      { provide: HTTP_INTERCEPTORS, useClass: NbAuthJWTInterceptor, multi: true },
   ],

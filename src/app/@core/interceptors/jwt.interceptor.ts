@@ -26,7 +26,7 @@ export class NbAuthJWTInterceptor implements HttpInterceptor {
               switchMap((token: NbAuthToken) => {
                 req = req.clone({
                   setHeaders: {
-                    Authorization: `Bearer ${token.getValue()}`,
+                    Authorization: `x-token ${token.getValue()}`,
                   },
                 });
                 return next.handle(req);

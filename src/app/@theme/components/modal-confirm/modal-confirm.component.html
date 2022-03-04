@@ -1,0 +1,12 @@
+<nb-card>
+    <nb-card-header class="text-center">
+        <h4>{{title}}</h4>
+    </nb-card-header>
+    <nb-card-body>
+        <p>{{message}}</p>
+    </nb-card-body>
+    <nb-card-footer class="text-right">
+        <button nbButton hero status="danger" shape="semi-round" (click)="ref.close(false)">No</button>
+        <button class="ml-2" nbButton hero status="primary" shape="semi-round" (click)="ref.close(true)">Sí</button>
+    </nb-card-footer>
+</nb-card>
