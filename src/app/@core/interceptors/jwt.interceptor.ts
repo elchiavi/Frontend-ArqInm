@@ -1,4 +1,4 @@
-import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
+import { HttpErrorResponse, HttpEvent, HttpHandler, HttpHeaders, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { NbAuthService, NbAuthToken } from '@nebular/auth';
@@ -24,10 +24,11 @@ export class NbAuthJWTInterceptor implements HttpInterceptor {
           if (authenticated) {
             return this.authService.getToken().pipe(
               switchMap((token: NbAuthToken) => {
+                const headers = new HttpHeaders({
+                  'x-token': token.getValue()
+                })
                 req = req.clone({
-                  setHeaders: {
-                    Authorization: `x-token ${token.getValue()}`,
-                  },
+                  headers
                 });
                 return next.handle(req);
               }),
@@ -36,7 +37,7 @@ export class NbAuthJWTInterceptor implements HttpInterceptor {
             return next.handle(req).catch((errorResponse: any) => {
               if (errorResponse instanceof HttpErrorResponse) {
                 if (FormUtils.handleFormValidationErrors(errorResponse.error)) {
-                  if (errorResponse.status === 400 && errorResponse.error.code === 'TOKEN_EXPIRED') {
+                  if (errorResponse.status === 401 && errorResponse.error.code === 'TOKEN_EXPIRED') {
                     this.router.navigate(['/auth/logout']);
                   }
                 }
