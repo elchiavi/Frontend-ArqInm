@@ -1,93 +1,88 @@
 <div class="section-header">
-    <div class="action">
-      <div class="row">
-        <div class="col-8">
-          <h2 class="title">Usuarios</h2>
-        </div>
-      </div>
-    </div>
-  
+  <div class="action">
     <div class="row">
       <div class="col-8">
-        <nb-form-field class="row col mb-2">
-          <input nbInput fieldSize="large" #inputSearch  (keyup.enter)="search(inputSearch.value)"
-            placeholder="Buscar por Apellido o Nombre...">
-          <button nbSuffix nbButton ghost (click)="clear(inputSearch)">
-            <nb-icon [icon]="'close-outline'" pack="eva" [title]="'Borrar filtro'">
-            </nb-icon>
-          </button>
-        </nb-form-field>
-      </div>
-  
-      <div class="col-4 text-right">
-        <button nbButton hero status="primary" shape="semi-round"
-          [routerLink]="['/pages/users','new']">
-          <nb-icon [icon]="'person-add-outline'" pack="eva"></nb-icon>
-          <span class="d-none d-md-block">Nuevo Usuario</span>
-        </button>
+        <h2 class="title">Usuarios</h2>
       </div>
     </div>
-  
-  
-    <nb-card accent="info" class="mb-2 d-none d-md-block table-header">
-      <nb-card-header class="form-inline">
-        <div class="row col-12">
-          <span class="col-md-2 pointer" ngxSortable="surname">Apellido
-            <i class="fas" [class]="userService.sortDirectionIcon('surname')"></i>
-          </span>
-          <span class="col-md-2 pointer" ngxSortable="name">Nombre
-            <i class="fas" [class]="userService.sortDirectionIcon('name')"></i>
-          </span>
-          <span class="col-md-3 pointer" ngxSortable="email">Email
-            <i class="fas" [class]="userService.sortDirectionIcon('email')"></i>
-          </span>
-          <span class="col-md-2">Rol</span>
-          <span class="col-md-2">Estado</span>
-          <span class="col-md-1">Acciones</span>
+  </div>
+
+  <div class="row">
+    <div class="col-8">
+      <nb-form-field class="row col mb-2">
+        <input nbInput fieldSize="large" #inputSearch (keyup.enter)="search(inputSearch.value)"
+          placeholder="Buscar por Apellido...">
+        <button nbSuffix nbButton ghost (click)="clear(inputSearch)">
+          <nb-icon [icon]="'close-outline'" pack="eva" [title]="'Borrar filtro'">
+          </nb-icon>
+        </button>
+      </nb-form-field>
+    </div>
+
+    <div class="col-4 text-right">
+      <button nbButton hero status="primary" shape="semi-round" [routerLink]="['/pages/users','new']">
+        <nb-icon [icon]="'person-add-outline'" pack="eva"></nb-icon>
+        <span class="d-none d-md-block">Nuevo Usuario</span>
+      </button>
+    </div>
+  </div>
+
+
+  <nb-card accent="info" class="mb-2 d-none d-md-block table-header">
+    <nb-card-header class="form-inline">
+      <div class="row col-12">
+        <span class="col-md-2 pointer" ngxSortable="surname" (sort)="onSort($event)"
+          [ngxEnabled]="userPage?.docs.length !== 0">Apellido
+          <i class="fas" [class]="userService.sortDirectionIcon('surname')"></i>
+        </span>
+        <span class="col-md-2">Nombre</span>
+        <span class="col-md-3">Email</span>
+        <span class="col-md-2">Rol</span>
+        <span class="col-md-2">Estado</span>
+        <span class="col-md-1">Acciones</span>
+      </div>
+    </nb-card-header>
+  </nb-card>
+
+  <nb-card *ngFor="let user of userPage?.docs; let i = index;" class="mb-1">
+    <nb-card-body class="form-inline">
+      <div class="row col-12">
+        <span class="col-md-2">{{ user.surname }}</span>
+        <span class="col-md-2">{{ user.name }}</span>
+        <span class="col-md-3">{{ user.email }}</span>
+        <div class="col-md-2">
+          <span class="badge badge-secondary">{{ user.role }}</span>
         </div>
-      </nb-card-header>
-    </nb-card>
-  
-    <nb-card *ngFor="let user of userPage?.docs; let i = index;" class="mb-1">
-      <nb-card-body class="form-inline">
-        <div class="row col-12">
-          <span class="col-md-2">{{ user.surname }}</span>
-          <span class="col-md-2">{{ user.name }}</span>
-          <span class="col-md-3">{{ user.email }}</span>
-          <div class="col-md-2">
-                <span class="badge badge-secondary">{{ user.role }}</span>
-          </div>
-          <div class="col-md-2">
-            <span class="badge" [ngClass]="{'badge-success': user.enabled, 'badge-danger': !user.enabled }">
-              {{ user.enabled ? 'HABILITADO' : 'DESHABILITADO' }}
-            </span>
-          </div>
-          <div class="col-md-1" *ngIf="isNotLoggedinUser(user)">
-            <nb-icon class="mr-1 pointer" [icon]="'edit-outline'" title="Editar" pack="eva"
-              [routerLink]="['/pages/users', user.id]"></nb-icon>
-            <nb-icon class="mr-1 pointer" [icon]="user.enabled ? 'person-delete-outline' : 'person-done-outline'"
-              [title]="user.enabled ? 'Deshabilitar' : 'Habilitar'" pack="eva"
-              (click)="changeStatus(user)"></nb-icon>
-            <nb-icon class="pointer" [icon]="'email-outline'" title="Regenerar Password" pack="eva"
-              (click)="emailResetPass(user)"></nb-icon>
-          </div>
+        <div class="col-md-2">
+          <span class="badge" [ngClass]="{'badge-success': user.enabled, 'badge-danger': !user.enabled }">
+            {{ user.enabled ? 'HABILITADO' : 'DESHABILITADO' }}
+          </span>
         </div>
-      </nb-card-body>
-    </nb-card>
-  
-    <nb-card *ngIf="userPage?.docs.length === 0" class="mb-1">
-      <nb-card-body class="form-inline pointer">
-        <div class="row col-12">
-          <span class="col-12 text-center">No se obtuvieron resultados</span>
+        <div class="col-md-1" *ngIf="isNotLoggedinUser(user)">
+          <nb-icon class="mr-1 pointer" [icon]="'edit-outline'" title="Editar" pack="eva"
+            [routerLink]="['/pages/users', user.id]"></nb-icon>
+          <nb-icon class="mr-1 pointer" [icon]="user.enabled ? 'person-delete-outline' : 'person-done-outline'"
+            [title]="user.enabled ? 'Deshabilitar' : 'Habilitar'" pack="eva" (click)="changeStatus(user)"></nb-icon>
+          <nb-icon class="pointer" [icon]="'email-outline'" title="Regenerar Password" pack="eva"
+            (click)="emailResetPass(user)"></nb-icon>
         </div>
-      </nb-card-body>
-    </nb-card>
-  
-    <nb-card *ngIf="userPage?.totalPages > 1">
-      <nb-card-body class="col-12 pb-0">
-        <ngb-pagination class="d-flex justify-content-center" [collectionSize]="userPage?.totalDocs"
-          [page]="userPage?.limit" [pageSize]="userService.pageSize" (pageChange)="pageChange($event)" [maxSize]="5"
-          [rotate]="true" [boundaryLinks]="true">
-        </ngb-pagination>
-      </nb-card-body>
-    </nb-card>
+      </div>
+    </nb-card-body>
+  </nb-card>
+
+  <nb-card *ngIf="userPage?.docs.length === 0" class="mb-1">
+    <nb-card-body class="form-inline pointer">
+      <div class="row col-12">
+        <span class="col-12 text-center">No se obtuvieron resultados</span>
+      </div>
+    </nb-card-body>
+  </nb-card>
+
+  <nb-card *ngIf="userPage?.totalPages > 1">
+    <nb-card-body class="col-12 pb-0">
+      <ngb-pagination class="d-flex justify-content-center" [collectionSize]="userPage?.totalDocs"
+        [page]="userPage?.limit" [pageSize]="userService.pageSize" (pageChange)="pageChange($event)" [maxSize]="5"
+        [rotate]="true" [boundaryLinks]="true">
+      </ngb-pagination>
+    </nb-card-body>
+  </nb-card>

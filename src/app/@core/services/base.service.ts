@@ -74,8 +74,8 @@ export abstract class BaseService<T extends BaseEntity> {
       });
     }
     if (this._sortDirection !== '') {
-      options.params = options.params.set('sortOrder', `${this._sortDirection.toUpperCase()}`);
-      options.params = options.params.set('sortBy', `${this.sortColumn}`);
+      options.params = options.params.set('sortorder', `${this._sortDirection.toUpperCase()}`);
+      options.params = options.params.set('sortby', `${this.sortColumn}`);
     }
     return this.httpClient.get<Page<T>>(`${this.fullPath}`, options);
   }

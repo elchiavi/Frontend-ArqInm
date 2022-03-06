@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { UnsubscribeOnDestroy, untilComponentDestroy } from '../../../@core/decorators/unsubscribe/on-destroy';
 import { UsersService } from '../../../@core/services/users.service';
 import { FormBuilder } from '@angular/forms';
@@ -8,14 +8,16 @@ import { NbDialogService } from '@nebular/theme';
 import { ModalConfirmComponent } from '../../../@theme/components';
 import { RoleService } from '../../../@core/services';
 import { ToastService } from '../../../@theme/utils/toast.service';
+import { SortEvent, NgxSortableHeaderDirective, Sortable } from '../../../@theme/directives/sortable-header.directive';
 
 @Component({
   selector: 'ngx-user-list',
   templateUrl: './user-list.component.html',
 })
 @UnsubscribeOnDestroy()
-export class UserListComponent implements OnInit, OnDestroy {
+export class UserListComponent implements OnInit, OnDestroy , Sortable{
 
+  @ViewChildren(NgxSortableHeaderDirective) headers: QueryList<NgxSortableHeaderDirective>;
   userPage: Page<User>;
   userLoggedin: string;
   new = false;
@@ -57,6 +59,17 @@ export class UserListComponent implements OnInit, OnDestroy {
     } else if (filter.trim().length > 2) {
       this.pageChange(null, filter);
     }
+  }
+
+  onSort({ column, direction }: SortEvent): void {
+    this.headers.forEach(header => {
+      if (header.ngxSortable !== column) {
+        header.direction = '';
+      }
+    });
+    this.userService.sortColumn = column;
+    this.userService.sortDirection = direction;
+    this.pageChange();
   }
 
   clear(inputSearch: any) {
