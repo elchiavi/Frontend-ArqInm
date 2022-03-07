@@ -6,6 +6,7 @@ import { PagesComponent } from './pages.component';
 import { PagesRoutingModule } from './pages-routing.module';
 import { MiscellaneousModule } from './miscellaneous/miscellaneous.module';
 import { UserModule } from './user/user.module';
+import { ClientModule } from './client/client.module';
 
 @NgModule({
   imports: [
@@ -14,6 +15,7 @@ import { UserModule } from './user/user.module';
     NbMenuModule,
     MiscellaneousModule,
     UserModule,
+    ClientModule,
   ],
   declarations: [
     PagesComponent,
