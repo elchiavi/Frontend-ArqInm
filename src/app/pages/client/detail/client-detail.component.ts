@@ -3,10 +3,10 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UnsubscribeOnDestroy, untilComponentDestroy } from '../../../@core/decorators/unsubscribe/on-destroy';
 import { Client } from '../../../@core/models';
-import { UsersService } from '../../../@core/services';
 import { Action, ToastService } from '../../../@theme/utils';
 import { SharedFormService } from '../../../@theme/utils/form.service';
 import { SharedFormValidation } from '../../../@theme/utils/form.validation';
+import { ClientsService } from '../../../@core/services/clients.service';
 
 @Component({
   selector: 'ngx-client-detail',
@@ -17,62 +17,59 @@ export class ClientDetailComponent implements OnInit, OnDestroy {
 
   form: FormGroup;
   new = false;
-  user: Client;
+  client: Client;
   readOnly = false;
 
   constructor(public formBuilder: FormBuilder,
     public toastService: ToastService,
     public activatedRoute: ActivatedRoute,
     public formHelperService: SharedFormService,
-    public usersService: UsersService,
+    public clientsService: ClientsService,
     public router: Router) { }
 
   ngOnInit() {
-    this.user = this.activatedRoute.snapshot.data['client'];
-    this.new = !this.user;
+    this.client = this.activatedRoute.snapshot.data['client'];
+    this.new = !this.client;
     this.readOnly = !this.new;
-    // this.createForm();
-    // this.mapData();
+    this.createForm();
+    this.mapData();
   }
 
-//   save() {
-//     this.formHelperService.touchAllFields(this.form);
-//     if (this.form.valid) {
-//       this.usersService.save(this.new, this.form).pipe(
-//         untilComponentDestroy.apply(this)).subscribe(() => {
-//           const action: Action = this.new ? 'create' : 'update';
-//           this.toastService.showToast('El usuario', action, 'success');
-//           this.router.navigate(['/pages/users']);
-//         }, (err) => {
-//           if (err.code === 409) {
-//             this.toastService.error('El mail ingresado ya fue registrado.');
-//           } else {
-//             this.toastService.error('Error inesperado, contactar con su administrador.');
-//           }
-          
-//         });
-//     }
-//   }
+  save() {
+    this.formHelperService.touchAllFields(this.form);
+    if (this.form.valid) {
+      this.clientsService.save(this.new, this.form).pipe(
+        untilComponentDestroy.apply(this)).subscribe(() => {
+          const action: Action = this.new ? 'create' : 'update';
+          this.toastService.showToast('El cliente', action, 'success');
+          this.router.navigate(['/pages/clients']);
+        }, () => {
+          this.toastService.error('Ya existe un cliente con ese DNI.');
+        });
+    }
+  }
 
-//   createForm() {
-//     this.form = this.formBuilder.group({
-//       id: [],
-//       name: ['', Validators.required],
-//       surname: ['', Validators.required],
-//       email: ['', [
-//         Validators.required, SharedFormValidation.emailValidator,
-//       ]],
-//       role: [null, Validators.required],
-//       enabled: [true],
-//     });
-//   }
+  createForm() {
+    this.form = this.formBuilder.group({
+      id: [],
+      name: ['', Validators.required],
+      surname: ['', Validators.required],
+      email: ['', [
+        Validators.required, SharedFormValidation.emailValidator,
+      ]],
+      dni: ['', Validators.required],
+      cuit: ['', Validators.required],
+      category: ['', Validators.required],
+      phone: ['', Validators.required],
+      enabled: [true],
+    });
+  }
 
-//   mapData() {
-//     if (!this.new) {
-//       this.form.reset(this.user);
-//       this.form.get('email').disable();
-//     }
-//   }
+  mapData() {
+    if (!this.new) {
+      this.form.reset(this.client);
+    }
+  }
 
   ngOnDestroy() { }
 }

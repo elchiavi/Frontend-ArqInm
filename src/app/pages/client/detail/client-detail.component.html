@@ -1,1 +1,104 @@
-<h5>Client detail</h5>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <nb-card accent="info" size="small">
+                <nb-card-header>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <h6 class="title" *ngIf="!new">Editar Cliente</h6>
+                            <h6 class="title" *ngIf="new">Nuevo Cliente</h6>
+                        </div>
+                        <div class="col-sm-6 text-sm-right">
+                            <button size="small" nbButton hero outline shape="semi-round"
+                                [routerLink]="['/pages/clients']">
+                                <nb-icon [icon]="'arrow-back-outline'" pack="eva"></nb-icon>
+                                <span class="d-none d-md-block text-dark">Regresar</span>
+                            </button>
+                        </div>
+                    </div>
+                </nb-card-header>
+                <nb-card-body>
+                    <form class="row" [formGroup]="form">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="inputSurname">Apellido</label>
+                                <input type="text" id="inputSurname" class="form-control"
+                                    [class.is-invalid]="formHelperService.canShowFieldErrors(form.get('surname'))"
+                                    formControlName="surname">
+                                <ngx-error-field [field]="form.get('surname')"></ngx-error-field>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="inputName">Nombre</label>
+                                <input type="text" id="inputName" class="form-control"
+                                    [class.is-invalid]="formHelperService.canShowFieldErrors(form.get('name'))"
+                                    formControlName="name">
+                                <ngx-error-field [field]="form.get('name')"></ngx-error-field>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="inputEmail">Email</label>
+                                <input type="text" id="inputEmail" class="form-control"
+                                    [class.is-invalid]="formHelperService.canShowFieldErrors(form.get('email'))"
+                                    formControlName="email">
+                                <ngx-error-field [field]="form.get('email')"></ngx-error-field>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label for="inputCelular">Celular</label>
+                                <input type="number" id="inputCelular" class="form-control" [min]="0"
+                                    [class.is-invalid]="formHelperService.canShowFieldErrors(form.get('phone'))"
+                                    formControlName="phone">
+                                <ngx-error-field [field]="form.get('phone')"></ngx-error-field>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="inputCategory">Categoría</label>
+                                <select class="form-control" formControlName="category">
+                                    <option value="Consumidor Final">Consumidor Final</option>
+                                    <option value="Monotributo">Monotributo</option>
+                                    <option value="Responsable Inscripto">Responsable Inscripto</option>
+                                </select>
+                                <ngx-error-field [field]="form.get('category')"></ngx-error-field>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label for="inputDni">Dni</label>
+                                <input type="number" id="inputLag" class="form-control" [min]="0"
+                                    [class.is-invalid]="formHelperService.canShowFieldErrors(form.get('dni'))"
+                                    formControlName="dni">
+                                <ngx-error-field [field]="form.get('dni')"></ngx-error-field>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label for="inputCuit">Cuit/Cuil</label>
+                                <input type="number" id="inputCuit" class="form-control" [min]="0"
+                                    [class.is-invalid]="formHelperService.canShowFieldErrors(form.get('cuit'))"
+                                    formControlName="cuit">
+                                <ngx-error-field [field]="form.get('cuit')"></ngx-error-field>
+                            </div>
+                        </div>
+                    </form>
+                </nb-card-body>
+                <nb-card-footer>
+                    <div class="row">
+                        <div class="col-12 text-right">
+                            <button nbButton hero status="danger" shape="semi-round" [routerLink]="['/pages/clients']">
+                                Cancelar
+                            </button>
+                            <button class="ml-2" nbButton hero status="primary" shape="semi-round" (click)="save()">
+                                Aceptar
+                            </button>
+                        </div>
+                    </div>
+                </nb-card-footer>
+            </nb-card>
+        </div>
+    </div>
+</div>

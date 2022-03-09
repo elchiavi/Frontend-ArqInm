@@ -30,7 +30,7 @@
 
   <nb-card accent="info" class="mb-2 d-none d-md-block table-header">
     <nb-card-header class="form-inline">
-      <div class="row col-12">
+      <div class="row col-12 text-center">
         <span class="col-md-2 pointer" ngxSortable="surname" (sort)="onSort($event)"
           [ngxEnabled]="userPage?.docs.length !== 0">Apellido
           <i class="fas" [class]="userService.sortDirectionIcon('surname')"></i>
@@ -45,7 +45,7 @@
   </nb-card>
 
   <nb-card *ngFor="let user of userPage?.docs; let i = index;" class="mb-1">
-    <nb-card-body class="form-inline">
+    <nb-card-body class="form-inline text-center">
       <div class="row col-12">
         <span class="col-md-2">{{ user.surname }}</span>
         <span class="col-md-2">{{ user.name }}</span>

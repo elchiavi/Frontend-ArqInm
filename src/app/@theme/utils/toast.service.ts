@@ -13,15 +13,15 @@ export class ToastService {
 
 
   success(message: string) {
-    this._toastrService.success(message, 'Exito!');
+    this._toastrService.success(message, '¡Exito!');
   }
 
   warn(message: string) {
-    this._toastrService.warning(message, 'Atención!');
+    this._toastrService.warning(message, '¡Atención!');
   }
 
   error(message: string) {
-    this._toastrService.error(message, 'Error!');
+    this._toastrService.error(message, '¡Error!');
   }
 
   showToast(entity: string, action: Action, status: Status, plural: boolean = false) {

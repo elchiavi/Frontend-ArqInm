@@ -44,13 +44,8 @@ export class UserDetailComponent implements OnInit, OnDestroy {
           const action: Action = this.new ? 'create' : 'update';
           this.toastService.showToast('El usuario', action, 'success');
           this.router.navigate(['/pages/users']);
-        }, (err) => {
-          if (err.code === 409) {
-            this.toastService.error('El mail ingresado ya fue registrado.');
-          } else {
-            this.toastService.error('Error inesperado, contactar con su administrador.');
-          }
-          
+        }, () => {
+          this.toastService.error('El mail ingresado ya fue registrado.');
         });
     }
   }
