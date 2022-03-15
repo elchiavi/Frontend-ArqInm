@@ -54,13 +54,19 @@ export class ClientDetailComponent implements OnInit, OnDestroy {
       id: [],
       name: ['', Validators.required],
       surname: ['', Validators.required],
+      businessName: [''],
       email: ['', [
         Validators.required, SharedFormValidation.emailValidator,
       ]],
       dni: ['', Validators.required],
       cuit: ['', Validators.required],
       category: ['', Validators.required],
+      street: ['', Validators.required],
+      streetNumber: ['', Validators.required],
+      floor: [''],
       phone: ['', Validators.required],
+      province: ['', Validators.required],
+      city: ['', Validators.required],
       enabled: [true],
     });
   }

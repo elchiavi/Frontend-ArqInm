@@ -1,7 +1,7 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-12">
-            <nb-card accent="info" size="small">
+            <nb-card accent="info" size="x-large">
                 <nb-card-header>
                     <div class="row">
                         <div class="col-sm-6">
@@ -19,7 +19,7 @@
                 </nb-card-header>
                 <nb-card-body>
                     <form class="row" [formGroup]="form">
-                        <div class="col-md-4">
+                        <div class="col-md-6">
                             <div class="form-group">
                                 <label for="inputSurname">Apellido</label>
                                 <input type="text" id="inputSurname" class="form-control"
@@ -28,7 +28,7 @@
                                 <ngx-error-field [field]="form.get('surname')"></ngx-error-field>
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-6">
                             <div class="form-group">
                                 <label for="inputName">Nombre</label>
                                 <input type="text" id="inputName" class="form-control"
@@ -37,7 +37,45 @@
                                 <ngx-error-field [field]="form.get('name')"></ngx-error-field>
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="inputBusinessName">Razón Social</label>
+                                <input type="text" id="inputBusinessName" class="form-control"
+                                    [class.is-invalid]="formHelperService.canShowFieldErrors(form.get('businessName'))"
+                                    formControlName="businessName">
+                                <ngx-error-field [field]="form.get('businessName')"></ngx-error-field>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="inputCategory">Categoría</label>
+                                <select class="form-control" formControlName="category">
+                                    <option value="Consumidor Final">Consumidor Final</option>
+                                    <option value="Monotributo">Monotributo</option>
+                                    <option value="Responsable Inscripto">Responsable Inscripto</option>
+                                </select>
+                                <ngx-error-field [field]="form.get('category')"></ngx-error-field>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label for="inputDni">Dni</label>
+                                <input type="number" id="inputLag" class="form-control" [min]="11111111" [max]="99999999"
+                                    [class.is-invalid]="formHelperService.canShowFieldErrors(form.get('dni'))"
+                                    formControlName="dni">
+                                <ngx-error-field [field]="form.get('dni')"></ngx-error-field>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label for="inputCuit">Cuit/Cuil</label>
+                                <input type="number" id="inputCuit" class="form-control" [min]="0"
+                                    [class.is-invalid]="formHelperService.canShowFieldErrors(form.get('cuit'))"
+                                    formControlName="cuit">
+                                <ngx-error-field [field]="form.get('cuit')"></ngx-error-field>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
                             <div class="form-group">
                                 <label for="inputEmail">Email</label>
                                 <input type="text" id="inputEmail" class="form-control"
@@ -55,33 +93,49 @@
                                 <ngx-error-field [field]="form.get('phone')"></ngx-error-field>
                             </div>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-6">
                             <div class="form-group">
-                                <label for="inputCategory">Categoría</label>
-                                <select class="form-control" formControlName="category">
-                                    <option value="Consumidor Final">Consumidor Final</option>
-                                    <option value="Monotributo">Monotributo</option>
-                                    <option value="Responsable Inscripto">Responsable Inscripto</option>
-                                </select>
-                                <ngx-error-field [field]="form.get('category')"></ngx-error-field>
+                                <label for="inputProvince">Provincia</label>
+                                <input type="text" id="inputinputProvinceSurname" class="form-control"
+                                    [class.is-invalid]="formHelperService.canShowFieldErrors(form.get('province'))"
+                                    formControlName="province">
+                                <ngx-error-field [field]="form.get('province')"></ngx-error-field>
                             </div>
                         </div>
-                        <div class="col-sm-3">
+                        <div class="col-md-6">
                             <div class="form-group">
-                                <label for="inputDni">Dni</label>
-                                <input type="number" id="inputLag" class="form-control" [min]="0"
-                                    [class.is-invalid]="formHelperService.canShowFieldErrors(form.get('dni'))"
-                                    formControlName="dni">
-                                <ngx-error-field [field]="form.get('dni')"></ngx-error-field>
+                                <label for="inputCity">Ciudad</label>
+                                <input type="text" id="inputCity" class="form-control"
+                                    [class.is-invalid]="formHelperService.canShowFieldErrors(form.get('city'))"
+                                    formControlName="city">
+                                <ngx-error-field [field]="form.get('city')"></ngx-error-field>
                             </div>
                         </div>
-                        <div class="col-sm-3">
+                        <div class="col-sm-4">
                             <div class="form-group">
-                                <label for="inputCuit">Cuit/Cuil</label>
-                                <input type="number" id="inputCuit" class="form-control" [min]="0"
-                                    [class.is-invalid]="formHelperService.canShowFieldErrors(form.get('cuit'))"
-                                    formControlName="cuit">
-                                <ngx-error-field [field]="form.get('cuit')"></ngx-error-field>
+                                <label for="inputStreet">Dirección</label>
+                                <input type="text" id="inputStreet" class="form-control"
+                                    [class.is-invalid]="formHelperService.canShowFieldErrors(form.get('street'))"
+                                    formControlName="street">
+                                <ngx-error-field [field]="form.get('street')"></ngx-error-field>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label for="inputStreetNumber">Número</label>
+                                <input type="number" id="inputStreetNumber" class="form-control" [min]="1"
+                                    [class.is-invalid]="formHelperService.canShowFieldErrors(form.get('streetNumber'))"
+                                    formControlName="streetNumber">
+                                <ngx-error-field [field]="form.get('streetNumber')"></ngx-error-field>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label for="inputFloor">Piso/Dpto</label>
+                                <input type="text" id="inputFloor" class="form-control"
+                                    [class.is-invalid]="formHelperService.canShowFieldErrors(form.get('floor'))"
+                                    formControlName="floor">
+                                <ngx-error-field [field]="form.get('floor')"></ngx-error-field>
                             </div>
                         </div>
                     </form>
