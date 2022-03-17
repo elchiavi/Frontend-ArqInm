@@ -26,6 +26,15 @@ const routes: Routes = [{
         .then(m => m.ClientModule),
     },
     {
+      path: 'projects',
+      data: {
+        permission: 'view',
+        resource: 'projects',
+      },
+      loadChildren: () => import('./project/project.module')
+        .then(m => m.ProjectModule),
+    },
+    {
       path: 'miscellaneous',
       loadChildren: () => import('./miscellaneous/miscellaneous.module')
         .then(m => m.MiscellaneousModule),

@@ -95,21 +95,6 @@ export class UserListComponent implements OnInit, OnDestroy , Sortable{
     });
   }
 
-  emailResetPass(user: User) {
-    const modalRef = this.dialogService.open(ModalConfirmComponent, { closeOnBackdropClick: false });
-    const description = 'Se enviará un email al usuario para realizar el cambio de clave.';
-    modalRef.componentRef.instance.title = 'Confirmación';
-    modalRef.componentRef.instance.message = `${description} ¿Desea continuar?`;
-    modalRef.onClose.subscribe((userResponse) => {
-      if (userResponse) {
-        this.userService.resetPass(user.email).pipe(
-          untilComponentDestroy.apply(this)).subscribe(() => {
-            this.toastService.success('Mail enviado correctamente');
-          });
-      }
-    });
-  }
-
   ngOnDestroy() { }
 
 }

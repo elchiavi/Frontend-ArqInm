@@ -101,7 +101,7 @@ export class FormUtils {
 
   static initMultipleCheckbox(checkboxesFormArray: FormArray, source: BaseEntity[], selected: BaseEntity[]) {
     for (let i = 0; i < source.length; i++) {
-      const exist = selected.some(lottery => lottery.id === source[i].id);
+      const exist = selected.some(lottery => lottery._id === source[i]._id);
       if (exist) {
         checkboxesFormArray.controls[i].setValue(source[i]);
       } else {

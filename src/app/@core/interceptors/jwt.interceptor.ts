@@ -3,8 +3,8 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { NbAuthService, NbAuthToken } from '@nebular/auth';
 import { Observable, throwError } from 'rxjs';
-import 'rxjs/add/operator/catch';
-import { switchMap } from 'rxjs/operators';
+//import 'rxjs/add/operator/catch';
+import { switchMap, catchError } from 'rxjs/operators';
 import { FormUtils } from '../../@theme/utils/form';
 
 
@@ -34,7 +34,7 @@ export class NbAuthJWTInterceptor implements HttpInterceptor {
               }),
             );
           } else {
-            return next.handle(req).catch((errorResponse: any) => {
+            return next.handle(req).pipe(catchError((errorResponse: any) => {
               if (errorResponse instanceof HttpErrorResponse) {
                 if (FormUtils.handleFormValidationErrors(errorResponse.error)) {
                   if (errorResponse.status === 401 && errorResponse.error.code === 'TOKEN_EXPIRED') {
@@ -43,7 +43,7 @@ export class NbAuthJWTInterceptor implements HttpInterceptor {
                 }
               }
               return throwError(errorResponse);
-            });
+            }));
           }
         }),
       );

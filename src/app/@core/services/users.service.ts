@@ -17,7 +17,7 @@ export class UsersService extends BaseService<User> {
     }
 
     enabledUser(user: User): Observable<User> {
-        return this.httpClient.put(`${this.fullPath}/enableUser/${user.id}`, {}).pipe(
+        return this.httpClient.put(`${this.fullPath}/enableUser/${user._id}`, {}).pipe(
             map(() => {
                 user.enabled = !user.enabled;
                 return user;

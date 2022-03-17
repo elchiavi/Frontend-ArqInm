@@ -5,3 +5,4 @@ export * from './user.model';
 export * from './page.model';
 export * from './client.model';
 export * from './error-Http.model';
+export * from './project.model';

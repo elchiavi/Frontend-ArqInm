@@ -1,0 +1,86 @@
+<div class="section-header">
+    <div class="action">
+        <div class="row">
+            <div class="col-8">
+                <h2 class="title">Proyectos</h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-8">
+            <nb-form-field class="row col mb-2">
+                <input nbInput fieldSize="large" #inputSearch (keyup.enter)="search(inputSearch.value)"
+                    placeholder="Buscar por Cliente...">
+                <button nbSuffix nbButton ghost (click)="clear(inputSearch)">
+                    <nb-icon [icon]="'close-outline'" pack="eva" [title]="'Borrar filtro'">
+                    </nb-icon>
+                </button>
+            </nb-form-field>
+        </div>
+
+        <div class="col-4 text-right">
+            <button nbButton hero status="primary" shape="semi-round" [routerLink]="['/pages/projects','new']">
+                <nb-icon [icon]="'folder-add-outline'" pack="eva"></nb-icon>
+                <span class="d-none d-md-block">Nuevo Proyecto</span>
+            </button>
+        </div>
+    </div>
+
+
+    <nb-card accent="info" class="mb-2 d-none d-md-block table-header">
+        <nb-card-header class="form-inline">
+            <div class="row col-12 text-center">
+                <span class="col-md-2 pointer" ngxSortable="surname" (sort)="onSort($event)"
+                    [ngxEnabled]="projectPage?.docs.length !== 0">Nombre
+                    <i class="fas" [class]="projectsService.sortDirectionIcon('surname')"></i>
+                </span>
+                <span class="col-md-2">Cliente</span>
+                <span class="col-md-2">Tipo</span>
+                <span class="col-md-2">Tipo 2</span>
+                <span class="col-md-1">Fecha Inicio</span>
+                <span class="col-md-2">Plazo de Obra</span>
+                <span class="col-md-1">Acciones</span>
+            </div>
+        </nb-card-header>
+    </nb-card>
+
+    <nb-card *ngFor="let project of projectPage?.docs; let i = index;" class="mb-1">
+        <nb-card-body class="form-inline text-center">
+            <div class="row col-12">
+                <span class="col-md-2">{{ project.name }}</span>
+                <span class="col-md-2">{{ project.client.name }} {{ project.client.surname }}</span>
+                <span class="col-md-2">{{ project.typeProject }}</span>
+                <span class="col-md-2">{{ project.type }}</span>
+                <span class="col-md-1">{{ project.startDate | date: 'dd/MM/yyyy' }}</span>
+                <span class="col-md-2">{{ project.termDays }} días</span>
+                <div class="col-md-1">
+                    <nb-icon class="mr-1 pointer" [icon]="'search-outline'" title="Visualizar" pack="eva"
+                        [routerLink]="['/pages/projects', project._id]"></nb-icon>
+                    <a href={{project.linkDrive}} target="_blank">
+                        <nb-icon class="mr-1 pointer" [icon]="'attach-outline'" title="Ir a los adjuntos" pack="eva">
+                        </nb-icon>
+                    </a>
+                    <nb-icon class="mr-1 pointer" [icon]="'edit-outline'" title="Editar" pack="eva"
+                        [routerLink]="['/pages/projects', project._id]"></nb-icon>
+                </div>
+            </div>
+        </nb-card-body>
+    </nb-card>
+
+    <nb-card *ngIf="projectPage?.docs.length === 0" class="mb-1">
+        <nb-card-body class="form-inline pointer">
+            <div class="row col-12">
+                <span class="col-12 text-center">No se obtuvieron resultados</span>
+            </div>
+        </nb-card-body>
+    </nb-card>
+
+    <nb-card *ngIf="projectPage?.totalPages > 1">
+        <nb-card-body class="col-12 pb-0">
+            <ngb-pagination class="d-flex justify-content-center" [collectionSize]="projectPage?.totalDocs"
+                [page]="projectPage?.limit" [pageSize]="projectsService.pageSize" (pageChange)="pageChange($event)"
+                [maxSize]="5" [rotate]="true" [boundaryLinks]="true">
+            </ngb-pagination>
+        </nb-card-body>
+    </nb-card>

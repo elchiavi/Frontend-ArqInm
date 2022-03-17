@@ -60,11 +60,9 @@
         </div>
         <div class="col-md-1" *ngIf="isNotLoggedinUser(user)">
           <nb-icon class="mr-1 pointer" [icon]="'edit-outline'" title="Editar" pack="eva"
-            [routerLink]="['/pages/users', user.id]"></nb-icon>
+            [routerLink]="['/pages/users', user._id]"></nb-icon>
           <nb-icon class="mr-1 pointer" [icon]="user.enabled ? 'person-delete-outline' : 'person-done-outline'"
             [title]="user.enabled ? 'Deshabilitar' : 'Habilitar'" pack="eva" (click)="changeStatus(user)"></nb-icon>
-          <nb-icon class="pointer" [icon]="'email-outline'" title="Regenerar Password" pack="eva"
-            (click)="emailResetPass(user)"></nb-icon>
         </div>
       </div>
     </nb-card-body>

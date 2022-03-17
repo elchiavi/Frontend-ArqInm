@@ -14,6 +14,7 @@ import {
   NbSidebarModule,
   NbWindowModule,
 } from '@nebular/theme';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [AppComponent],
@@ -30,6 +31,7 @@ import {
     ToastrModule.forRoot(),
     NbDialogModule.forRoot(),
     NbWindowModule.forRoot(),
+    NgbModule,
   ],
   bootstrap: [AppComponent],
 })
