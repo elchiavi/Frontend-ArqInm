@@ -18,7 +18,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   public constructor(
     private sidebarService: NbSidebarService,
     private menuService: NbMenuService,
-    private roleService: RoleService
+    private roleService: RoleService,
   ) {
   }
 

@@ -56,14 +56,13 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
       untilComponentDestroy.apply(this)).subscribe((clients: Client[]) => {
         clients.forEach((client: Client) => {
           client.surname = client.surname.concat(', ' + client.name);
-        })
+        });
         this.clients = clients;
       });
   }
 
   save() {
     this.formHelperService.touchAllFields(this.form);
-    console.log(this.form.value);
     if (this.form.valid) {
       this.projectsService.save(this.new, this.form).pipe(
         untilComponentDestroy.apply(this)).subscribe(() => {
@@ -105,7 +104,7 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
   }
 
   public compareFn(a, b): boolean {
-    return a == b;
+    return a === b;
 }
 
   ngOnDestroy() { }

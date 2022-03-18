@@ -8,7 +8,7 @@ import { ProjectRoutingModule } from './project-routing.module';
 @NgModule({
   imports: [
     ThemeModule,
-    ProjectRoutingModule
+    ProjectRoutingModule,
   ],
   declarations: [
       ProjectComponent,

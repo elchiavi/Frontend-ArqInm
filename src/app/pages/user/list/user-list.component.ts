@@ -15,7 +15,7 @@ import { SortEvent, NgxSortableHeaderDirective, Sortable } from '../../../@theme
   templateUrl: './user-list.component.html',
 })
 @UnsubscribeOnDestroy()
-export class UserListComponent implements OnInit, OnDestroy , Sortable{
+export class UserListComponent implements OnInit, OnDestroy , Sortable {
 
   @ViewChildren(NgxSortableHeaderDirective) headers: QueryList<NgxSortableHeaderDirective>;
   userPage: Page<User>;

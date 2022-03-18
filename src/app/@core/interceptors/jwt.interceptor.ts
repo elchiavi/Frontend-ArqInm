@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { NbAuthService, NbAuthToken } from '@nebular/auth';
 import { Observable, throwError } from 'rxjs';
-//import 'rxjs/add/operator/catch';
 import { switchMap, catchError } from 'rxjs/operators';
 import { FormUtils } from '../../@theme/utils/form';
 
@@ -25,10 +24,10 @@ export class NbAuthJWTInterceptor implements HttpInterceptor {
             return this.authService.getToken().pipe(
               switchMap((token: NbAuthToken) => {
                 const headers = new HttpHeaders({
-                  'x-token': token.getValue()
-                })
+                  'x-token': token.getValue(),
+                });
                 req = req.clone({
-                  headers
+                  headers,
                 });
                 return next.handle(req);
               }),

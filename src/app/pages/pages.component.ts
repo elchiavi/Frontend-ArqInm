@@ -9,8 +9,7 @@ import { MENU_ITEMS } from './pages-menu';
     <ngx-layout>
       <nb-menu [items]="menu"></nb-menu>
       <router-outlet></router-outlet>
-    </ngx-layout>    
-  `,
+    </ngx-layout>`,
 })
 export class PagesComponent {
 

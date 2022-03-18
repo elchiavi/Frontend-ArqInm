@@ -16,5 +16,5 @@ export const MENU_ITEMS: NbMenuItem[] = [
     icon: 'person',
     link: '/pages/users',
     home: true,
-  }
+  },
 ];

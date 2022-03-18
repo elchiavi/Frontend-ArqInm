@@ -34,7 +34,7 @@ export abstract class BaseService<T extends BaseEntity> {
 
   list(term?: string): Observable<T[]> {
     let params: HttpParams;
-    if( term ) {
+    if (term) {
       params = new HttpParams().set('filter', term);
     }
     return this.getPage(0, null, null, params).pipe(

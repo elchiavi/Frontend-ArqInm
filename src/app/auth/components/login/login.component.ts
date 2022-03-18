@@ -38,7 +38,7 @@ export class LoginComponent implements OnDestroy {
   login(): void {
     this.errors = [];
     this.messages = [];
-    this.submitted = true;    
+    this.submitted = true;
 
     this.service.authenticate(this.strategy, this.user)
       .pipe(untilComponentDestroy.apply(this))
