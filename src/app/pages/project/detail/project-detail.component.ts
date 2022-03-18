@@ -2,9 +2,10 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NbDateService } from '@nebular/theme';
+import { Observable, Subject } from 'rxjs';
 import { UnsubscribeOnDestroy, untilComponentDestroy } from '../../../@core/decorators/unsubscribe/on-destroy';
-import { Project } from '../../../@core/models';
-import { ProjectsService } from '../../../@core/services';
+import { Client, Project } from '../../../@core/models';
+import { ClientsService, ProjectsService } from '../../../@core/services';
 import { Action, ToastService } from '../../../@theme/utils';
 import { SharedFormService } from '../../../@theme/utils/form.service';
 import { SharedFormValidation } from '../../../@theme/utils/form.validation';
@@ -19,6 +20,10 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
   form: FormGroup;
   new = false;
   project: Project;
+  clients$: Observable<Client[]>;
+  clients: Client[];
+  input$ = new Subject<string>();
+  loading = false;
   readOnly = false;
   day: number;
   month: number;
@@ -26,6 +31,7 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
 
   constructor(public formBuilder: FormBuilder,
     public projectsService: ProjectsService,
+    public clientsService: ClientsService,
     public toastService: ToastService,
     public activatedRoute: ActivatedRoute,
     public formHelperService: SharedFormService,
@@ -38,21 +44,34 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
     this.readOnly = !this.new;
     this.createForm();
     this.mapData();
+    this.clients$ = this.clientsService.listClients();
+    this.loadClients();
     this.day = new Date().getDate();
     this.month = new Date().getMonth() + 1;
     this.year = new Date().getFullYear();
   }
 
+  loadClients() {
+    this.clientsService.listClients().pipe(
+      untilComponentDestroy.apply(this)).subscribe((clients: Client[]) => {
+        clients.forEach((client: Client) => {
+          client.surname = client.surname.concat(', ' + client.name);
+        })
+        this.clients = clients;
+      });
+  }
+
   save() {
     this.formHelperService.touchAllFields(this.form);
+    console.log(this.form.value);
     if (this.form.valid) {
       this.projectsService.save(this.new, this.form).pipe(
         untilComponentDestroy.apply(this)).subscribe(() => {
           const action: Action = this.new ? 'create' : 'update';
-          this.toastService.showToast('El usuario', action, 'success');
-          this.router.navigate(['/pages/users']);
+          this.toastService.showToast('El proyecto', action, 'success');
+          this.router.navigate(['/pages/projects']);
         }, () => {
-          this.toastService.error('El mail ingresado ya fue registrado.');
+          this.toastService.error('Error inesperado, contactar a su administrador.');
         });
     }
   }
@@ -84,6 +103,10 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
       this.form.reset(this.project);
     }
   }
+
+  public compareFn(a, b): boolean {
+    return a == b;
+}
 
   ngOnDestroy() { }
 }

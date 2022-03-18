@@ -106,6 +106,17 @@
                                 <ngx-error-field [field]="form.get('termDays')"></ngx-error-field>
                             </div>
                         </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label for="inputSelectedClient">Cliente</label>
+                                <ng-select class="custom" id="selectedClient" name="client"
+                                [items]="clients$ | async" formControlName="client" appendTo="body" [multiple]="false"
+                                [hideSelected]="true" bindLabel="fullName" bindValue="_id" [compareWith]="compareFn"
+                                [class.is-invalid]="formHelperService.canShowFieldErrors(form.get('client'))">
+                              </ng-select>
+                                <ngx-error-field [field]="form.get('client')"></ngx-error-field>
+                            </div>
+                        </div>
                     </form>
                 </nb-card-body>
                 <nb-card-footer>

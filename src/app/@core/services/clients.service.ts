@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { BaseService } from './base.service';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs';
-import { Client } from '../models';
+import { Client, Page } from '../models';
+import { map } from 'rxjs/operators';
 
 
 @Injectable({
@@ -18,6 +19,13 @@ export class ClientsService extends BaseService<Client> {
     save(isNew: boolean, form: FormGroup): Observable<Client> {
         const client: Client = form.getRawValue();
         return isNew ? this.add(client) : this.update(client);
+    }
+
+    listClients(): Observable<Client[]> {
+        this.pageSize = 1000;
+        return this.getPage().pipe(
+            map((page: Page<Client>) => page.docs),
+        );
     }
 
 }

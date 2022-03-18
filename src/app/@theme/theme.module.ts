@@ -15,8 +15,8 @@ import {
   NgbDatepickerModule, NgbNavModule,
   NgbPaginationModule,
 } from '@ng-bootstrap/ng-bootstrap';
-// import { NgSelectModule } from '@ng-select/ng-select';
-// import { NgxSpinnerModule } from 'ngx-spinner';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { NgxSpinnerModule } from 'ngx-spinner';
 import {
   FooterComponent, HeaderComponent, LayoutComponent,
 } from './components';
@@ -54,10 +54,10 @@ const NB_MODULES = [
 ];
 
 const OTHERS_MODULES = [
-  //NgSelectModule,
+  NgSelectModule,
   NgbPaginationModule,
   NgbDatepickerModule,
-  //NgxSpinnerModule,
+  NgxSpinnerModule,
   NgbNavModule,
 ];
 
