@@ -12,6 +12,8 @@ export interface Project extends BaseEntity {
     termDays: number;
     typeProject: string;
     type: string;
+    lengthArea: number;
+    widthArea: number;
     totalArea?: number;
     coveredArea?: number;
     semiCoveredArea?: number;

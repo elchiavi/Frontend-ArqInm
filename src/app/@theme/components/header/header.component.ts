@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, AfterContentInit } from '@angular/core';
 import { NbMenuService, NbSidebarService } from '@nebular/theme';
 import { Observable } from 'rxjs';
 import { RoleService } from '../../../@core/services';
@@ -8,7 +8,7 @@ import { RoleService } from '../../../@core/services';
   styleUrls: ['./header.component.scss'],
   templateUrl: './header.component.html',
 })
-export class HeaderComponent implements OnInit, OnDestroy {
+export class HeaderComponent implements OnInit, OnDestroy, AfterContentInit {
 
   user: any;
   userName$: Observable<string>;
@@ -26,7 +26,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.userName$ = this.roleService.getFirstName();
   }
 
-  ngOnDestroy() {}
+  ngAfterContentInit(): void {
+    this.sidebarService.toggle(true, 'menu-sidebar');
+  }
+
+  ngOnDestroy() { }
 
   toggleSidebar(): boolean {
     this.sidebarService.toggle(true, 'menu-sidebar');

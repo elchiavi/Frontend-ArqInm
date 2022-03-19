@@ -1,137 +1,233 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-12">
-            <nb-card accent="info" size="large">
-                <nb-card-header>
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <h6 class="title" *ngIf="!new">Editar Proyecto</h6>
-                            <h6 class="title" *ngIf="new">Nuevo Proyecto</h6>
-                        </div>
-                        <div class="col-sm-6 text-sm-right">
-                            <button size="small" nbButton hero outline shape="semi-round"
-                                [routerLink]="['/pages/projects']">
-                                <nb-icon [icon]="'arrow-back-outline'" pack="eva"></nb-icon>
-                                <span class="d-none d-md-block text-dark">Regresar</span>
-                            </button>
-                        </div>
-                    </div>
-                </nb-card-header>
+            <div class="row mb-3">
+                <div class="col-sm-6">
+                    <h6 class="title" *ngIf="!new">Editar Proyecto</h6>
+                    <h6 class="title" *ngIf="new">Nuevo Proyecto</h6>
+                </div>
+                <div class="col-sm-6 text-sm-right">
+                    <button size="small" nbButton hero outline shape="semi-round"
+                        [routerLink]="['/pages/projects']">
+                        <nb-icon [icon]="'arrow-back-outline'" pack="eva"></nb-icon>
+                        <span class="d-none d-md-block text-dark">Regresar</span>
+                    </button>
+                </div>
+            </div>
+            <nb-card accent="info" size="giant">
                 <nb-card-body>
                     <form class="row" [formGroup]="form">
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="inputTypeProject">Tipo de Proyecto</label>
-                                <select class="form-control" formControlName="typeProject">
-                                    <option value="Construcción de Obra">Construcción de Obra</option>
-                                    <option value="Proyecto de Obra">Proyecto de Obra</option>
-                                </select>
-                                <ngx-error-field [field]="form.get('typeProject')"></ngx-error-field>
+                            <div class="col-12">
+                                <nb-card>
+                                    <nb-card-body>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="inputTypeProject">Tipo de Proyecto</label>
+                                                        <select class="form-control" formControlName="typeProject">
+                                                            <option value="Construcción de Obra">Construcción de Obra</option>
+                                                            <option value="Proyecto de Obra">Proyecto de Obra</option>
+                                                        </select>
+                                                        <ngx-error-field [field]="form.get('typeProject')"></ngx-error-field>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="inputType">Tipo Proyecto Detallado</label>
+                                                        <select class="form-control" formControlName="type">
+                                                            <option value="Ampliación">Ampliación</option>
+                                                            <option value="Ampliación y refacción">Ampliación y refacción</option>
+                                                            <option value="Nuevo">Nuevo</option>
+                                                            <option value="Refacción">Refacción</option>
+                                                        </select>
+                                                        <ngx-error-field [field]="form.get('type')"></ngx-error-field>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="inputName">Nombre</label>
+                                                        <input type="text" id="inputName" class="form-control"
+                                                            [class.is-invalid]="formHelperService.canShowFieldErrors(form.get('name'))"
+                                                            formControlName="name">
+                                                        <ngx-error-field [field]="form.get('name')"></ngx-error-field>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="inputSelectedClient">Cliente</label>
+                                                        <ng-select class="custom" id="selectedClient" name="client"
+                                                        [items]="clients$ | async" formControlName="client" appendTo="body" [multiple]="false"
+                                                        [hideSelected]="true" bindLabel="fullName" bindValue="_id" [compareWith]="compareFn"
+                                                        [class.is-invalid]="formHelperService.canShowFieldErrors(form.get('client'))">
+                                                    </ng-select>
+                                                        <ngx-error-field [field]="form.get('client')"></ngx-error-field>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                    </nb-card-body>
+                                </nb-card>
                             </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="inputType">Tipo Proyecto Detallado</label>
-                                <select class="form-control" formControlName="type">
-                                    <option value="Ampliación">Ampliación</option>
-                                    <option value="Ampliación y refacción">Ampliación y refacción</option>
-                                    <option value="Nuevo">Nuevo</option>
-                                    <option value="Refacción">Refacción</option>
-                                </select>
-                                <ngx-error-field [field]="form.get('type')"></ngx-error-field>
+                            
+                            <div class="col-6">
+                                <nb-card>
+                                    <nb-card-body>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="inputStartDate">Fecha Inicio</label>
+                                                    <input type="text" id="inputStartDate" class="form-control" ngbDatepicker
+                                                        #startDate="ngbDatepicker" placement="bottom" firstDayOfWeek="7" outsideDays="hidden"
+                                                        [class.is-invalid]="formHelperService.canShowFieldErrors(form.get('startDate'))"
+                                                        formControlName="startDate" (click)="startDate.toggle()"
+                                                        [minDate]="{year: year, month: month, day: day }">
+                                                    <ngx-error-field [field]="form.get('startDate')"></ngx-error-field>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="inputTermDays">Plazo de Obra (en días)</label>
+                                                    <input type="number" id="inputTermDays" class="form-control" [min]="1"
+                                                        [class.is-invalid]="formHelperService.canShowFieldErrors(form.get('termDays'))"
+                                                        formControlName="termDays">
+                                                    <ngx-error-field [field]="form.get('termDays')"></ngx-error-field>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="inputCadastral">Datos Catastrales</label>
+                                                    <input type="text" id="inputCadastral" class="form-control"
+                                                        [class.is-invalid]="formHelperService.canShowFieldErrors(form.get('cadastral'))"
+                                                        formControlName="cadastral">
+                                                    <ngx-error-field [field]="form.get('cadastral')"></ngx-error-field>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="inputLinkDrive">Link Drive</label>
+                                                    <input type="text" id="inputLinkDrive" class="form-control"
+                                                        [class.is-invalid]="formHelperService.canShowFieldErrors(form.get('linkDrive'))"
+                                                        formControlName="linkDrive">
+                                                    <ngx-error-field [field]="form.get('linkDrive')"></ngx-error-field>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="inputStreet">Dirección</label>
+                                                    <input type="text" id="inputStreet" class="form-control"
+                                                        [class.is-invalid]="formHelperService.canShowFieldErrors(form.get('street'))"
+                                                        formControlName="street">
+                                                    <ngx-error-field [field]="form.get('street')"></ngx-error-field>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="inputStreetNumber">Número</label>
+                                                    <input type="number" id="inputStreetNumber" class="form-control" [min]="1"
+                                                        [class.is-invalid]="formHelperService.canShowFieldErrors(form.get('streetNumber'))"
+                                                        formControlName="streetNumber">
+                                                    <ngx-error-field [field]="form.get('streetNumber')"></ngx-error-field>
+                                                </div>
+                                            </div>
+                                        </div>                                
+                                    </nb-card-body>
+                                </nb-card>
+
                             </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="inputName">Nombre</label>
-                                <input type="text" id="inputName" class="form-control"
-                                    [class.is-invalid]="formHelperService.canShowFieldErrors(form.get('name'))"
-                                    formControlName="name">
-                                <ngx-error-field [field]="form.get('name')"></ngx-error-field>
+
+                            <div class="col-6">
+                                <nb-card>
+                                    <nb-card-body>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="inputLengthArea">Largo (Metros)</label>
+                                                    <input type="number" id="inputLengthArea" class="form-control" [min]="1"
+                                                        [class.is-invalid]="formHelperService.canShowFieldErrors(form.get('lengthArea'))"
+                                                        formControlName="lengthArea">
+                                                    <ngx-error-field [field]="form.get('lengthArea')"></ngx-error-field>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="inputWidthArea">Ancho (Metros)</label>
+                                                    <input type="number" id="inputWidthArea" class="form-control" [min]="1"
+                                                        [class.is-invalid]="formHelperService.canShowFieldErrors(form.get('widthArea'))"
+                                                        formControlName="widthArea">
+                                                    <ngx-error-field [field]="form.get('widthArea')"></ngx-error-field>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label for="inputTotalArea">M² Totales</label>
+                                                    <input type="number" id="inputTotalArea" class="form-control" [min]="1"
+                                                        [class.is-invalid]="formHelperService.canShowFieldErrors(form.get('totalArea'))"
+                                                        formControlName="totalArea">
+                                                    <ngx-error-field [field]="form.get('totalArea')"></ngx-error-field>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label for="inputCoveredArea">M² Cubiertos</label>
+                                                    <input type="number" id="inputCoveredArea" class="form-control" [min]="1"
+                                                        [class.is-invalid]="formHelperService.canShowFieldErrors(form.get('coveredArea'))"
+                                                        formControlName="coveredArea">
+                                                    <ngx-error-field [field]="form.get('coveredArea')"></ngx-error-field>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label for="inputSemiCoveredArea">M² Semi Cubiertos</label>
+                                                    <input type="number" id="inputSemiCoveredArea" class="form-control" [min]="1"
+                                                        [class.is-invalid]="formHelperService.canShowFieldErrors(form.get('semiCoveredArea'))"
+                                                        formControlName="semiCoveredArea">
+                                                    <ngx-error-field [field]="form.get('semiCoveredArea')"></ngx-error-field>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label for="inputUncoveredArea">M² Sin cubrir</label>
+                                                    <input type="number" id="inputUncoveredArea" class="form-control" [min]="1"
+                                                        [class.is-invalid]="formHelperService.canShowFieldErrors(form.get('uncoveredArea'))"
+                                                        formControlName="uncoveredArea">
+                                                    <ngx-error-field [field]="form.get('uncoveredArea')"></ngx-error-field>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label for="inputWaterMirror">M² Espejo de Agua</label>
+                                                    <input type="number" id="inputWaterMirror" class="form-control" [min]="1"
+                                                        [class.is-invalid]="formHelperService.canShowFieldErrors(form.get('waterMirror'))"
+                                                        formControlName="waterMirror">
+                                                    <ngx-error-field [field]="form.get('waterMirror')"></ngx-error-field>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label for="inputSidewalk">M² Vereda</label>
+                                                    <input type="number" id="inputSidewalk" class="form-control" [min]="1"
+                                                        [class.is-invalid]="formHelperService.canShowFieldErrors(form.get('sidewalk'))"
+                                                        formControlName="sidewalk">
+                                                    <ngx-error-field [field]="form.get('sidewalk')"></ngx-error-field>
+                                                </div>
+                                            </div>
+                                        </div>                                
+                                    </nb-card-body>
+                                </nb-card>
+
                             </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="inputCadastral">Datos Catastrales</label>
-                                <input type="text" id="inputCadastral" class="form-control"
-                                    [class.is-invalid]="formHelperService.canShowFieldErrors(form.get('cadastral'))"
-                                    formControlName="cadastral">
-                                <ngx-error-field [field]="form.get('cadastral')"></ngx-error-field>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="inputStreet">Dirección</label>
-                                <input type="text" id="inputStreet" class="form-control"
-                                    [class.is-invalid]="formHelperService.canShowFieldErrors(form.get('street'))"
-                                    formControlName="street">
-                                <ngx-error-field [field]="form.get('street')"></ngx-error-field>
-                            </div>
-                        </div>
-                        <div class="col-sm-4">
-                            <div class="form-group">
-                                <label for="inputStreetNumber">Número</label>
-                                <input type="number" id="inputStreetNumber" class="form-control" [min]="1"
-                                    [class.is-invalid]="formHelperService.canShowFieldErrors(form.get('streetNumber'))"
-                                    formControlName="streetNumber">
-                                <ngx-error-field [field]="form.get('streetNumber')"></ngx-error-field>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="inputLinkDrive">Link Drive</label>
-                                <input type="text" id="inputLinkDrive" class="form-control"
-                                    [class.is-invalid]="formHelperService.canShowFieldErrors(form.get('linkDrive'))"
-                                    formControlName="linkDrive">
-                                <ngx-error-field [field]="form.get('linkDrive')"></ngx-error-field>
-                            </div>
-                        </div>
-                        <div class="col-sm-4">
-                            <div class="form-group">
-                                <label for="inputStartDate">Fecha Inicio</label>
-                                <input type="text" id="inputStartDate" class="form-control" ngbDatepicker
-                                    #startDate="ngbDatepicker"
-                                    [class.is-invalid]="formHelperService.canShowFieldErrors(form.get('startDate'))"
-                                    formControlName="startDate" (click)="startDate.toggle()" placeholder="Fecha"
-                                    [minDate]="{year: year, month: month, day: day }">
-                                <ngx-error-field [field]="form.get('startDate')"></ngx-error-field>
-                            </div>
-                        </div>
-                        <div class="col-sm-4">
-                            <div class="form-group">
-                                <label for="inputTermDays">Plazo de Obra (en días)</label>
-                                <input type="number" id="inputTermDays" class="form-control" [min]="1"
-                                    [class.is-invalid]="formHelperService.canShowFieldErrors(form.get('termDays'))"
-                                    formControlName="termDays">
-                                <ngx-error-field [field]="form.get('termDays')"></ngx-error-field>
-                            </div>
-                        </div>
-                        <div class="col-sm-4">
-                            <div class="form-group">
-                                <label for="inputSelectedClient">Cliente</label>
-                                <ng-select class="custom" id="selectedClient" name="client"
-                                [items]="clients$ | async" formControlName="client" appendTo="body" [multiple]="false"
-                                [hideSelected]="true" bindLabel="fullName" bindValue="_id" [compareWith]="compareFn"
-                                [class.is-invalid]="formHelperService.canShowFieldErrors(form.get('client'))">
-                              </ng-select>
-                                <ngx-error-field [field]="form.get('client')"></ngx-error-field>
-                            </div>
-                        </div>
                     </form>
                 </nb-card-body>
-                <nb-card-footer>
-                    <div class="row">
-                        <div class="col-12 text-right">
-                            <button nbButton hero status="danger" shape="semi-round" [routerLink]="['/pages/projects']">
-                                Cancelar
-                            </button>
-                            <button class="ml-2" nbButton hero status="primary" shape="semi-round" (click)="save()">
-                                Aceptar
-                            </button>
-                        </div>
-                    </div>
-                </nb-card-footer>
             </nb-card>
+            <div class="row mb-2 ">
+                <div class="col-12 text-right">
+                    <button nbButton hero status="danger" shape="semi-round" [routerLink]="['/pages/projects']">
+                        Cancelar
+                    </button>
+                    <button class="ml-2" nbButton hero status="primary" shape="semi-round" (click)="save()">
+                        Aceptar
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
 </div>

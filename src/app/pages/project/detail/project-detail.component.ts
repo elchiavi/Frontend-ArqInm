@@ -77,7 +77,7 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
 
   createForm() {
     this.form = this.formBuilder.group({
-      id: [],
+      _id: [],
       name: ['', Validators.required],
       client: [null, Validators.required],
       linkDrive: [null, Validators.required],
@@ -89,6 +89,8 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
       typeProject: [null, Validators.required],
       type: [null, Validators.required],
       totalArea: [],
+      lengthArea: [],
+      widthArea: [],
       coveredArea: [],
       semiCoveredArea: [],
       uncoveredArea: [],
