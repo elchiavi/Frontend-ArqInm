@@ -81,10 +81,10 @@
     </nb-card>
 
     <nb-card *ngIf="projectPage?.totalPages > 1">
-        <nb-card-body class="col-12 pb-0">
+        <nb-card-footer class="col-12 pb-0">
             <ngb-pagination class="d-flex justify-content-center" [collectionSize]="projectPage?.totalDocs"
                 [page]="projectPage?.limit" [pageSize]="projectsService.pageSize" (pageChange)="pageChange($event)"
                 [maxSize]="5" [rotate]="true" [boundaryLinks]="true">
             </ngb-pagination>
-        </nb-card-body>
+        </nb-card-footer>
     </nb-card>

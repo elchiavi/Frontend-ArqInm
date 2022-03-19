@@ -13,6 +13,7 @@ import { SortEvent, NgxSortableHeaderDirective, Sortable } from '../../../@theme
 @Component({
   selector: 'ngx-user-list',
   templateUrl: './user-list.component.html',
+  styleUrls: ['./user-list.component.scss'],
 })
 @UnsubscribeOnDestroy()
 export class UserListComponent implements OnInit, OnDestroy , Sortable {

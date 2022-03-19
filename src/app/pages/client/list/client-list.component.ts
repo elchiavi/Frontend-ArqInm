@@ -11,6 +11,7 @@ import { ClientsService } from '../../../@core/services';
 @Component({
   selector: 'ngx-client-list',
   templateUrl: './client-list.component.html',
+  styleUrls: ['./client-list.component.scss'],
 })
 @UnsubscribeOnDestroy()
 export class ClientListComponent implements OnInit, OnDestroy, Sortable {

@@ -11,6 +11,7 @@ import { SortEvent, NgxSortableHeaderDirective, Sortable } from '../../../@theme
 @Component({
     selector: 'ngx-project-list',
     templateUrl: './project-list.component.html',
+    styleUrls: ['./project-list.component.scss'],
 })
 @UnsubscribeOnDestroy()
 export class ProjectListComponent implements OnInit, OnDestroy, Sortable {

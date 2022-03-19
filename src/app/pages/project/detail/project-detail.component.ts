@@ -13,6 +13,7 @@ import { SharedFormValidation } from '../../../@theme/utils/form.validation';
 @Component({
   selector: 'ngx-project-detail',
   templateUrl: './project-detail.component.html',
+  styleUrls: ['./project-detail.component.scss'],
 })
 @UnsubscribeOnDestroy()
 export class ProjectDetailComponent implements OnInit, OnDestroy {
@@ -102,6 +103,7 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
   mapData() {
     if (!this.new) {
       this.form.reset(this.project);
+      this.form.patchValue({['client']: this.project.client._id});
     }
   }
 
