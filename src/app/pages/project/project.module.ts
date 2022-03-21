@@ -4,6 +4,7 @@ import { ProjectListComponent } from './list/project-list.component';
 import { ProjectDetailComponent } from './detail/project-detail.component';
 import { ProjectComponent } from './project.component';
 import { ProjectRoutingModule } from './project-routing.module';
+import { BudgetComponent } from './budget/budget.component';
 
 @NgModule({
   imports: [
@@ -14,6 +15,7 @@ import { ProjectRoutingModule } from './project-routing.module';
       ProjectComponent,
       ProjectListComponent,
       ProjectDetailComponent,
+      BudgetComponent,
   ],
 })
 export class ProjectModule { }
