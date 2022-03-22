@@ -5,9 +5,16 @@ export interface Project extends BaseEntity {
     name: string;
     client: Client;
     linkDrive: string;
-    cadastral: string;
+    departure: string;
+    circ: string;
+    section: string;
+    apple: string;
+    plot: string;
     street: string;
     streetNumber: number;
+    floor?: string;
+    province: string;
+    city: string;
     startDate: Date;
     termDays: number;
     typeProject: string;
