@@ -1,1 +1,147 @@
-<h5>{{this.budget[0].project.client.name}}</h5>
+<div class="section-header">
+    <div class="action">
+        <div class="row mb-4">
+            <div class="col-sm-6 mb-3">
+                <h4>Presupuesto {{project.name}}</h4>
+            </div>
+            <div class="col-sm-6 mb-3 text-sm-right">
+                <button size="small" nbButton hero outline shape="semi-round" [routerLink]="['/pages/projects']">
+                    <nb-icon [icon]="'arrow-back'" pack="eva"></nb-icon>
+                    <span class="d-none d-md-block text-dark">Regresar</span>
+                </button>
+            </div>
+
+            <div class="col-sm-6">
+                <nb-card status="primary">
+                    <nb-card-header>
+                        <div class="col-sm-6">
+                            <span><strong>Cliente</strong></span>
+                        </div>
+                    </nb-card-header>
+                    <nb-card-body>
+                        <div class="col-sm-12">
+                            <span>Nombre y Apellido: {{project.client.fullName}}</span><br>
+                            <span>Razón Social: {{project.client.businessName}}</span><br>
+                            <span>Celular: {{project.client.phone}}</span><br>
+                            <span>E-mail: {{project.client.email}}</span>
+                        </div>
+                    </nb-card-body>
+                </nb-card>
+            </div>
+            <div class="col-sm-6">
+                <nb-card status="primary">
+                    <nb-card-header>
+                        <div class="col-sm-6">
+                            <span><strong>Proyecto</strong></span>
+                        </div>
+                    </nb-card-header>
+                    <nb-card-body class="card-border-oval">
+                        <div class="col-sm-12">
+                            <span>{{project.typeProject}} - {{project.type}}</span><br>
+                            <span>Ubicación: {{project.province}} - {{project.city}}</span><br>
+                            <span>Inicio de Obra: {{project.startDate | date: 'dd/MM/yyyy'}}</span><br>
+                            <span>Plazo de Obra: {{project.termDays}} días</span>
+                        </div>
+                    </nb-card-body>
+                </nb-card>
+            </div>
+
+        </div>
+    </div>
+
+    <nb-tabset fullWidth>
+        <nb-tab tabTitle="Presupuesto Profesionales">
+            <form class="row" [formGroup]="form">
+                <div class="col-12">
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label for="inputSelected">Profesionales</label>
+                                <select class="form-control" formControlName="professional"
+                                    [class.is-invalid]="formHelperService.canShowFieldErrors(form.get('professional'))">
+                                    <option *ngFor="let professional of professional$ | async"
+                                        [value]="professional._id">
+                                        {{professional.name}}</option>
+                                </select>
+                                <ngx-error-field [field]="form.get('professional')"></ngx-error-field>
+                            </div>
+                        </div>
+                        <div class="col-sm-2">
+                            <div class="form-group">
+                                <label for="inputCost">Valor (en pesos $)</label>
+                                <input type="number" id="inputCost" class="form-control" [min]="1"
+                                    [class.is-invalid]="formHelperService.canShowFieldErrors(form.get('cost'))"
+                                    formControlName="cost">
+                                <ngx-error-field [field]="form.get('cost')"></ngx-error-field>
+                            </div>
+                        </div>
+                        <div class="col-sm-2 mt-4">
+                            <button nbButton hero status="primary" shape="semi-round" (click)="save()">
+                                <nb-icon [icon]="'save-outline'" pack="eva"></nb-icon>
+                                <span class="d-none d-md-block">Aceptar</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <nb-card size="medium">
+                <nb-card-header>
+                    <div class="row text-center">
+                        <div class="col-md-4">
+                            Profesional
+                        </div>
+                        <div class="col-md-4">
+                            Costo
+                        </div>
+                        <div class="col-md-4">
+                            Acciones
+                        </div>
+                    </div>
+                </nb-card-header>
+                <nb-list>
+                    <nb-list-item class="border-bottom border-info"
+                        *ngFor="let professionalBudget of professionalBudgetPage?.docs; let i = index;" class="mb-1">
+                        <div class="w-100 text-center">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    {{professionalBudget.professional.name}}
+                                </div>
+                                <div class="col-md-4">
+                                    $ {{professionalBudget.cost}}
+                                </div>
+                                <div class="col-md-4">
+                                    <button nbButton hero status="danger" shape="semi-round"
+                                    (click)="deleteProfessionalBudget(professionalBudget)">
+                                      <nb-icon [icon]="'trash-2-outline'" pack="eva"></nb-icon>
+                                      Borrar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </nb-list-item>
+                </nb-list>
+            </nb-card>
+        </nb-tab>
+        <nb-tab tabTitle="Presupuesto Soporte de Obra"></nb-tab>
+        <nb-tab tabTitle="Presupuesto Mano de Obra"></nb-tab>
+        <nb-tab tabTitle="Presupuesto Materiales Gruesos"></nb-tab>
+        <nb-tab tabTitle="Presupuesto Instalaciones"></nb-tab>
+        <nb-tab tabTitle="Presupuesto Materiales de Terminación"></nb-tab>
+    </nb-tabset>
+
+    <div class="col-sm-12">
+        <nb-card status="primary">
+            <nb-card-header>
+                <div class="col-sm-12">
+                    <span><strong>Valores detallados</strong></span>
+                </div>
+            </nb-card-header>
+            <nb-card-body>
+                <div class="col-sm-12">
+                    <span>Total: $ {{budget[0].totalCost}}</span><br>
+                </div>
+            </nb-card-body>
+        </nb-card>
+    </div>
+
+</div>

@@ -3,6 +3,7 @@ import { Professional } from './professional.model';
 
 export interface ProfessionalBudget extends BaseEntity {
 
-    professional: Professional[];
+    professional: Professional;
+    budget: string;
     cost: number;
 }

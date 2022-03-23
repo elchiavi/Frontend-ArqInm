@@ -58,7 +58,8 @@ export abstract class BaseService<T extends BaseEntity> {
     return this.httpClient.patch(this.fullPath, body);
   }
 
-  getPage(pageNumber?: number, filter?: string, headers?: HttpHeaders, parameters?: HttpParams): Observable<Page<T>> {
+  getPage(pageNumber?: number, filter?: string, headers?: HttpHeaders,
+    parameters?: HttpParams, id?: string): Observable<Page<T>> {
     const page = pageNumber ? (pageNumber - 1) : this.initPage;
     const options = {
       params: new HttpParams().set('page', page.toString())
@@ -67,6 +68,9 @@ export abstract class BaseService<T extends BaseEntity> {
     };
     if (filter) {
       options.params = options.params.set('filter', filter);
+    }
+    if (id) {
+      options.params = options.params.set('id', id);
     }
     if (parameters) {
       parameters.keys().forEach((key: string) => {

@@ -5,11 +5,13 @@ import { ProjectDetailComponent } from './detail/project-detail.component';
 import { ProjectComponent } from './project.component';
 import { ProjectRoutingModule } from './project-routing.module';
 import { BudgetComponent } from './budget/budget.component';
+import { NbTabsetModule } from '@nebular/theme';
 
 @NgModule({
   imports: [
     ThemeModule,
     ProjectRoutingModule,
+    NbTabsetModule,
   ],
   declarations: [
       ProjectComponent,
