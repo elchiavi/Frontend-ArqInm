@@ -10,11 +10,11 @@ export const MENU_ITEMS: NbMenuItem[] = [
     title: 'Proyectos',
     icon: 'home',
     link: '/pages/projects',
+    home: true,
   },
   {
     title: 'Usuarios',
     icon: 'person',
     link: '/pages/users',
-    home: true,
   },
 ];

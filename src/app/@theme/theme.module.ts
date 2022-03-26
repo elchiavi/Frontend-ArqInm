@@ -27,6 +27,7 @@ import { ClipboardModule } from '@angular/cdk/clipboard';
 import { ModalConfirmComponent } from './components/modal-confirm/modal-confirm.component';
 import { ErrorBlockComponent } from './components/error-block/error-block.component';
 import { BudgetProfessionalComponent } from './components/budget-professionals/budget-professionals.component';
+import { BudgetConstructionSupportComponent } from './components/budget-construction-support/budget-construction-support.component';
 
 
 const ANGULAR_MODULES = [CommonModule, FormsModule, RouterModule, ReactiveFormsModule, ClipboardModule ];
@@ -69,6 +70,7 @@ const COMPONENTS = [
   ModalConfirmComponent,
   ErrorBlockComponent,
   BudgetProfessionalComponent,
+  BudgetConstructionSupportComponent,
 ];
 
 const DIRECTIVE = [

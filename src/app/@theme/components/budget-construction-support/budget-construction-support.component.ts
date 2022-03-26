@@ -2,31 +2,30 @@ import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { UnsubscribeOnDestroy, untilComponentDestroy } from '../../../@core/decorators/unsubscribe/on-destroy';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Budget, Page, Professional } from '../../../@core/models';
+import { Budget, ConstructionSupport, Page, ConstructionSupportBudget } from '../../../@core/models';
 import { NbDialogService } from '@nebular/theme';
 import { Action, ToastService } from '../../../@theme/utils/toast.service';
-import { ProfessionalBudgetsService, ProfessionalsService } from '../../../@core/services';
+import { ConstructionSupportBudgetsService, ConstructionSupportsService } from '../../../@core/services';
 import { Observable } from 'rxjs';
 import { SharedFormService } from '../../../@theme/utils/form.service';
-import { ProfessionalBudget } from '../../../@core/models/professional-budget.model';
-import { ModalConfirmComponent } from '../../../@theme/components';
+import { ModalConfirmComponent } from '../modal-confirm/modal-confirm.component';
 
 @Component({
-  selector: 'ngx-budget-professionals',
-  templateUrl: './budget-professionals.component.html',
+  selector: 'ngx-budget-construction-support',
+  templateUrl: './budget-construction-support.component.html',
 })
 @UnsubscribeOnDestroy()
-export class BudgetProfessionalComponent implements OnInit, OnDestroy {
+export class BudgetConstructionSupportComponent implements OnInit, OnDestroy {
 
   form: FormGroup;
   @Input() budget: Budget;
-  professional$: Observable<Professional[]>;
-  professionalBudgetPage: Page<ProfessionalBudget>;
+  constructionSupport$: Observable<ConstructionSupport[]>;
+  constructionSupportBudgetPage: Page<ConstructionSupportBudget>;
 
 
   constructor(public toastService: ToastService,
-    public professionalsService: ProfessionalsService,
-    public professionalBudgetsService: ProfessionalBudgetsService,
+    public constructionSupportsService: ConstructionSupportsService,
+    public constructionSupportBudgetsService: ConstructionSupportBudgetsService,
     public formBuilder: FormBuilder,
     public activatedRoute: ActivatedRoute,
     public formHelperService: SharedFormService,
@@ -40,26 +39,26 @@ export class BudgetProfessionalComponent implements OnInit, OnDestroy {
 
   resetForm() {
     this.formHelperService.cleanAllFields(this.form);
-    this.form.patchValue({ ['professional']: '' });
+    this.form.patchValue({ ['constructionSupport']: '' });
     this.form.patchValue({ ['cost']: '' });
   }
 
   loadPage() {
     this.createForm();
-    this.professional$ = this.professionalsService.listProfessionals();
+    this.constructionSupport$ = this.constructionSupportsService.listConstructionSupports();
   }
 
   pageChangeProfessionalBudget(pageNumber?: number, filter?: string) {
     const id = this.budget[0]._id;
-    this.professionalBudgetsService.getPage(pageNumber, filter, null, null, id).pipe(
-      untilComponentDestroy.apply(this)).subscribe((professionalBudgetPage: Page<ProfessionalBudget>) => {
-        this.professionalBudgetPage = professionalBudgetPage;
+    this.constructionSupportBudgetsService.getPage(pageNumber, filter, null, null, id).pipe(
+      untilComponentDestroy.apply(this)).subscribe((constructionSupportBudgetPage: Page<ConstructionSupportBudget>) => {
+        this.constructionSupportBudgetPage = constructionSupportBudgetPage;
       });
   }
 
   createForm() {
     this.form = this.formBuilder.group({
-      professional: ['', Validators.required],
+      constructionSupport: ['', Validators.required],
       cost: ['', Validators.required],
     });
   }
@@ -67,32 +66,32 @@ export class BudgetProfessionalComponent implements OnInit, OnDestroy {
   save() {
     this.formHelperService.touchAllFields(this.form);
     if (this.form.valid) {
-      const professionalBudget: ProfessionalBudget = this.form.getRawValue();
-      professionalBudget.budget = this.budget[0]._id;
-      this.professionalBudgetsService.add(professionalBudget).pipe(
+      const constructionSupportBudget: ConstructionSupportBudget = this.form.getRawValue();
+      constructionSupportBudget.budget = this.budget[0]._id;
+      this.constructionSupportBudgetsService.add(constructionSupportBudget).pipe(
         untilComponentDestroy.apply(this)).subscribe(() => {
           const action: Action = 'create';
-          this.toastService.showToast('El costo del profesional ', action, 'success');
-          this.budget[0].totalCost = this.budget[0].totalCost + professionalBudget.cost;
+          this.toastService.showToast('El costo de soporte de obra ', action, 'success');
+          this.budget[0].totalCost = this.budget[0].totalCost + constructionSupportBudget.cost;
           this.pageChangeProfessionalBudget();
           this.resetForm();
         }, () => {
-          this.toastService.error('El costo del profesional ingresado ya se encuentra registrado para el presupuesto.');
+          this.toastService.error('El costo de soporte de obra ingresado ya se encuentra registrado para el presupuesto.');
         });
     }
   }
 
-  deleteProfessionalBudget(professionalBudget: ProfessionalBudget) {
+  deleteConstructionSupportBudget(constructionSupportBudget: ConstructionSupportBudget) {
     const modalRef = this.dialogService.open(ModalConfirmComponent, { closeOnBackdropClick: false });
-    const description = `Se eliminará el registro ${professionalBudget.professional.name} .`;
+    const description = `Se eliminará el registro ${constructionSupportBudget.constructionSupport.name} .`;
     modalRef.componentRef.instance.title = 'Confirmación';
     modalRef.componentRef.instance.message = `${description} ¿Desea continuar?`;
     modalRef.onClose.subscribe((userResponse) => {
       if (userResponse) {
-        this.professionalBudgetsService.delete(professionalBudget._id).pipe(
+        this.constructionSupportBudgetsService.delete(constructionSupportBudget._id).pipe(
           untilComponentDestroy.apply(this)).subscribe(() => {
             this.toastService.success('Gasto eliminado');
-            this.budget[0].totalCost = this.budget[0].totalCost - professionalBudget.cost;
+            this.budget[0].totalCost = this.budget[0].totalCost - constructionSupportBudget.cost;
             this.pageChangeProfessionalBudget();
           }, () => {
             this.toastService.error('Error Inesperado');

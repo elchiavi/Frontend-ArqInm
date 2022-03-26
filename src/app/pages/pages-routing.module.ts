@@ -8,6 +8,15 @@ const routes: Routes = [{
   component: PagesComponent,
   children: [
     {
+      path: 'projects',
+      data: {
+        permission: 'view',
+        resource: 'projects',
+      },
+      loadChildren: () => import('./project/project.module')
+        .then(m => m.ProjectModule),
+    },
+    {
       path: 'users',
       data: {
         permission: 'view',
@@ -24,15 +33,6 @@ const routes: Routes = [{
       },
       loadChildren: () => import('./client/client.module')
         .then(m => m.ClientModule),
-    },
-    {
-      path: 'projects',
-      data: {
-        permission: 'view',
-        resource: 'projects',
-      },
-      loadChildren: () => import('./project/project.module')
-        .then(m => m.ProjectModule),
     },
     {
       path: 'miscellaneous',
