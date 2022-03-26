@@ -8,7 +8,6 @@ import { Client, Project } from '../../../@core/models';
 import { ClientsService, ProjectsService } from '../../../@core/services';
 import { Action, ToastService } from '../../../@theme/utils';
 import { SharedFormService } from '../../../@theme/utils/form.service';
-import { SharedFormValidation } from '../../../@theme/utils/form.validation';
 
 @Component({
   selector: 'ngx-project-detail',
@@ -104,6 +103,15 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
       uncoveredArea: [],
       waterMirror: [],
       sidewalk: [],
+      zone: [null, Validators.required],
+      fosPartOne: [null, Validators.required],
+      fosPartTwo: [null, Validators.required],
+      fotPartOne: [null, Validators.required],
+      fotPartTwo: [null, Validators.required],
+      dnmPartOne: [null, Validators.required],
+      dnmPartTwo: [null, Validators.required],
+      heightPartOne: [null, Validators.required],
+      heightPartTwo: [null, Validators.required],
     });
   }
 

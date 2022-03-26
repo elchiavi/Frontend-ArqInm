@@ -269,7 +269,7 @@
                                 </div>
                                 <div class="col-md-2">
                                     <div class="form-group">
-                                        <label for="inputUncoveredArea">M² Sin cubrir</label>
+                                        <label for="inputUncoveredArea">M² Descubier</label>
                                         <input type="number" id="inputUncoveredArea" class="form-control" [min]="1"
                                             [class.is-invalid]="formHelperService.canShowFieldErrors(form.get('uncoveredArea'))"
                                             formControlName="uncoveredArea">
@@ -297,6 +297,99 @@
                             </div>
                         </nb-card-body>
                     </nb-card>
+                </div>
+
+                <div class="col-12">
+                    <nb-card class="card-border-oval">
+                        <nb-card-header>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <h6>Indicadores</h6>
+                                </div>
+                            </div>
+                        </nb-card-header>
+                        <nb-card-body>
+                            <div class="row ml-1">
+                                <label for="inputZone">Zona</label>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <input type="text" id="inputZone" class="form-control"
+                                            [class.is-invalid]="formHelperService.canShowFieldErrors(form.get('zone'))"
+                                            formControlName="zone">
+                                        <ngx-error-field [field]="form.get('zone')"></ngx-error-field>
+                                    </div>
+                                </div>
+                                <label for="inputFosPartOne">Fos</label>
+                                <div class="col-md-1">
+                                    <div class="form-group">
+                                        <input type="number" id="inputFosPartOne" class="form-control" [min]="0"
+                                            [class.is-invalid]="formHelperService.canShowFieldErrors(form.get('fosPartOne'))"
+                                            formControlName="fosPartOne">
+                                        <ngx-error-field [field]="form.get('fosPartOne')"></ngx-error-field>
+                                    </div>
+                                </div>
+                                <div class="col-md-1">
+                                    <div class="form-group">
+                                        <input type="number" id="inputFosPartTwo" class="form-control" [min]="0"
+                                            [class.is-invalid]="formHelperService.canShowFieldErrors(form.get('fosPartTwo'))"
+                                            formControlName="fosPartTwo">
+                                        <ngx-error-field [field]="form.get('fosPartTwo')"></ngx-error-field>
+                                    </div>
+                                </div>
+                                <label for="inputFotPartTwo">Fot</label>
+                                <div class="col-md-1">
+                                    <div class="form-group">
+                                        <input type="number" id="inputFotPartOne" class="form-control" [min]="0"
+                                            [class.is-invalid]="formHelperService.canShowFieldErrors(form.get('fotPartOne'))"
+                                            formControlName="fotPartOne">
+                                        <ngx-error-field [field]="form.get('fotPartOne')"></ngx-error-field>
+                                    </div>
+                                </div>
+                                <div class="col-md-1">
+                                    <div class="form-group">
+                                        <input type="number" id="inputFotPartTwo" class="form-control" [min]="0"
+                                            [class.is-invalid]="formHelperService.canShowFieldErrors(form.get('fotPartTwo'))"
+                                            formControlName="fotPartTwo">
+                                        <ngx-error-field [field]="form.get('fotPartTwo')"></ngx-error-field>
+                                    </div>
+                                </div>
+                                <label for="inputDnmPartOne">Dnm</label>
+                                <div class="col-md-1">
+                                    <div class="form-group">
+                                        <input type="number" id="inputDnmPartOne" class="form-control" [min]="0"
+                                            [class.is-invalid]="formHelperService.canShowFieldErrors(form.get('dnmPartOne'))"
+                                            formControlName="dnmPartOne">
+                                        <ngx-error-field [field]="form.get('dnmPartOne')"></ngx-error-field>
+                                    </div>
+                                </div>
+                                <div class="col-md-1">
+                                    <div class="form-group">
+                                        <input type="number" id="inputDnmPartTwo" class="form-control" [min]="0"
+                                            [class.is-invalid]="formHelperService.canShowFieldErrors(form.get('dnmPartTwo'))"
+                                            formControlName="dnmPartTwo">
+                                        <ngx-error-field [field]="form.get('dnmPartTwo')"></ngx-error-field>
+                                    </div>
+                                </div>
+                                <label for="inputHeightPartOne">Altura</label>
+                                <div class="col-md-1">
+                                    <div class="form-group">                                        
+                                        <input type="number" id="inputHeightPartOne" class="form-control" [min]="0"
+                                            [class.is-invalid]="formHelperService.canShowFieldErrors(form.get('heightPartOne'))"
+                                            formControlName="heightPartOne">
+                                        <ngx-error-field [field]="form.get('heightPartOne')"></ngx-error-field>
+                                    </div>
+                                </div>
+                                <div class="col-md-1">
+                                    <div class="form-group">
+                                        <input type="number" id="inputHeightPartTwo" class="form-control" [min]="0"
+                                            [class.is-invalid]="formHelperService.canShowFieldErrors(form.get('heightPartTwo'))"
+                                            formControlName="heightPartTwo">
+                                        <ngx-error-field [field]="form.get('heightPartTwo')"></ngx-error-field>
+                                    </div>
+                                </div>                              
+                            </div>
+                        </nb-card-body>
+                    </nb-card>
                     <div class="row">
                         <div class="col-12 text-right">
                             <button class="mt-1" nbButton hero status="danger" shape="semi-round"
@@ -310,6 +403,7 @@
                         </div>
                     </div>
                 </div>
+                
             </form>
         </div>
     </div>
