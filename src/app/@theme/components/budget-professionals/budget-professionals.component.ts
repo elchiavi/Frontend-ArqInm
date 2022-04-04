@@ -72,12 +72,12 @@ export class BudgetProfessionalComponent implements OnInit, OnDestroy {
       this.professionalBudgetsService.add(professionalBudget).pipe(
         untilComponentDestroy.apply(this)).subscribe(() => {
           const action: Action = 'create';
-          this.toastService.showToast('El costo del profesional ', action, 'success');
+          this.toastService.showToast('El costo de profesional ', action, 'success');
           this.budget[0].totalCost = this.budget[0].totalCost + professionalBudget.cost;
           this.pageChangeProfessionalBudget();
           this.resetForm();
         }, () => {
-          this.toastService.error('El costo del profesional ingresado ya se encuentra registrado para el presupuesto.');
+          this.toastService.error('El costo de profesional ingresado ya se encuentra registrado para el presupuesto.');
         });
     }
   }
