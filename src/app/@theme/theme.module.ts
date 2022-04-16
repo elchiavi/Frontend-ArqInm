@@ -28,6 +28,7 @@ import { ModalConfirmComponent } from './components/modal-confirm/modal-confirm.
 import { ErrorBlockComponent } from './components/error-block/error-block.component';
 import { BudgetProfessionalComponent } from './components/budget-professionals/budget-professionals.component';
 import { BudgetConstructionSupportComponent } from './components/budget-construction-support/budget-construction-support.component';
+import { BudgetManPowerComponent } from './components/budget-man-power/budget-man-power.component';
 
 
 const ANGULAR_MODULES = [CommonModule, FormsModule, RouterModule, ReactiveFormsModule, ClipboardModule ];
@@ -71,6 +72,7 @@ const COMPONENTS = [
   ErrorBlockComponent,
   BudgetProfessionalComponent,
   BudgetConstructionSupportComponent,
+  BudgetManPowerComponent,
 ];
 
 const DIRECTIVE = [

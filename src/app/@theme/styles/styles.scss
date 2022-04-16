@@ -49,3 +49,7 @@
 
 /* Importing Bootstrap SCSS file. */
 @import '~bootstrap/scss/bootstrap';
+
+textarea {
+  resize: none;
+}

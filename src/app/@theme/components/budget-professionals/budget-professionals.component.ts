@@ -21,7 +21,7 @@ export class BudgetProfessionalComponent implements OnInit, OnDestroy {
   form: FormGroup;
   @Input() budget: Budget;
   professional$: Observable<Professional[]>;
-  professionalBudgetPage: Page<ProfessionalBudget>;
+  professionalBudgets: ProfessionalBudget;
 
 
   constructor(public toastService: ToastService,
@@ -35,7 +35,7 @@ export class BudgetProfessionalComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.loadPage();
-    this.pageChangeProfessionalBudget();
+    this.getProfessionalBudgets();
   }
 
   resetForm() {
@@ -49,11 +49,11 @@ export class BudgetProfessionalComponent implements OnInit, OnDestroy {
     this.professional$ = this.professionalsService.listProfessionals();
   }
 
-  pageChangeProfessionalBudget(pageNumber?: number, filter?: string) {
+  getProfessionalBudgets() {
     const id = this.budget[0]._id;
-    this.professionalBudgetsService.getPage(pageNumber, filter, null, null, id).pipe(
-      untilComponentDestroy.apply(this)).subscribe((professionalBudgetPage: Page<ProfessionalBudget>) => {
-        this.professionalBudgetPage = professionalBudgetPage;
+    this.professionalBudgetsService.getProfessionalBudgets(id).pipe(
+      untilComponentDestroy.apply(this)).subscribe((professionalBudgets: ProfessionalBudget) => {
+        this.professionalBudgets = professionalBudgets;
       });
   }
 
@@ -74,7 +74,7 @@ export class BudgetProfessionalComponent implements OnInit, OnDestroy {
           const action: Action = 'create';
           this.toastService.showToast('El costo de profesional ', action, 'success');
           this.budget[0].totalCost = this.budget[0].totalCost + professionalBudget.cost;
-          this.pageChangeProfessionalBudget();
+          this.getProfessionalBudgets();
           this.resetForm();
         }, () => {
           this.toastService.error('El costo de profesional ingresado ya se encuentra registrado para el presupuesto.');
@@ -93,9 +93,9 @@ export class BudgetProfessionalComponent implements OnInit, OnDestroy {
           untilComponentDestroy.apply(this)).subscribe(() => {
             this.toastService.success('Gasto eliminado');
             this.budget[0].totalCost = this.budget[0].totalCost - professionalBudget.cost;
-            this.pageChangeProfessionalBudget();
+            this.getProfessionalBudgets();
           }, () => {
-            this.toastService.error('Error Inesperado');
+            this.toastService.error('Error Inesperado, contacte a su administrador');
           });
       }
     });

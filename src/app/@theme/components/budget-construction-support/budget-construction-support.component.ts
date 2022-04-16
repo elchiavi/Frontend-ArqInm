@@ -20,7 +20,7 @@ export class BudgetConstructionSupportComponent implements OnInit, OnDestroy {
   form: FormGroup;
   @Input() budget: Budget;
   constructionSupport$: Observable<ConstructionSupport[]>;
-  constructionSupportBudgetPage: Page<ConstructionSupportBudget>;
+  constructionSupportBudgets: ConstructionSupportBudget;
 
 
   constructor(public toastService: ToastService,
@@ -34,7 +34,7 @@ export class BudgetConstructionSupportComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.loadPage();
-    this.pageChangeProfessionalBudget();
+    this.getConstructionSupportBudgets();
   }
 
   resetForm() {
@@ -48,11 +48,11 @@ export class BudgetConstructionSupportComponent implements OnInit, OnDestroy {
     this.constructionSupport$ = this.constructionSupportsService.listConstructionSupports();
   }
 
-  pageChangeProfessionalBudget(pageNumber?: number, filter?: string) {
+  getConstructionSupportBudgets() {
     const id = this.budget[0]._id;
-    this.constructionSupportBudgetsService.getPage(pageNumber, filter, null, null, id).pipe(
-      untilComponentDestroy.apply(this)).subscribe((constructionSupportBudgetPage: Page<ConstructionSupportBudget>) => {
-        this.constructionSupportBudgetPage = constructionSupportBudgetPage;
+    this.constructionSupportBudgetsService.getConstructionSupportsBudgets(id).pipe(
+      untilComponentDestroy.apply(this)).subscribe((constructionSupportBudgets: ConstructionSupportBudget) => {
+        this.constructionSupportBudgets = constructionSupportBudgets;
       });
   }
 
@@ -73,7 +73,7 @@ export class BudgetConstructionSupportComponent implements OnInit, OnDestroy {
           const action: Action = 'create';
           this.toastService.showToast('El costo de soporte de obra ', action, 'success');
           this.budget[0].totalCost = this.budget[0].totalCost + constructionSupportBudget.cost;
-          this.pageChangeProfessionalBudget();
+          this.getConstructionSupportBudgets();
           this.resetForm();
         }, () => {
           this.toastService.error('El costo de soporte de obra ingresado ya se encuentra registrado para el presupuesto.');
@@ -92,9 +92,9 @@ export class BudgetConstructionSupportComponent implements OnInit, OnDestroy {
           untilComponentDestroy.apply(this)).subscribe(() => {
             this.toastService.success('Gasto eliminado');
             this.budget[0].totalCost = this.budget[0].totalCost - constructionSupportBudget.cost;
-            this.pageChangeProfessionalBudget();
+            this.getConstructionSupportBudgets();
           }, () => {
-            this.toastService.error('Error Inesperado');
+            this.toastService.error('Error Inesperado, contacte a su administrador');
           });
       }
     });

@@ -8,3 +8,6 @@ export * from './professionals.service';
 export * from './professionalBudgets.service';
 export * from './constructionSupports.service';
 export * from './constructionSupportBudgets.service';
+export * from './manPowers.service';
+export * from './manPowerSkills.service';
+export * from './manPowerBudgets.service';

@@ -55,8 +55,7 @@
                                             #startDate="ngbDatepicker" placement="bottom" firstDayOfWeek="7"
                                             outsideDays="hidden" container="body"
                                             [class.is-invalid]="formHelperService.canShowFieldErrors(form.get('startDate'))"
-                                            formControlName="startDate" (click)="startDate.toggle()"
-                                            [minDate]="{year: year, month: month, day: day }">
+                                            formControlName="startDate" (click)="startDate.toggle()">
                                         <ngx-error-field [field]="form.get('startDate')"></ngx-error-field>
                                     </div>
                                 </div>
