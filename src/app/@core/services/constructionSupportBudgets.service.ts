@@ -14,9 +14,13 @@ export class ConstructionSupportBudgetsService extends BaseService<ConstructionS
         super('constructionSupportsBudgets', httpClient);
     }
 
-    getConstructionSupportsBudgets(budgetId: string): Observable<ConstructionSupportBudget[]> {
+    getConstructionSupportsBudgets(budgetId: string, filter?: string): Observable<ConstructionSupportBudget[]> {
         let params: HttpParams;
-          params = new HttpParams().set('id', budgetId);
-        return this.httpClient.get<ConstructionSupportBudget[]>(`${this.fullPath}`, {params});
+        if (filter) {
+            params = new HttpParams().set('id', budgetId).set('filter', filter);
+        } else {
+            params = new HttpParams().set('id', budgetId);
+        }
+        return this.httpClient.get<ConstructionSupportBudget[]>(`${this.fullPath}`, { params });
     }
 }

@@ -79,13 +79,20 @@
                                         <ngx-error-field [field]="form.get('name')"></ngx-error-field>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="inputTermDays">Plazo de Obra (en días)</label>
                                         <input type="number" id="inputTermDays" class="form-control" [min]="1"
                                             [class.is-invalid]="formHelperService.canShowFieldErrors(form.get('termDays'))"
                                             formControlName="termDays">
                                         <ngx-error-field [field]="form.get('termDays')"></ngx-error-field>
+                                    </div>
+                                </div>
+                                <div class="col-md-1">
+                                    <div class="form-group">
+                                        <label for="inputTermDays">Es adicional</label>
+                                        <nb-checkbox id="inputTermDays" class="form-control"
+                                            formControlName="additionalProject">Sí</nb-checkbox>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
@@ -268,7 +275,7 @@
                                 </div>
                                 <div class="col-md-2">
                                     <div class="form-group">
-                                        <label for="inputUncoveredArea">M² Descubier</label>
+                                        <label for="inputUncoveredArea">M² Descubiertos</label>
                                         <input type="number" id="inputUncoveredArea" class="form-control" [min]="1"
                                             [class.is-invalid]="formHelperService.canShowFieldErrors(form.get('uncoveredArea'))"
                                             formControlName="uncoveredArea">

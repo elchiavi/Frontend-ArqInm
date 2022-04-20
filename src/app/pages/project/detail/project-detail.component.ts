@@ -88,6 +88,7 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
       plot: [null, Validators.required],
       street: [null, Validators.required],
       streetNumber: [null, Validators.required],
+      additionalProject: [],
       floor: [''],
       province: ['', Validators.required],
       city: ['', Validators.required],

@@ -31,9 +31,9 @@
     <nb-card accent="info" class="mb-2 d-none d-md-block table-header">
         <nb-card-header class="form-inline">
             <div class="row col-12 text-center">
-                <span class="col-md-2 pointer" ngxSortable="surname" (sort)="onSort($event)"
+                <span class="col-md-2 pointer" ngxSortable="name" (sort)="onSort($event)"
                     [ngxEnabled]="projectPage?.docs.length !== 0">Nombre
-                    <i class="fas" [class]="projectsService.sortDirectionIcon('surname')"></i>
+                    <i class="fas" [class]="projectsService.sortDirectionIcon('name')"></i>
                 </span>
                 <span class="col-md-2">Cliente</span>
                 <span class="col-md-2">Tipo</span>
@@ -81,7 +81,7 @@
     <nb-card *ngIf="projectPage?.totalPages > 1">
         <nb-card-footer class="col-12 pb-0">
             <ngb-pagination class="d-flex justify-content-center" [collectionSize]="projectPage?.totalDocs"
-                [page]="projectPage?.limit" [pageSize]="projectsService.pageSize" (pageChange)="pageChange($event)"
+                [page]="projectPage?.limit - 1" [pageSize]="projectsService.pageSize" (pageChange)="pageChange($event)"
                 [maxSize]="5" [rotate]="true" [boundaryLinks]="true">
             </ngb-pagination>
         </nb-card-footer>

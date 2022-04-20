@@ -70,7 +70,7 @@
     <nb-card *ngIf="clientPage?.totalPages > 1">
       <nb-card-footer class="col-12 pb-0">
         <ngb-pagination class="d-flex justify-content-center" [collectionSize]="clientPage?.totalDocs"
-          [page]="clientPage?.limit" [pageSize]="clientsService.pageSize" (pageChange)="pageChange($event)" [maxSize]="5"
+          [page]="clientPage?.limit -1" [pageSize]="clientsService.pageSize" (pageChange)="pageChange($event)" [maxSize]="5"
           [rotate]="true" [boundaryLinks]="true">
         </ngb-pagination>
       </nb-card-footer>

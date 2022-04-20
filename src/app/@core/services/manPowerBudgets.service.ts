@@ -14,9 +14,13 @@ export class ManPowerBudgetsService extends BaseService<ManPowerBudget> {
         super('manPowersBudgets', httpClient);
     }
 
-    getManPowersBudgets(budgetId: string): Observable<ManPowerBudget[]> {
+    getManPowersBudgets(budgetId: string, filter?: string): Observable<ManPowerBudget[]> {
         let params: HttpParams;
-          params = new HttpParams().set('id', budgetId);
+        if (filter) {
+            params = new HttpParams().set('id', budgetId).set('filter', filter);
+        } else {
+            params = new HttpParams().set('id', budgetId);
+        }
         return this.httpClient.get<ManPowerBudget[]>(`${this.fullPath}`, {params});
     }
 

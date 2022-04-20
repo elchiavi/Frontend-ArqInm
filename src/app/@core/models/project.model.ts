@@ -8,6 +8,7 @@ export interface Project extends BaseEntity {
     departure: string;
     circ: string;
     section: string;
+    additionalProject: boolean;
     apple: string;
     plot: string;
     street: string;

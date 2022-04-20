@@ -1,13 +1,24 @@
+<div class="row">
+    <div class="col-8">
+        <nb-form-field class="row col mb-2">
+          <input nbInput fieldSize="large" #inputSearch (keyup.enter)="search(inputSearch.value)"
+            placeholder="Buscar por Mano de obra...">
+          <button nbSuffix nbButton ghost (click)="clear(inputSearch)">
+            <nb-icon [icon]="'close-outline'" pack="eva" [title]="'Borrar filtro'">
+            </nb-icon>
+          </button>
+        </nb-form-field>
+      </div>
+</div>
 <form class="row mt-2" [formGroup]="form">
     <div class="col-12">
         <div class="row">
-            <div class="col-sm-3">
+            <div class="col-sm-2">
                 <div class="form-group">
                     <label for="inputSelected">Mano de Obra</label>
                     <select class="form-control" formControlName="manPower" (change)="change()"
                         [class.is-invalid]="formHelperService.canShowFieldErrors(form.get('manPower'))">
-                        <option *ngFor="let manPower of manPower$ | async"
-                            [value]="manPower._id">
+                        <option *ngFor="let manPower of manPower$ | async" [value]="manPower._id">
                             {{manPower.name}}</option>
                     </select>
                     <ngx-error-field [field]="form.get('manPower')"></ngx-error-field>
@@ -18,8 +29,7 @@
                     <label for="inputSelected">Tareas</label>
                     <select class="form-control" formControlName="manPowerSkill"
                         [class.is-invalid]="formHelperService.canShowFieldErrors(form.get('manPowerSkill'))">
-                        <option *ngFor="let manPowerSkill of manPowerSkills$ | async"
-                            [value]="manPowerSkill._id">
+                        <option *ngFor="let manPowerSkill of manPowerSkills$ | async" [value]="manPowerSkill._id">
                             {{manPowerSkill.name}}</option>
                     </select>
                     <ngx-error-field [field]="form.get('manPowerSkill')"></ngx-error-field>
@@ -36,14 +46,14 @@
             </div>
             <div class="col-md-3">
                 <div class="form-group">
-                  <label for="description">Descripción</label>
-                  <textarea fullWidth id="description" class="form-control" rows="3"
-                    [class.is-invalid]="formHelperService.canShowFieldErrors(form.get('description'))"
-                    formControlName="description"></textarea>
-                  <ngx-error-field [field]="form.get('description')"></ngx-error-field>
+                    <label for="description">Descripción</label>
+                    <textarea fullWidth id="description" class="form-control" rows="3"
+                        [class.is-invalid]="formHelperService.canShowFieldErrors(form.get('description'))"
+                        formControlName="description"></textarea>
+                    <ngx-error-field [field]="form.get('description')"></ngx-error-field>
                 </div>
             </div>
-            <div class="col-sm-1 mt-4">
+            <div class="col-sm-1 mt-4 mb-2">
                 <button nbButton hero status="primary" shape="semi-round" (click)="save()">
                     <nb-icon [icon]="'save-outline'" pack="eva"></nb-icon>
                     <span class="d-none d-md-block">Aceptar</span>
@@ -52,9 +62,9 @@
         </div>
     </div>
 </form>
-<nb-card size="medium">
-    <nb-card-header>
-        <div class="row text-center">
+<nb-card accent="info" class="mb-2 d-none d-md-block table-header">
+    <nb-card-header class="form-inline">
+        <div class="row col-12 text-center">
             <div class="col-md-2">
                 Mano de Obra
             </div>
@@ -65,39 +75,36 @@
                 Descripción
             </div>
             <div class="col-md-2">
-                Costo
+                Valor
             </div>
             <div class="col-md-2">
                 Acciones
             </div>
         </div>
     </nb-card-header>
-    <nb-list>
-        <nb-list-item class="border-bottom border-info"
-            *ngFor="let manPowerBudget of manPowerBudgets; let i = index;" class="mb-1">
-            <div class="w-100 text-center">
-                <div class="row">
-                    <div class="col-md-2">
-                        {{manPowerBudget.manPower.name}}
-                    </div>
-                    <div class="col-md-3">
-                        {{manPowerBudget.manPowerSkill.name}}
-                    </div>
-                    <div class="col-md-3">
-                        {{manPowerBudget.description}}
-                    </div>
-                    <div class="col-md-2">
-                        $ {{manPowerBudget.cost}}
-                    </div>
-                    <div class="col-md-2">
-                        <button nbButton hero status="danger" shape="semi-round"
-                        (click)="deleteManPowerBudget(manPowerBudget)">
-                          <nb-icon [icon]="'trash-2-outline'" pack="eva"></nb-icon>
-                          Borrar
-                        </button>
-                    </div>
-                </div>
+</nb-card>
+<nb-card *ngFor="let manPowerBudget of manPowerBudgets; let i = index;" class="mb-1">
+    <nb-card-body class="form-inline text-center">
+        <div class="row col-12">
+            <div class="col-md-2">
+                {{manPowerBudget.manPower.name}}
             </div>
-        </nb-list-item>
-    </nb-list>
+            <div class="col-md-3">
+                {{manPowerBudget.manPowerSkill.name}}
+            </div>
+            <div class="col-md-3">
+                {{manPowerBudget.description}}
+            </div>
+            <div class="col-md-2">
+                $ {{manPowerBudget.cost}}
+            </div>
+            <div class="col-md-2">
+                <button nbButton hero status="danger" shape="semi-round"
+                    (click)="deleteManPowerBudget(manPowerBudget)">
+                    <nb-icon [icon]="'trash-2-outline'" pack="eva"></nb-icon>
+                    Borrar
+                </button>
+            </div>
+        </div>
+    </nb-card-body>
 </nb-card>

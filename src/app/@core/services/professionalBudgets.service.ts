@@ -14,9 +14,13 @@ export class ProfessionalBudgetsService extends BaseService<ProfessionalBudget> 
         super('professionalsBudgets', httpClient);
     }
 
-    getProfessionalBudgets(budgetId: string): Observable<ProfessionalBudget[]> {
+    getProfessionalBudgets(budgetId: string, filter?: string): Observable<ProfessionalBudget[]> {
         let params: HttpParams;
-          params = new HttpParams().set('id', budgetId);
+        if (filter) {
+            params = new HttpParams().set('id', budgetId).set('filter', filter);
+        } else {
+            params = new HttpParams().set('id', budgetId);
+        }
         return this.httpClient.get<ProfessionalBudget[]>(`${this.fullPath}`, {params});
     }
 }

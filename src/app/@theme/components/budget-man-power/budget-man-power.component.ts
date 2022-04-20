@@ -57,9 +57,9 @@ export class BudgetManPowerComponent implements OnInit, OnDestroy {
     this.manPowerSkills$ = this.manPowerSkillsService.listManPowerSkills(manPowerId);
   }
 
-  getManPowersBudgets() {
+  getManPowersBudgets(filter?: string) {
     const id = this.budget[0]._id;
-    this.manPowerBudgetsService.getManPowersBudgets(id).pipe(
+    this.manPowerBudgetsService.getManPowersBudgets(id, filter).pipe(
       untilComponentDestroy.apply(this)).subscribe((manPowerBudgets: ManPowerBudget) => {
         this.manPowerBudgets = manPowerBudgets;
       });
@@ -109,6 +109,24 @@ export class BudgetManPowerComponent implements OnInit, OnDestroy {
           });
       }
     });
+  }
+
+  search(filter: string) {
+    if (filter.length === 0) {
+      this.getManPowersBudgets();
+      return;
+    } else if (filter.trim().length === 0) {
+      return;
+    } else if (filter.trim().length > 2) {
+      this.getManPowersBudgets(filter);
+    }
+  }
+
+  clear(inputSearch: any) {
+    if (inputSearch.value !== '') {
+      inputSearch.value = '';
+      this.getManPowersBudgets();
+    }
   }
 
   ngOnDestroy() { }

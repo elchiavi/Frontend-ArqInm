@@ -49,9 +49,9 @@ export class BudgetProfessionalComponent implements OnInit, OnDestroy {
     this.professional$ = this.professionalsService.listProfessionals();
   }
 
-  getProfessionalBudgets() {
+  getProfessionalBudgets(filter?: string) {
     const id = this.budget[0]._id;
-    this.professionalBudgetsService.getProfessionalBudgets(id).pipe(
+    this.professionalBudgetsService.getProfessionalBudgets(id, filter).pipe(
       untilComponentDestroy.apply(this)).subscribe((professionalBudgets: ProfessionalBudget) => {
         this.professionalBudgets = professionalBudgets;
       });
@@ -99,6 +99,24 @@ export class BudgetProfessionalComponent implements OnInit, OnDestroy {
           });
       }
     });
+  }
+
+  search(filter: string) {
+    if (filter.length === 0) {
+      this.getProfessionalBudgets();
+      return;
+    } else if (filter.trim().length === 0) {
+      return;
+    } else if (filter.trim().length > 2) {
+      this.getProfessionalBudgets(filter);
+    }
+  }
+
+  clear(inputSearch: any) {
+    if (inputSearch.value !== '') {
+      inputSearch.value = '';
+      this.getProfessionalBudgets();
+    }
   }
 
   ngOnDestroy() { }

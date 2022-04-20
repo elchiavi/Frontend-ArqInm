@@ -48,9 +48,9 @@ export class BudgetConstructionSupportComponent implements OnInit, OnDestroy {
     this.constructionSupport$ = this.constructionSupportsService.listConstructionSupports();
   }
 
-  getConstructionSupportBudgets() {
+  getConstructionSupportBudgets(filter?: string) {
     const id = this.budget[0]._id;
-    this.constructionSupportBudgetsService.getConstructionSupportsBudgets(id).pipe(
+    this.constructionSupportBudgetsService.getConstructionSupportsBudgets(id, filter).pipe(
       untilComponentDestroy.apply(this)).subscribe((constructionSupportBudgets: ConstructionSupportBudget) => {
         this.constructionSupportBudgets = constructionSupportBudgets;
       });
@@ -98,6 +98,24 @@ export class BudgetConstructionSupportComponent implements OnInit, OnDestroy {
           });
       }
     });
+  }
+
+  search(filter: string) {
+    if (filter.length === 0) {
+      this.getConstructionSupportBudgets();
+      return;
+    } else if (filter.trim().length === 0) {
+      return;
+    } else if (filter.trim().length > 2) {
+      this.getConstructionSupportBudgets(filter);
+    }
+  }
+
+  clear(inputSearch: any) {
+    if (inputSearch.value !== '') {
+      inputSearch.value = '';
+      this.getConstructionSupportBudgets();
+    }
   }
 
   ngOnDestroy() { }

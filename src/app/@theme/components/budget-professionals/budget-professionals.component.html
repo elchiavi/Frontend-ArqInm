@@ -1,3 +1,15 @@
+<div class="row">
+    <div class="col-8">
+        <nb-form-field class="row col mb-2">
+          <input nbInput fieldSize="large" #inputSearch (keyup.enter)="search(inputSearch.value)"
+            placeholder="Buscar por Profesional u otros...">
+          <button nbSuffix nbButton ghost (click)="clear(inputSearch)">
+            <nb-icon [icon]="'close-outline'" pack="eva" [title]="'Borrar filtro'">
+            </nb-icon>
+          </button>
+        </nb-form-field>
+      </div>
+</div>
 <form class="row mt-2" [formGroup]="form">
     <div class="col-12">
         <div class="row">
@@ -6,8 +18,7 @@
                     <label for="inputSelected">Profesionales</label>
                     <select class="form-control" formControlName="professional"
                         [class.is-invalid]="formHelperService.canShowFieldErrors(form.get('professional'))">
-                        <option *ngFor="let professional of professional$ | async"
-                            [value]="professional._id">
+                        <option *ngFor="let professional of professional$ | async" [value]="professional._id">
                             {{professional.name}}</option>
                     </select>
                     <ngx-error-field [field]="form.get('professional')"></ngx-error-field>
@@ -31,40 +42,38 @@
         </div>
     </div>
 </form>
-<nb-card size="medium">
-    <nb-card-header>
-        <div class="row text-center">
+<nb-card accent="info" class="mb-2 d-none d-md-block table-header">
+    <nb-card-header class="form-inline">
+        <div class="row col-12 text-center">
             <div class="col-md-4">
                 Profesional
             </div>
             <div class="col-md-4">
-                Costo
+                Valor
             </div>
             <div class="col-md-4">
                 Acciones
             </div>
         </div>
     </nb-card-header>
-    <nb-list>
-        <nb-list-item class="border-bottom border-info"
-            *ngFor="let professionalBudget of professionalBudgets; let i = index;" class="mb-1">
-            <div class="w-100 text-center">
-                <div class="row">
-                    <div class="col-md-4">
-                        {{professionalBudget.professional.name}}
-                    </div>
-                    <div class="col-md-4">
-                        $ {{professionalBudget.cost}}
-                    </div>
-                    <div class="col-md-4">
-                        <button nbButton hero status="danger" shape="semi-round"
-                        (click)="deleteProfessionalBudget(professionalBudget)">
-                          <nb-icon [icon]="'trash-2-outline'" pack="eva"></nb-icon>
-                          Borrar
-                        </button>
-                    </div>
-                </div>
+</nb-card>
+
+<nb-card *ngFor="let professionalBudget of professionalBudgets; let i = index;" class="mb-1">
+    <nb-card-body class="form-inline text-center">
+        <div class="row col-12">
+            <div class="col-md-4">
+                {{professionalBudget.professional.name}}
             </div>
-        </nb-list-item>
-    </nb-list>
+            <div class="col-md-4">
+                $ {{professionalBudget.cost}}
+            </div>
+            <div class="col-md-4">
+                <button nbButton hero status="danger" shape="semi-round"
+                    (click)="deleteProfessionalBudget(professionalBudget)">
+                    <nb-icon [icon]="'trash-2-outline'" pack="eva"></nb-icon>
+                    Borrar
+                </button>
+            </div>
+        </div>
+    </nb-card-body>
 </nb-card>
