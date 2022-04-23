@@ -24,4 +24,8 @@ export class ManPowerBudgetsService extends BaseService<ManPowerBudget> {
         return this.httpClient.get<ManPowerBudget[]>(`${this.fullPath}`, {params});
     }
 
+    save(isUpdate: boolean, manPowerBudget: ManPowerBudget): Observable<ManPowerBudget> {
+        return isUpdate ? this.update(manPowerBudget) : this.add(manPowerBudget);
+    }
+
 }

@@ -21,6 +21,10 @@ export class ProfessionalBudgetsService extends BaseService<ProfessionalBudget> 
         } else {
             params = new HttpParams().set('id', budgetId);
         }
-        return this.httpClient.get<ProfessionalBudget[]>(`${this.fullPath}`, {params});
+        return this.httpClient.get<ProfessionalBudget[]>(`${this.fullPath}`, { params });
+    }
+
+    save(isUpdate: boolean, professionalBudget: ProfessionalBudget): Observable<ProfessionalBudget> {
+        return isUpdate ? this.update(professionalBudget) : this.add(professionalBudget);
     }
 }

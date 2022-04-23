@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { UnsubscribeOnDestroy, untilComponentDestroy } from '../../../@core/decorators/unsubscribe/on-destroy';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -19,8 +19,11 @@ export class BudgetConstructionSupportComponent implements OnInit, OnDestroy {
 
   form: FormGroup;
   @Input() budget: Budget;
+  @Output() changeCost: EventEmitter<{ update: boolean, preCost: number, cost: number }> = new EventEmitter();
   constructionSupport$: Observable<ConstructionSupport[]>;
   constructionSupportBudgets: ConstructionSupportBudget;
+  preCost: number;
+  update = false;
 
 
   constructor(public toastService: ToastService,
@@ -39,6 +42,8 @@ export class BudgetConstructionSupportComponent implements OnInit, OnDestroy {
 
   resetForm() {
     this.formHelperService.cleanAllFields(this.form);
+    this.update = false;
+    this.form.get('constructionSupport').enable();
     this.form.patchValue({ ['constructionSupport']: '' });
     this.form.patchValue({ ['cost']: '' });
   }
@@ -58,6 +63,7 @@ export class BudgetConstructionSupportComponent implements OnInit, OnDestroy {
 
   createForm() {
     this.form = this.formBuilder.group({
+      _id: [],
       constructionSupport: ['', Validators.required],
       cost: ['', Validators.required],
     });
@@ -68,11 +74,11 @@ export class BudgetConstructionSupportComponent implements OnInit, OnDestroy {
     if (this.form.valid) {
       const constructionSupportBudget: ConstructionSupportBudget = this.form.getRawValue();
       constructionSupportBudget.budget = this.budget[0]._id;
-      this.constructionSupportBudgetsService.add(constructionSupportBudget).pipe(
+      this.constructionSupportBudgetsService.save(this.update, constructionSupportBudget).pipe(
         untilComponentDestroy.apply(this)).subscribe(() => {
-          const action: Action = 'create';
+          const action: Action = this.update ? 'update' : 'create';
           this.toastService.showToast('El costo de soporte de obra ', action, 'success');
-          this.budget[0].totalCost = this.budget[0].totalCost + constructionSupportBudget.cost;
+          this.changeCost.emit({ update: this.update, preCost: this.preCost, cost: constructionSupportBudget.cost });
           this.getConstructionSupportBudgets();
           this.resetForm();
         }, () => {
@@ -116,6 +122,16 @@ export class BudgetConstructionSupportComponent implements OnInit, OnDestroy {
       inputSearch.value = '';
       this.getConstructionSupportBudgets();
     }
+  }
+
+  edit(constructionSupportBudget: ConstructionSupportBudget) {
+    this.preCost = constructionSupportBudget.cost;
+    this.resetForm();
+    this.update = true;
+    this.form.get('constructionSupport').disable();
+    this.form.get('_id').patchValue(constructionSupportBudget._id);
+    this.form.get('cost').patchValue(constructionSupportBudget.cost);
+    this.form.get('constructionSupport').patchValue(constructionSupportBudget.constructionSupport._id);
   }
 
   ngOnDestroy() { }

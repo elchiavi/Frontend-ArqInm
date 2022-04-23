@@ -1,14 +1,14 @@
 <div class="row">
     <div class="col-8">
         <nb-form-field class="row col mb-2">
-          <input nbInput fieldSize="large" #inputSearch (keyup.enter)="search(inputSearch.value)"
-            placeholder="Buscar por Mano de obra...">
-          <button nbSuffix nbButton ghost (click)="clear(inputSearch)">
-            <nb-icon [icon]="'close-outline'" pack="eva" [title]="'Borrar filtro'">
-            </nb-icon>
-          </button>
+            <input nbInput fieldSize="large" #inputSearch (keyup.enter)="search(inputSearch.value)"
+                placeholder="Buscar por Mano de obra...">
+            <button nbSuffix nbButton ghost (click)="clear(inputSearch)">
+                <nb-icon [icon]="'close-outline'" pack="eva" [title]="'Borrar filtro'">
+                </nb-icon>
+            </button>
         </nb-form-field>
-      </div>
+    </div>
 </div>
 <form class="row mt-2" [formGroup]="form">
     <div class="col-12">
@@ -26,7 +26,7 @@
             </div>
             <div class="col-sm-3">
                 <div class="form-group">
-                    <label for="inputSelected">Tareas</label>
+                    <label for="inputSelectedSkill">Tareas</label>
                     <select class="form-control" formControlName="manPowerSkill"
                         [class.is-invalid]="formHelperService.canShowFieldErrors(form.get('manPowerSkill'))">
                         <option *ngFor="let manPowerSkill of manPowerSkills$ | async" [value]="manPowerSkill._id">
@@ -54,9 +54,13 @@
                 </div>
             </div>
             <div class="col-sm-1 mt-4 mb-2">
-                <button nbButton hero status="primary" shape="semi-round" (click)="save()">
+                <button class="mb-2" nbButton hero status="primary" shape="semi-round" (click)="save()">
                     <nb-icon [icon]="'save-outline'" pack="eva"></nb-icon>
                     <span class="d-none d-md-block">Aceptar</span>
+                </button>
+                <button nbButton hero status="danger" shape="semi-round" (click)="resetForm()">
+                    <nb-icon [icon]="'close-outline'" pack="eva"></nb-icon>
+                    <span class="d-none d-md-block">Cancelar</span>
                 </button>
             </div>
         </div>
@@ -99,10 +103,11 @@
                 $ {{manPowerBudget.cost}}
             </div>
             <div class="col-md-2">
-                <button nbButton hero status="danger" shape="semi-round"
-                    (click)="deleteManPowerBudget(manPowerBudget)">
+                <button class="mr-2" nbButton hero status="primary" shape="semi-round" (click)="edit(manPowerBudget)">
+                    <nb-icon [icon]="'edit-2-outline'" pack="eva"></nb-icon>
+                </button>
+                <button nbButton hero status="danger" shape="semi-round" (click)="deleteManPowerBudget(manPowerBudget)">
                     <nb-icon [icon]="'trash-2-outline'" pack="eva"></nb-icon>
-                    Borrar
                 </button>
             </div>
         </div>

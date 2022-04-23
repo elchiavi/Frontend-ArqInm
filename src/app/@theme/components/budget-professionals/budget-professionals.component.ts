@@ -1,8 +1,8 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { UnsubscribeOnDestroy, untilComponentDestroy } from '../../../@core/decorators/unsubscribe/on-destroy';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Budget, Page, Professional } from '../../../@core/models';
+import { Budget, Professional } from '../../../@core/models';
 import { NbDialogService } from '@nebular/theme';
 import { Action, ToastService } from '../../../@theme/utils/toast.service';
 import { ProfessionalBudgetsService, ProfessionalsService } from '../../../@core/services';
@@ -18,11 +18,13 @@ import { ModalConfirmComponent } from '../../../@theme/components';
 @UnsubscribeOnDestroy()
 export class BudgetProfessionalComponent implements OnInit, OnDestroy {
 
-  form: FormGroup;
   @Input() budget: Budget;
+  @Output() changeCost: EventEmitter<{ update: boolean, preCost: number, cost: number }> = new EventEmitter();
+  form: FormGroup;
   professional$: Observable<Professional[]>;
   professionalBudgets: ProfessionalBudget;
-
+  preCost: number;
+  update = false;
 
   constructor(public toastService: ToastService,
     public professionalsService: ProfessionalsService,
@@ -40,6 +42,8 @@ export class BudgetProfessionalComponent implements OnInit, OnDestroy {
 
   resetForm() {
     this.formHelperService.cleanAllFields(this.form);
+    this.update = false;
+    this.form.get('professional').enable();
     this.form.patchValue({ ['professional']: '' });
     this.form.patchValue({ ['cost']: '' });
   }
@@ -59,6 +63,7 @@ export class BudgetProfessionalComponent implements OnInit, OnDestroy {
 
   createForm() {
     this.form = this.formBuilder.group({
+      _id: [],
       professional: ['', Validators.required],
       cost: ['', Validators.required],
     });
@@ -69,11 +74,11 @@ export class BudgetProfessionalComponent implements OnInit, OnDestroy {
     if (this.form.valid) {
       const professionalBudget: ProfessionalBudget = this.form.getRawValue();
       professionalBudget.budget = this.budget[0]._id;
-      this.professionalBudgetsService.add(professionalBudget).pipe(
+      this.professionalBudgetsService.save(this.update, professionalBudget).pipe(
         untilComponentDestroy.apply(this)).subscribe(() => {
-          const action: Action = 'create';
+          const action: Action = this.update ? 'update' : 'create';
           this.toastService.showToast('El costo de profesional ', action, 'success');
-          this.budget[0].totalCost = this.budget[0].totalCost + professionalBudget.cost;
+          this.changeCost.emit({ update: this.update, preCost: this.preCost, cost: professionalBudget.cost });
           this.getProfessionalBudgets();
           this.resetForm();
         }, () => {
@@ -117,6 +122,16 @@ export class BudgetProfessionalComponent implements OnInit, OnDestroy {
       inputSearch.value = '';
       this.getProfessionalBudgets();
     }
+  }
+
+  edit(profesional: ProfessionalBudget) {
+    this.preCost = profesional.cost;
+    this.resetForm();
+    this.update = true;
+    this.form.get('professional').disable();
+    this.form.get('_id').patchValue(profesional._id);
+    this.form.get('cost').patchValue(profesional.cost);
+    this.form.get('professional').patchValue(profesional.professional._id);
   }
 
   ngOnDestroy() { }

@@ -23,4 +23,9 @@ export class ConstructionSupportBudgetsService extends BaseService<ConstructionS
         }
         return this.httpClient.get<ConstructionSupportBudget[]>(`${this.fullPath}`, { params });
     }
+
+    save(isUpdate: boolean, constructionSupportBudget: ConstructionSupportBudget):
+        Observable<ConstructionSupportBudget> {
+        return isUpdate ? this.update(constructionSupportBudget) : this.add(constructionSupportBudget);
+    }
 }

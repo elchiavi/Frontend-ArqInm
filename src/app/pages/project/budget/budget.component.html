@@ -51,13 +51,13 @@
 
     <nb-tabset>
         <nb-tab tabTitle="Profesionales y Otros">
-            <ngx-budget-professionals [budget]=budget></ngx-budget-professionals>
+            <ngx-budget-professionals [budget]=budget (changeCost)="changeCost($event)"></ngx-budget-professionals>
         </nb-tab>
         <nb-tab tabTitle="Soporte de Obra">
-            <ngx-budget-construction-support [budget]=budget></ngx-budget-construction-support>
+            <ngx-budget-construction-support [budget]=budget (changeCost)="changeCost($event)"></ngx-budget-construction-support>
         </nb-tab>
         <nb-tab tabTitle="Mano de Obra">
-            <ngx-budget-man-power [budget]=budget></ngx-budget-man-power>
+            <ngx-budget-man-power [budget]=budget (changeCost)="changeCost($event)"></ngx-budget-man-power>
         </nb-tab>
         <nb-tab tabTitle="Materiales Gruesos"></nb-tab>
         <nb-tab tabTitle="Materiales de Instalaciones"></nb-tab>

@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { UnsubscribeOnDestroy, untilComponentDestroy } from '../../../@core/decorators/unsubscribe/on-destroy';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -19,9 +19,12 @@ export class BudgetManPowerComponent implements OnInit, OnDestroy {
 
   form: FormGroup;
   @Input() budget: Budget;
+  @Output() changeCost: EventEmitter<{ update: boolean, preCost: number, cost: number }> = new EventEmitter();
   manPower$: Observable<ManPower[]>;
   manPowerSkills$: Observable<ManPowerSkill[]>;
   manPowerBudgets: ManPowerBudget;
+  preCost: number;
+  update = false;
 
 
   constructor(public toastService: ToastService,
@@ -41,8 +44,11 @@ export class BudgetManPowerComponent implements OnInit, OnDestroy {
 
   resetForm() {
     this.formHelperService.cleanAllFields(this.form);
+    this.update = false;
+    this.form.get('manPower').enable();
+    this.form.get('manPowerSkill').enable();
     this.form.patchValue({ ['manPower']: '' });
-    this.form.patchValue({ ['manPowerSkills']: '' });
+    this.form.patchValue({ ['manPowerSkill']: '' });
     this.form.patchValue({ ['cost']: '' });
     this.form.patchValue({ ['description']: '' });
   }
@@ -67,6 +73,7 @@ export class BudgetManPowerComponent implements OnInit, OnDestroy {
 
   createForm() {
     this.form = this.formBuilder.group({
+      _id: [],
       manPower: ['', Validators.required],
       manPowerSkill: ['', Validators.required],
       cost: ['', Validators.required],
@@ -79,11 +86,11 @@ export class BudgetManPowerComponent implements OnInit, OnDestroy {
     if (this.form.valid) {
       const manPowerBudget: ManPowerBudget = this.form.getRawValue();
       manPowerBudget.budget = this.budget[0]._id;
-      this.manPowerBudgetsService.add(manPowerBudget).pipe(
+      this.manPowerBudgetsService.save(this.update, manPowerBudget).pipe(
         untilComponentDestroy.apply(this)).subscribe(() => {
-          const action: Action = 'create';
+          const action: Action = this.update ? 'update' : 'create';
           this.toastService.showToast('El costo de mano de obra ', action, 'success');
-          this.budget[0].totalCost = this.budget[0].totalCost + manPowerBudget.cost;
+          this.changeCost.emit({ update: this.update, preCost: this.preCost, cost: manPowerBudget.cost });
           this.getManPowersBudgets();
           this.resetForm();
         }, () => {
@@ -127,6 +134,20 @@ export class BudgetManPowerComponent implements OnInit, OnDestroy {
       inputSearch.value = '';
       this.getManPowersBudgets();
     }
+  }
+
+  edit(manPowerBudget: ManPowerBudget) {
+    this.preCost = manPowerBudget.cost;
+    this.resetForm();
+    this.update = true;
+    this.form.get('_id').patchValue(manPowerBudget._id);
+    this.form.get('cost').patchValue(manPowerBudget.cost);
+    this.form.get('description').patchValue(manPowerBudget.description);
+    this.form.get('manPower').patchValue(manPowerBudget.manPower._id);
+    this.change();
+    this.form.get('manPowerSkill').patchValue(manPowerBudget.manPowerSkill._id);
+    this.form.get('manPower').disable();
+    this.form.get('manPowerSkill').disable();
   }
 
   ngOnDestroy() { }
