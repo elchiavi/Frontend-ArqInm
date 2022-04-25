@@ -5,7 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Budget, Professional } from '../../../@core/models';
 import { NbDialogService } from '@nebular/theme';
 import { Action, ToastService } from '../../../@theme/utils/toast.service';
-import { ProfessionalBudgetsService, ProfessionalsService } from '../../../@core/services';
+import { BudgetsService, ProfessionalBudgetsService, ProfessionalsService } from '../../../@core/services';
 import { Observable } from 'rxjs';
 import { SharedFormService } from '../../../@theme/utils/form.service';
 import { ProfessionalBudget } from '../../../@core/models/professional-budget.model';
@@ -19,7 +19,6 @@ import { ModalConfirmComponent } from '../../../@theme/components';
 export class BudgetProfessionalComponent implements OnInit, OnDestroy {
 
   @Input() budget: Budget;
-  @Output() changeCost: EventEmitter<{ update: boolean, preCost: number, cost: number }> = new EventEmitter();
   form: FormGroup;
   professional$: Observable<Professional[]>;
   professionalBudgets: ProfessionalBudget;
@@ -27,6 +26,7 @@ export class BudgetProfessionalComponent implements OnInit, OnDestroy {
   update = false;
 
   constructor(public toastService: ToastService,
+    public budgetsService: BudgetsService,
     public professionalsService: ProfessionalsService,
     public professionalBudgetsService: ProfessionalBudgetsService,
     public formBuilder: FormBuilder,
@@ -69,6 +69,13 @@ export class BudgetProfessionalComponent implements OnInit, OnDestroy {
     });
   }
 
+  getBudget() {
+    this.budgetsService.getBudgetForId(this.budget[0]._id).pipe(
+      untilComponentDestroy.apply(this)).subscribe((budget: Budget) => {
+        this.budget[0] = budget;
+      });
+  }
+
   save() {
     this.formHelperService.touchAllFields(this.form);
     if (this.form.valid) {
@@ -78,7 +85,7 @@ export class BudgetProfessionalComponent implements OnInit, OnDestroy {
         untilComponentDestroy.apply(this)).subscribe(() => {
           const action: Action = this.update ? 'update' : 'create';
           this.toastService.showToast('El costo de profesional ', action, 'success');
-          this.changeCost.emit({ update: this.update, preCost: this.preCost, cost: professionalBudget.cost });
+          this.getBudget();
           this.getProfessionalBudgets();
           this.resetForm();
         }, () => {
@@ -97,7 +104,7 @@ export class BudgetProfessionalComponent implements OnInit, OnDestroy {
         this.professionalBudgetsService.delete(professionalBudget._id).pipe(
           untilComponentDestroy.apply(this)).subscribe(() => {
             this.toastService.success('Gasto eliminado');
-            this.budget[0].totalCost = this.budget[0].totalCost - professionalBudget.cost;
+            this.getBudget();
             this.getProfessionalBudgets();
           }, () => {
             this.toastService.error('Error Inesperado, contacte a su administrador');

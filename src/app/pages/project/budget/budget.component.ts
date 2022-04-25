@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { UnsubscribeOnDestroy } from '../../../@core/decorators/unsubscribe/on-destroy';
+import { UnsubscribeOnDestroy, untilComponentDestroy } from '../../../@core/decorators/unsubscribe/on-destroy';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Budget, Project } from '../../../@core/models';
 
@@ -13,6 +13,7 @@ import { Budget, Project } from '../../../@core/models';
 export class BudgetComponent implements OnInit, OnDestroy {
 
   budget: Budget;
+  budget2: Budget;
   project: Project;
 
   constructor(public activatedRoute: ActivatedRoute,
@@ -25,15 +26,6 @@ export class BudgetComponent implements OnInit, OnDestroy {
   load() {
     this.budget = this.activatedRoute.snapshot.data['budget'];
     this.project = this.budget[0].project;
-  }
-
-  changeCost(event) {
-    if (event.update) {
-      this.budget[0].totalCost = this.budget[0].totalCost - event.preCost;
-      this.budget[0].totalCost = this.budget[0].totalCost + event.cost;
-    } else {
-      this.budget[0].totalCost = this.budget[0].totalCost + event.cost;
-    }
   }
 
   ngOnDestroy() { }

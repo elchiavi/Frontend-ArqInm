@@ -19,8 +19,8 @@ export class BudgetsService extends BaseService<Budget> {
         return this.httpClient.get<Budget>(`${this.fullPath}/project?project=${id}`);
     }
 
-    // save(isNew: boolean, form: FormGroup): Observable<Budget> {
-    //     const budget: Budget = form.getRawValue();
-    //     return isNew ? this.add(budget) : this.update(budget);
-    // }
+    getBudgetForId(id: string) {
+        return this.httpClient.get<Budget>(`${this.fullPath}/budget?budget=${id}`);
+    }
+
 }

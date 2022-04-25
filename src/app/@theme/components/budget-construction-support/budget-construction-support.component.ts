@@ -1,11 +1,14 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { UnsubscribeOnDestroy, untilComponentDestroy } from '../../../@core/decorators/unsubscribe/on-destroy';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Budget, ConstructionSupport, Page, ConstructionSupportBudget } from '../../../@core/models';
 import { NbDialogService } from '@nebular/theme';
 import { Action, ToastService } from '../../../@theme/utils/toast.service';
-import { ConstructionSupportBudgetsService, ConstructionSupportsService } from '../../../@core/services';
+import {
+  BudgetsService, ConstructionSupportBudgetsService,
+  ConstructionSupportsService,
+} from '../../../@core/services';
 import { Observable } from 'rxjs';
 import { SharedFormService } from '../../../@theme/utils/form.service';
 import { ModalConfirmComponent } from '../modal-confirm/modal-confirm.component';
@@ -19,14 +22,13 @@ export class BudgetConstructionSupportComponent implements OnInit, OnDestroy {
 
   form: FormGroup;
   @Input() budget: Budget;
-  @Output() changeCost: EventEmitter<{ update: boolean, preCost: number, cost: number }> = new EventEmitter();
   constructionSupport$: Observable<ConstructionSupport[]>;
   constructionSupportBudgets: ConstructionSupportBudget;
   preCost: number;
   update = false;
 
-
   constructor(public toastService: ToastService,
+    public budgetsService: BudgetsService,
     public constructionSupportsService: ConstructionSupportsService,
     public constructionSupportBudgetsService: ConstructionSupportBudgetsService,
     public formBuilder: FormBuilder,
@@ -61,6 +63,13 @@ export class BudgetConstructionSupportComponent implements OnInit, OnDestroy {
       });
   }
 
+  getBudget() {
+    this.budgetsService.getBudgetForId(this.budget[0]._id).pipe(
+      untilComponentDestroy.apply(this)).subscribe((budget: Budget) => {
+        this.budget[0] = budget;
+      });
+  }
+
   createForm() {
     this.form = this.formBuilder.group({
       _id: [],
@@ -78,7 +87,7 @@ export class BudgetConstructionSupportComponent implements OnInit, OnDestroy {
         untilComponentDestroy.apply(this)).subscribe(() => {
           const action: Action = this.update ? 'update' : 'create';
           this.toastService.showToast('El costo de soporte de obra ', action, 'success');
-          this.changeCost.emit({ update: this.update, preCost: this.preCost, cost: constructionSupportBudget.cost });
+          this.getBudget();
           this.getConstructionSupportBudgets();
           this.resetForm();
         }, () => {
@@ -97,7 +106,7 @@ export class BudgetConstructionSupportComponent implements OnInit, OnDestroy {
         this.constructionSupportBudgetsService.delete(constructionSupportBudget._id).pipe(
           untilComponentDestroy.apply(this)).subscribe(() => {
             this.toastService.success('Gasto eliminado');
-            this.budget[0].totalCost = this.budget[0].totalCost - constructionSupportBudget.cost;
+            this.getBudget();
             this.getConstructionSupportBudgets();
           }, () => {
             this.toastService.error('Error Inesperado, contacte a su administrador');
