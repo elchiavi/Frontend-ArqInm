@@ -72,14 +72,49 @@
                 </div>
             </nb-card-header>
             <nb-card-body>
-                <div class="col-sm-12 text-right">
-                    <small>Profesioanles y Otros: $ {{budget[0].totalCostProfessional}}</small><br>
-                    <small>Soporte de Obra: $ {{budget[0].totalCostConstructionSupport}}</small><br>
-                    <small>Mano de Obra: $ {{budget[0].totalCostManPower}}</small><br>
-                    <hr>
-                    <span><strong>Total: $ {{budget[0].totalCost}}</strong></span><br>
-                </div>
+                <div class="row">
+                    <div class="col-sm-2">
+                        <nb-card status="danger">
+                            <nb-card-header>
+                                <span><strong>Profesionales y Otros</strong></span>
+                            </nb-card-header>
+                            <nb-card-body class="text-right">
+                                <span>$ {{budget[0].totalCostProfessional}}</span><br>
+                            </nb-card-body>
+                        </nb-card>
+                    </div>
+                    <div class="col-sm-2">
+                        <nb-card status="danger">
+                            <nb-card-header>
+                                <span><strong>Soporte de Obra</strong></span>
+                            </nb-card-header>
+                            <nb-card-body class="text-right">
+                                <span>$ {{budget[0].totalCostConstructionSupport}}</span><br>
+                            </nb-card-body>
+                        </nb-card>
+                    </div>
+                    <div class="col-sm-2">
+                        <nb-card status="danger">
+                            <nb-card-header>
+                                <span><strong>Mano de Obra</strong></span>
+                            </nb-card-header>
+                            <nb-card-body class="text-right">
+                                <div *ngFor="let cost of budget[0].arrayCosts; let i = index;" class="mb-1">
+                                    <span>{{budget[0].arrayManPowers[i]}}: $ {{cost}}</span><br>
+                                </div>
+                            </nb-card-body>
+                            <nb-card-footer class="text-right">
+                                <hr>
+                                <span>$ {{budget[0].totalCostManPower}}</span><br>
+                            </nb-card-footer>
+                        </nb-card>
+                    </div>
+                </div>               
             </nb-card-body>
+            <nb-card-footer class="text-sm-right">
+                <hr>
+                <span><strong>Total: $ {{budget[0].totalCost}}</strong></span><br>
+            </nb-card-footer>
         </nb-card>
     </div>
 
