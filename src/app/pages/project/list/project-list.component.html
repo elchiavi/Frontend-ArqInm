@@ -37,9 +37,9 @@
                 </span>
                 <span class="col-md-2">Cliente</span>
                 <span class="col-md-2">Tipo</span>
-                <span class="col-md-2">Tipo 2</span>
+                <span class="col-md-2">Detalle</span>
                 <span class="col-md-1">Fecha Inicio</span>
-                <span class="col-md-2">Plazo de Obra</span>
+                <span class="col-md-2">Plazo</span>
                 <span class="col-md-1">Acciones</span>
             </div>
         </nb-card-header>
@@ -48,20 +48,20 @@
     <nb-card *ngFor="let project of projectPage?.docs; let i = index;" class="mb-1">
         <nb-card-body class="form-inline text-center">
             <div class="row col-12">
-                <span class="col-md-2">{{ project.name }}</span>
+                <span class="col-md-2"><nb-icon *ngIf="project.additionalProject" [icon]="'layers'" style="color: #ec8e82" title="Es adicional" pack="eva"></nb-icon> {{ project.name }}</span> 
                 <span class="col-md-2">{{ project.client.name }} {{ project.client.surname }}</span>
                 <span class="col-md-2">{{ project.typeProject }}</span>
                 <span class="col-md-2">{{ project.type }}</span>
                 <span class="col-md-1">{{ project.startDate | date: 'dd/MM/yyyy' }}</span>
                 <span class="col-md-2">{{ project.termDays }} días</span>
                 <div class="col-md-1">
-                    <nb-icon class="mr-1 pointer" [icon]="'search-outline'" title="Visualizar" pack="eva"
+                    <nb-icon style="color: #F3B1A1" class="mr-1 pointer" [icon]="'search-outline'" title="Visualizar" pack="eva"
                         [routerLink]="['/pages/projects', project._id]"></nb-icon>
-                    <nb-icon class="mr-1 pointer" [icon]="'file-outline'" title="Presupuesto" pack="eva"
+                    <nb-icon style="color: #F3B1A1" class="mr-1 pointer" [icon]="'file-outline'" title="Presupuesto" pack="eva"
                         [routerLink]="['/pages/projects', project._id, 'budget']"></nb-icon>
-                    <nb-icon class="mr-1 pointer" [icon]="'edit-outline'" title="Editar" pack="eva"
+                    <nb-icon style="color: #F3B1A1" class="mr-1 pointer" [icon]="'edit-outline'" title="Editar" pack="eva"
                         [routerLink]="['/pages/projects', project._id]"></nb-icon>
-                    <a href={{project.linkDrive}} target="_blank">
+                    <a href={{project.linkDrive}} target="_blank" style="color: #F3B1A1;">
                         <nb-icon class="mr-1 pointer" [icon]="'attach-outline'" title="Ir a los adjuntos" pack="eva">
                         </nb-icon>
                     </a>
