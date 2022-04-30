@@ -1,8 +1,14 @@
 <div class="row">
-    <div class="col-8">
+    <nb-radio-group class="ml-3" [(ngModel)]="option">
+        <nb-radio *ngFor="let option of options" [value]="option.value">
+            {{ option.label }}
+        </nb-radio>
+    </nb-radio-group>
+
+    <div class="col-7 mt-2">
         <nb-form-field class="row col mb-2">
             <input nbInput fieldSize="large" #inputSearch (keyup.enter)="search(inputSearch.value)"
-                placeholder="Buscar por Mano de obra...">
+                placeholder="Buscar por...">
             <button nbSuffix nbButton ghost (click)="clear(inputSearch)">
                 <nb-icon [icon]="'close-outline'" pack="eva" [title]="'Borrar filtro'">
                 </nb-icon>
@@ -11,9 +17,9 @@
     </div>
 </div>
 <form class="row mt-2" [formGroup]="form">
-    <div class="col-12">
+    <div class="col-6">
         <div class="row">
-            <div class="col-sm-2">
+            <div class="col-sm-6">
                 <div class="form-group">
                     <label for="inputSelected">Mano de Obra</label>
                     <select class="form-control" formControlName="manPower" (change)="change()"
@@ -24,7 +30,7 @@
                     <ngx-error-field [field]="form.get('manPower')"></ngx-error-field>
                 </div>
             </div>
-            <div class="col-sm-3">
+            <div class="col-sm-6">
                 <div class="form-group">
                     <label for="inputSelectedSkill">Tareas</label>
                     <select class="form-control" formControlName="manPowerSkill"
@@ -35,7 +41,16 @@
                     <ngx-error-field [field]="form.get('manPowerSkill')"></ngx-error-field>
                 </div>
             </div>
-            <div class="col-sm-2">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label for="inputContracted">Comitente</label>
+                    <input type="text" id="inputContracted" class="form-control"
+                        [class.is-invalid]="formHelperService.canShowFieldErrors(form.get('contracted'))"
+                        formControlName="contracted">
+                    <ngx-error-field [field]="form.get('contracted')"></ngx-error-field>
+                </div>
+            </div>
+            <div class="col-sm-3">
                 <div class="form-group">
                     <label for="inputCost">Valor (en pesos $)</label>
                     <input type="number" id="inputCost" class="form-control" [min]="1"
@@ -44,17 +59,21 @@
                     <ngx-error-field [field]="form.get('cost')"></ngx-error-field>
                 </div>
             </div>
-            <div class="col-md-3">
+        </div>
+    </div>
+    <div class="col-6">
+        <div class="row">
+            <div class="col-md-6">
                 <div class="form-group">
                     <label for="description">Descripción</label>
-                    <textarea fullWidth id="description" class="form-control" rows="3"
+                    <textarea fullWidth id="description" class="form-control" rows="5"
                         [class.is-invalid]="formHelperService.canShowFieldErrors(form.get('description'))"
                         formControlName="description"></textarea>
                     <ngx-error-field [field]="form.get('description')"></ngx-error-field>
                 </div>
             </div>
-            <div class="col-sm-1 mt-4 mb-2">
-                <button class="mb-2" nbButton hero status="primary" shape="semi-round" (click)="save()">
+            <div class="col-sm-6 mt-4 mb-2">
+                <button class="mr-2" nbButton hero status="primary" shape="semi-round" (click)="save()">
                     <nb-icon [icon]="'save-outline'" pack="eva"></nb-icon>
                     <span class="d-none d-md-block">Aceptar</span>
                 </button>
@@ -65,6 +84,7 @@
             </div>
         </div>
     </div>
+
 </form>
 <nb-card accent="info" class="mb-2 d-none d-md-block table-header">
     <nb-card-header class="form-inline">
@@ -72,8 +92,11 @@
             <div class="col-md-2">
                 Mano de Obra
             </div>
-            <div class="col-md-3">
+            <div class="col-md-2">
                 Tarea
+            </div>
+            <div class="col-md-2">
+                Comitente
             </div>
             <div class="col-md-3">
                 Descripción
@@ -81,7 +104,7 @@
             <div class="col-md-2">
                 Valor
             </div>
-            <div class="col-md-2">
+            <div class="col-md-1">
                 Acciones
             </div>
         </div>
@@ -93,8 +116,11 @@
             <div class="col-md-2">
                 {{manPowerBudget.manPower.name}}
             </div>
-            <div class="col-md-3">
+            <div class="col-md-2">
                 {{manPowerBudget.manPowerSkill.name}}
+            </div>
+            <div class="col-md-2">
+                {{manPowerBudget.contracted}}
             </div>
             <div class="col-md-3">
                 {{manPowerBudget.description}}
@@ -102,7 +128,7 @@
             <div class="col-md-2">
                 $ {{manPowerBudget.cost}}
             </div>
-            <div class="col-md-2">
+            <div class="col-md-1">
                 <button class="mr-2" nbButton hero status="primary" shape="semi-round" (click)="edit(manPowerBudget)">
                     <nb-icon [icon]="'edit-2-outline'" pack="eva"></nb-icon>
                 </button>

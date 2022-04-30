@@ -8,5 +8,6 @@ export interface ManPowerBudget extends BaseEntity {
     manPowerSkill: ManPowerSkill;
     budget: string;
     cost: number;
+    contracted: string;
     description?: string;
 }

@@ -14,10 +14,10 @@ export class ManPowerBudgetsService extends BaseService<ManPowerBudget> {
         super('manPowersBudgets', httpClient);
     }
 
-    getManPowersBudgets(budgetId: string, filter?: string): Observable<ManPowerBudget[]> {
+    getManPowersBudgets(budgetId: string, filter?: string, option?: string): Observable<ManPowerBudget[]> {
         let params: HttpParams;
-        if (filter) {
-            params = new HttpParams().set('id', budgetId).set('filter', filter);
+        if (filter && option) {
+            params = new HttpParams().set('id', budgetId).set('filter', filter).set('option', option);
         } else {
             params = new HttpParams().set('id', budgetId);
         }

@@ -8,7 +8,7 @@ import {
   NbActionsModule, NbAlertModule, NbButtonGroupModule, NbButtonModule,
   NbCardModule, NbCheckboxModule, NbContextMenuModule, NbDialogModule,
   NbIconModule, NbInputModule, NbLayoutModule, NbListModule, NbFormFieldModule,
-  NbMenuModule, NbPopoverModule, NbSidebarModule, NbThemeModule, NbToggleModule, NbUserModule,
+  NbMenuModule, NbPopoverModule, NbSidebarModule, NbThemeModule, NbToggleModule, NbUserModule, NbRadioModule,
 } from '@nebular/theme';
 import {
   NgbDateAdapter, NgbDateParserFormatter,
@@ -54,6 +54,7 @@ const NB_MODULES = [
   NbPopoverModule,
   NbButtonGroupModule,
   NbFormFieldModule,
+  NbRadioModule,
 ];
 
 const OTHERS_MODULES = [

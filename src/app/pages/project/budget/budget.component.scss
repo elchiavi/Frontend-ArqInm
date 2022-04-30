@@ -6,3 +6,8 @@
 .card-border-oval {
     border-radius: 10px;
 }
+
+.tabset-limit {
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+}

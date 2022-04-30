@@ -24,6 +24,11 @@ export class BudgetManPowerComponent implements OnInit, OnDestroy {
   manPowerBudgets: ManPowerBudget;
   preCost: number;
   update = false;
+  options = [
+    { value: 'manPower', label: 'Mano de Obra' },
+    { value: 'contracted', label: 'Comitente' },
+  ];
+  option = 'manPower';
 
 
   constructor(public toastService: ToastService,
@@ -49,6 +54,7 @@ export class BudgetManPowerComponent implements OnInit, OnDestroy {
     this.form.get('manPowerSkill').enable();
     this.form.patchValue({ ['manPower']: '' });
     this.form.patchValue({ ['manPowerSkill']: '' });
+    this.form.patchValue({ ['contracted']: '' });
     this.form.patchValue({ ['cost']: '' });
     this.form.patchValue({ ['description']: '' });
   }
@@ -65,7 +71,7 @@ export class BudgetManPowerComponent implements OnInit, OnDestroy {
 
   getManPowersBudgets(filter?: string) {
     const id = this.budget[0]._id;
-    this.manPowerBudgetsService.getManPowersBudgets(id, filter).pipe(
+    this.manPowerBudgetsService.getManPowersBudgets(id, filter, this.option).pipe(
       untilComponentDestroy.apply(this)).subscribe((manPowerBudgets: ManPowerBudget) => {
         this.manPowerBudgets = manPowerBudgets;
       });
@@ -83,6 +89,7 @@ export class BudgetManPowerComponent implements OnInit, OnDestroy {
       _id: [],
       manPower: ['', Validators.required],
       manPowerSkill: ['', Validators.required],
+      contracted: ['', Validators.required],
       cost: ['', Validators.required],
       description: [''],
     });
@@ -150,6 +157,7 @@ export class BudgetManPowerComponent implements OnInit, OnDestroy {
     this.form.get('_id').patchValue(manPowerBudget._id);
     this.form.get('cost').patchValue(manPowerBudget.cost);
     this.form.get('description').patchValue(manPowerBudget.description);
+    this.form.get('contracted').patchValue(manPowerBudget.contracted);
     this.form.get('manPower').patchValue(manPowerBudget.manPower._id);
     this.change();
     this.form.get('manPowerSkill').patchValue(manPowerBudget.manPowerSkill._id);
