@@ -16,76 +16,80 @@
         </nb-form-field>
     </div>
 </div>
-<form class="row mt-2" [formGroup]="form">
-    <div class="col-6">
-        <div class="row">
-            <div class="col-sm-6">
-                <div class="form-group">
-                    <label for="inputSelected">Mano de Obra</label>
-                    <select class="form-control" formControlName="manPower" (change)="change()"
-                        [class.is-invalid]="formHelperService.canShowFieldErrors(form.get('manPower'))">
-                        <option *ngFor="let manPower of manPower$ | async" [value]="manPower._id">
-                            {{manPower.name}}</option>
-                    </select>
-                    <ngx-error-field [field]="form.get('manPower')"></ngx-error-field>
+<nb-card class="mt-2">
+    <nb-card-body>
+        <form class="row mt-2" [formGroup]="form">
+            <div class="col-6">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="inputSelected">Mano de Obra</label>
+                            <select class="form-control" formControlName="manPower" (change)="change()"
+                                [class.is-invalid]="formHelperService.canShowFieldErrors(form.get('manPower'))">
+                                <option *ngFor="let manPower of manPower$ | async" [value]="manPower._id">
+                                    {{manPower.name}}</option>
+                            </select>
+                            <ngx-error-field [field]="form.get('manPower')"></ngx-error-field>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="inputSelectedSkill">Tareas</label>
+                            <select class="form-control" formControlName="manPowerSkill"
+                                [class.is-invalid]="formHelperService.canShowFieldErrors(form.get('manPowerSkill'))">
+                                <option *ngFor="let manPowerSkill of manPowerSkills$ | async" [value]="manPowerSkill._id">
+                                    {{manPowerSkill.name}}</option>
+                            </select>
+                            <ngx-error-field [field]="form.get('manPowerSkill')"></ngx-error-field>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="inputContracted">Comitente</label>
+                            <input type="text" id="inputContracted" class="form-control"
+                                [class.is-invalid]="formHelperService.canShowFieldErrors(form.get('contracted'))"
+                                formControlName="contracted">
+                            <ngx-error-field [field]="form.get('contracted')"></ngx-error-field>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label for="inputCost">Valor (en pesos $)</label>
+                            <input type="number" id="inputCost" class="form-control" [min]="1"
+                                [class.is-invalid]="formHelperService.canShowFieldErrors(form.get('cost'))"
+                                formControlName="cost">
+                            <ngx-error-field [field]="form.get('cost')"></ngx-error-field>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="col-sm-6">
-                <div class="form-group">
-                    <label for="inputSelectedSkill">Tareas</label>
-                    <select class="form-control" formControlName="manPowerSkill"
-                        [class.is-invalid]="formHelperService.canShowFieldErrors(form.get('manPowerSkill'))">
-                        <option *ngFor="let manPowerSkill of manPowerSkills$ | async" [value]="manPowerSkill._id">
-                            {{manPowerSkill.name}}</option>
-                    </select>
-                    <ngx-error-field [field]="form.get('manPowerSkill')"></ngx-error-field>
+            <div class="col-6">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="description">Descripción</label>
+                            <textarea fullWidth id="description" class="form-control" rows="5"
+                                [class.is-invalid]="formHelperService.canShowFieldErrors(form.get('description'))"
+                                formControlName="description"></textarea>
+                            <ngx-error-field [field]="form.get('description')"></ngx-error-field>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 mt-4 mb-2">
+                        <button class="mr-2" nbButton hero status="primary" shape="semi-round" (click)="save()">
+                            <nb-icon [icon]="'save-outline'" pack="eva"></nb-icon>
+                            <span class="d-none d-md-block">Aceptar</span>
+                        </button>
+                        <button nbButton hero status="danger" shape="semi-round" (click)="resetForm()">
+                            <nb-icon [icon]="'close-outline'" pack="eva"></nb-icon>
+                            <span class="d-none d-md-block">Cancelar</span>
+                        </button>
+                    </div>
                 </div>
             </div>
-            <div class="col-sm-6">
-                <div class="form-group">
-                    <label for="inputContracted">Comitente</label>
-                    <input type="text" id="inputContracted" class="form-control"
-                        [class.is-invalid]="formHelperService.canShowFieldErrors(form.get('contracted'))"
-                        formControlName="contracted">
-                    <ngx-error-field [field]="form.get('contracted')"></ngx-error-field>
-                </div>
-            </div>
-            <div class="col-sm-3">
-                <div class="form-group">
-                    <label for="inputCost">Valor (en pesos $)</label>
-                    <input type="number" id="inputCost" class="form-control" [min]="1"
-                        [class.is-invalid]="formHelperService.canShowFieldErrors(form.get('cost'))"
-                        formControlName="cost">
-                    <ngx-error-field [field]="form.get('cost')"></ngx-error-field>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-6">
-        <div class="row">
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="description">Descripción</label>
-                    <textarea fullWidth id="description" class="form-control" rows="5"
-                        [class.is-invalid]="formHelperService.canShowFieldErrors(form.get('description'))"
-                        formControlName="description"></textarea>
-                    <ngx-error-field [field]="form.get('description')"></ngx-error-field>
-                </div>
-            </div>
-            <div class="col-sm-6 mt-4 mb-2">
-                <button class="mr-2" nbButton hero status="primary" shape="semi-round" (click)="save()">
-                    <nb-icon [icon]="'save-outline'" pack="eva"></nb-icon>
-                    <span class="d-none d-md-block">Aceptar</span>
-                </button>
-                <button nbButton hero status="danger" shape="semi-round" (click)="resetForm()">
-                    <nb-icon [icon]="'close-outline'" pack="eva"></nb-icon>
-                    <span class="d-none d-md-block">Cancelar</span>
-                </button>
-            </div>
-        </div>
-    </div>
+        </form>
+    </nb-card-body>
+</nb-card>
 
-</form>
 <nb-card accent="info" class="mb-2 d-none d-md-block table-header">
     <nb-card-header class="form-inline">
         <div class="row col-12 text-center">

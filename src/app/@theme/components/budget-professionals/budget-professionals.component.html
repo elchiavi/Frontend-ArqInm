@@ -10,42 +10,46 @@
         </nb-form-field>
     </div>
 </div>
-<form class="row mt-2" [formGroup]="form">
-    <div class="col-12">
-        <div class="row">
-            <div class="col-sm-4">
-                <div class="form-group">
-                    <label for="inputSelected">Profesionales</label>
-                    <select class="form-control" formControlName="professional"
-                        [class.is-invalid]="formHelperService.canShowFieldErrors(form.get('professional'))">
-                        <option *ngFor="let professional of professional$ | async" [value]="professional._id">
-                            {{professional.name}}</option>
-                    </select>
-                    <ngx-error-field [field]="form.get('professional')"></ngx-error-field>
+<nb-card class="mt-2">
+    <nb-card-body>
+        <form class="row mt-2" [formGroup]="form">
+            <div class="col-12">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label for="inputSelected">Profesionales</label>
+                            <select class="form-control" formControlName="professional"
+                                [class.is-invalid]="formHelperService.canShowFieldErrors(form.get('professional'))">
+                                <option *ngFor="let professional of professional$ | async" [value]="professional._id">
+                                    {{professional.name}}</option>
+                            </select>
+                            <ngx-error-field [field]="form.get('professional')"></ngx-error-field>
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label for="inputCost">Valor (en pesos $)</label>
+                            <input type="number" id="inputCost" class="form-control" [min]="1"
+                                [class.is-invalid]="formHelperService.canShowFieldErrors(form.get('cost'))"
+                                formControlName="cost">
+                            <ngx-error-field [field]="form.get('cost')"></ngx-error-field>
+                        </div>
+                    </div>
+                    <div class="col-sm-4 mt-4 mb-2">
+                        <button class="mr-2" nbButton hero status="primary" shape="semi-round" (click)="save()">
+                            <nb-icon [icon]="'save-outline'" pack="eva"></nb-icon>
+                            <span class="d-none d-md-block">Aceptar</span>
+                        </button>
+                        <button nbButton hero status="danger" shape="semi-round" (click)="resetForm()">
+                            <nb-icon [icon]="'close-outline'" pack="eva"></nb-icon>
+                            <span class="d-none d-md-block">Cancelar</span>
+                        </button>
+                    </div>
                 </div>
             </div>
-            <div class="col-sm-2">
-                <div class="form-group">
-                    <label for="inputCost">Valor (en pesos $)</label>
-                    <input type="number" id="inputCost" class="form-control" [min]="1"
-                        [class.is-invalid]="formHelperService.canShowFieldErrors(form.get('cost'))"
-                        formControlName="cost">
-                    <ngx-error-field [field]="form.get('cost')"></ngx-error-field>
-                </div>
-            </div>
-            <div class="col-sm-4 mt-4 mb-2">
-                <button class="mr-2" nbButton hero status="primary" shape="semi-round" (click)="save()">
-                    <nb-icon [icon]="'save-outline'" pack="eva"></nb-icon>
-                    <span class="d-none d-md-block">Aceptar</span>
-                </button>
-                <button nbButton hero status="danger" shape="semi-round" (click)="resetForm()">
-                    <nb-icon [icon]="'close-outline'" pack="eva"></nb-icon>
-                    <span class="d-none d-md-block">Cancelar</span>
-                </button>
-            </div>
-        </div>
-    </div>
-</form>
+        </form>
+    </nb-card-body>
+</nb-card>
 <nb-card accent="info" class="mb-2 d-none d-md-block table-header">
     <nb-card-header class="form-inline">
         <div class="row col-12 text-center">
@@ -71,9 +75,9 @@
             <div class="col-md-4">
                 $ {{professionalBudget.cost}}
             </div>
-            <div class="col-md-4"  *ngIf="!update">
-                <button class="mr-2"nbButton hero status="primary" shape="semi-round"
-                (click)="edit(professionalBudget)">
+            <div class="col-md-4" *ngIf="!update">
+                <button class="mr-2" nbButton hero status="primary" shape="semi-round"
+                    (click)="edit(professionalBudget)">
                     <nb-icon [icon]="'edit-2-outline'" pack="eva"></nb-icon>
                 </button>
                 <button nbButton hero status="danger" shape="semi-round"
