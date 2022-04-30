@@ -52,7 +52,7 @@
                             <ngx-error-field [field]="form.get('contracted')"></ngx-error-field>
                         </div>
                     </div>
-                    <div class="col-sm-3">
+                    <div class="col-sm-4">
                         <div class="form-group">
                             <label for="inputCost">Valor (en pesos $)</label>
                             <input type="number" id="inputCost" class="form-control" [min]="1"
@@ -75,11 +75,11 @@
                         </div>
                     </div>
                     <div class="col-sm-6 mt-4 mb-2">
-                        <button class="mr-2" nbButton hero status="primary" shape="semi-round" (click)="save()">
+                        <button class="mr-2 mt-2" size="small" nbButton hero status="primary" shape="semi-round" (click)="save()">
                             <nb-icon [icon]="'save-outline'" pack="eva"></nb-icon>
                             <span class="d-none d-md-block">Aceptar</span>
                         </button>
-                        <button nbButton hero status="danger" shape="semi-round" (click)="resetForm()">
+                        <button class="mt-2" nbButton size="small" hero status="danger" shape="semi-round" (click)="resetForm()">
                             <nb-icon [icon]="'close-outline'" pack="eva"></nb-icon>
                             <span class="d-none d-md-block">Cancelar</span>
                         </button>
@@ -102,13 +102,13 @@
             <div class="col-md-2">
                 Comitente
             </div>
-            <div class="col-md-3">
+            <div class="col-md-2">
                 Descripción
             </div>
             <div class="col-md-2">
                 Valor
             </div>
-            <div class="col-md-1">
+            <div class="col-md-2">
                 Acciones
             </div>
         </div>
@@ -126,17 +126,17 @@
             <div class="col-md-2">
                 {{manPowerBudget.contracted}}
             </div>
-            <div class="col-md-3">
+            <div class="col-md-2">
                 {{manPowerBudget.description}}
             </div>
             <div class="col-md-2">
                 $ {{manPowerBudget.cost}}
             </div>
-            <div class="col-md-1">
-                <button class="mr-2" nbButton hero status="primary" shape="semi-round" (click)="edit(manPowerBudget)">
+            <div class="col-md-2">
+                <button class="mr-2" size="small" nbButton hero status="primary" shape="semi-round" (click)="edit(manPowerBudget)">
                     <nb-icon [icon]="'edit-2-outline'" pack="eva"></nb-icon>
                 </button>
-                <button nbButton hero status="danger" shape="semi-round" (click)="deleteManPowerBudget(manPowerBudget)">
+                <button size="small" nbButton hero status="danger" shape="semi-round" (click)="deleteManPowerBudget(manPowerBudget)">
                     <nb-icon [icon]="'trash-2-outline'" pack="eva"></nb-icon>
                 </button>
             </div>
