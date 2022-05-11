@@ -49,7 +49,7 @@
         </div>
     </div>
 
-    <nb-tabset fullWidth class="tabset-limit">
+    <nb-tabset class="tabset-limit">
         <nb-tab tabTitle="Profesionales y Otros">
             <ngx-budget-professionals [budget]=budget></ngx-budget-professionals>
         </nb-tab>
@@ -76,7 +76,7 @@
             </nb-card-header>
             <nb-card-body>
                 <div class="row">
-                    <div class="col-sm-3">
+                    <div class="col-sm-4">
                         <nb-card status="primary">
                             <nb-card-header>
                                 <span><strong>Profesionales y Otros</strong></span>
@@ -86,7 +86,7 @@
                             </nb-card-body>
                         </nb-card>
                     </div>
-                    <div class="col-sm-3">
+                    <div class="col-sm-4">
                         <nb-card status="primary">
                             <nb-card-header>
                                 <span><strong>Soporte de Obra</strong></span>
@@ -96,34 +96,34 @@
                             </nb-card-body>
                         </nb-card>
                     </div>
-                    <div class="col-sm-3">
+                    <div class="col-sm-4">
                         <nb-card status="primary">
                             <nb-card-header>
                                 <span><strong>Mano de Obra</strong></span>
                             </nb-card-header>
-                            <nb-card-body class="text-right">
+                            <nb-card-body *ngIf="budget[0].arrayCostsManPower.length > 0" class="text-right">
                                 <div *ngFor="let cost of budget[0].arrayCostsManPower; let i = index;">
                                     <small>{{budget[0].arrayManPowers[i]}}: $ {{cost}}</small>
                                 </div>
+                                <hr>
                             </nb-card-body>
                             <nb-card-footer class="text-right">
-                                <hr>
                                 <span>$ {{budget[0].totalCostManPower}}</span>
                             </nb-card-footer>
                         </nb-card>
                     </div>
-                    <div class="col-sm-2">
+                    <div class="col-sm-4">
                         <nb-card status="primary">
                             <nb-card-header>
                                 <span><strong>Materiales de Terminación</strong></span>
                             </nb-card-header>
-                            <nb-card-body class="text-right">
+                            <nb-card-body *ngIf="budget[0].arrayCostsTerminationMaterial.length > 0" class="text-right">
                                 <div *ngFor="let cost of budget[0].arrayCostsTerminationMaterial; let i = index;">
                                     <small>{{budget[0].arrayTerminationMaterial[i]}}: $ {{cost}}</small>
                                 </div>
+                                <hr>
                             </nb-card-body>
                             <nb-card-footer class="text-right">
-                                <hr>
                                 <span>$ {{budget[0].totalCostTerminationMaterial}}</span>
                             </nb-card-footer>
                         </nb-card>
