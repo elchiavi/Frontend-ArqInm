@@ -120,7 +120,7 @@ export class BudgetTerminationMaterialComponent implements OnInit, OnDestroy {
     }
   }
 
-  deleteManPowerBudget(terminationMaterialBudget: TerminationMaterialBudget) {
+  deleteTerminationBudget(terminationMaterialBudget: TerminationMaterialBudget) {
     const modalRef = this.dialogService.open(ModalConfirmComponent, { closeOnBackdropClick: false });
     const description = `Se eliminará el registro ${terminationMaterialBudget.terminationMaterial.name} .`;
     modalRef.componentRef.instance.title = 'Confirmación';
@@ -172,6 +172,10 @@ export class BudgetTerminationMaterialComponent implements OnInit, OnDestroy {
     this.form.get('terminationMaterialDetail').patchValue(terminationMaterialBudget.terminationMaterialDetail._id);
     this.form.get('terminationMaterial').disable();
     this.form.get('terminationMaterialDetail').disable();
+  }
+
+  onlyInteger(event: any) {
+    return event.keyCode >= 48 && event.keyCode <= 57;
   }
 
   ngOnDestroy() { }
