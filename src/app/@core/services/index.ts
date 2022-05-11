@@ -11,3 +11,6 @@ export * from './constructionSupportBudgets.service';
 export * from './manPowers.service';
 export * from './manPowerSkills.service';
 export * from './manPowerBudgets.service';
+export * from './terminationMaterials.service';
+export * from './terminationMaterialDetails.service';
+export * from './terminationMaterialBudgets.service';

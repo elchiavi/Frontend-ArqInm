@@ -1,0 +1,176 @@
+<div class="row">
+    <nb-radio-group class="ml-3" [(ngModel)]="option">
+        <nb-radio *ngFor="let option of options" [value]="option.value">
+            {{ option.label }}
+        </nb-radio>
+    </nb-radio-group>
+
+    <div class="col-7 mt-2">
+        <nb-form-field class="row col mb-2">
+            <input nbInput fieldSize="large" #inputSearch (keyup.enter)="search(inputSearch.value)"
+                placeholder="Buscar por...">
+            <button nbSuffix nbButton ghost (click)="clear(inputSearch)">
+                <nb-icon [icon]="'close-outline'" pack="eva" [title]="'Borrar filtro'">
+                </nb-icon>
+            </button>
+        </nb-form-field>
+    </div>
+</div>
+<nb-card class="mt-2">
+    <nb-card-body>
+        <form class="row mt-2" [formGroup]="form">
+            <div class="col-12">
+                <div class="row">
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label for="inputSelected">Material de terminación</label>
+                            <select class="form-control" formControlName="terminationMaterial" (change)="change()"
+                                [class.is-invalid]="formHelperService.canShowFieldErrors(form.get('terminationMaterial'))">
+                                <option *ngFor="let terminationMaterial of terminationMaterial$ | async"
+                                    [value]="terminationMaterial._id">
+                                    {{terminationMaterial.name}}</option>
+                            </select>
+                            <ngx-error-field [field]="form.get('terminationMaterial')"></ngx-error-field>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label for="inputSelectedDetail">Detalle</label>
+                            <select class="form-control" formControlName="terminationMaterialDetail"
+                                [class.is-invalid]="formHelperService.canShowFieldErrors(form.get('terminationMaterialDetail'))">
+                                <option *ngFor="let terminationMaterialDetail of terminationMaterialDetail$ | async"
+                                    [value]="terminationMaterialDetail._id">
+                                    {{terminationMaterialDetail.name}}</option>
+                            </select>
+                            <ngx-error-field [field]="form.get('terminationMaterialDetail')"></ngx-error-field>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label for="inputProvider">Proveedor</label>
+                            <input type="text" id="inputProvider" class="form-control"
+                                [class.is-invalid]="formHelperService.canShowFieldErrors(form.get('provider'))"
+                                formControlName="provider">
+                            <ngx-error-field [field]="form.get('provider')"></ngx-error-field>
+                        </div>
+                    </div>
+                    <div class="col-sm-3 mt-4 mb-2">
+                        <button class="mr-2" nbButton hero status="primary" shape="semi-round" (click)="save()">
+                            <nb-icon [icon]="'save-outline'" pack="eva"></nb-icon>
+                            <span class="d-none d-md-block">Aceptar</span>
+                        </button>
+                        <button nbButton hero status="danger" shape="semi-round" (click)="resetForm()">
+                            <nb-icon [icon]="'close-outline'" pack="eva"></nb-icon>
+                            <span class="d-none d-md-block">Cancelar</span>
+                        </button>
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label for="inputCant">Cantidad</label>
+                            <input type="number" id="inputCant" class="form-control" [min]="1" step="1"
+                                onkeypress="return event.keyCode >= 48 && event.keyCode <= 57"
+                                [class.is-invalid]="formHelperService.canShowFieldErrors(form.get('cant'))"
+                                formControlName="cant">
+                            <ngx-error-field [field]="form.get('cant')"></ngx-error-field>
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label for="inputUnitOfMeasurement">Unidad de Medida</label>
+                            <input type="text" id="inputUnitOfMeasurement" class="form-control"
+                                [class.is-invalid]="formHelperService.canShowFieldErrors(form.get('unitOfMeasurement'))"
+                                formControlName="unitOfMeasurement">
+                            <ngx-error-field [field]="form.get('unitOfMeasurement')"></ngx-error-field>
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label for="inputUnitCost">Precio Unitario</label>
+                            <input type="number" id="inputUnitCost" class="form-control" [min]="1"
+                                [class.is-invalid]="formHelperService.canShowFieldErrors(form.get('unitCost'))"
+                                formControlName="unitCost">
+                            <ngx-error-field [field]="form.get('unitCost')"></ngx-error-field>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="description">Descripción</label>
+                            <textarea fullWidth id="description" class="form-control" rows="3"
+                                [class.is-invalid]="formHelperService.canShowFieldErrors(form.get('description'))"
+                                formControlName="description"></textarea>
+                            <ngx-error-field [field]="form.get('description')"></ngx-error-field>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </nb-card-body>
+</nb-card>
+
+<nb-card accent="info" class="mb-2 d-none d-md-block table-header">
+    <nb-card-header class="form-inline">
+        <div class="row col-12 text-center">
+            <div class="col-md-2">
+                Material de Terminación
+            </div>
+            <div class="col-md-2">
+                Detalle
+            </div>
+            <div class="col-md-2">
+                Proveedor
+            </div>
+            <div class="col-md-2">
+                Descripción
+            </div>
+            <div class="col-md-1">
+                Cantidad
+            </div>
+            <div class="col-md-1">
+                Precio Unit.
+            </div>
+            <div class="col-md-1">
+                Valor
+            </div>
+            <div class="col-md-1">
+                Acciones
+            </div>
+        </div>
+    </nb-card-header>
+</nb-card>
+<nb-card *ngFor="let terminationMaterialBudget of terminationMaterialBudget; let i = index;" class="mb-1">
+    <nb-card-body class="form-inline text-center">
+        <div class="row col-12">
+            <div class="col-md-2">
+                {{terminationMaterialBudget.terminationMaterial.name}}
+            </div>
+            <div class="col-md-2">
+                {{terminationMaterialBudget.terminationMaterialDetail.name}}
+            </div>
+            <div class="col-md-2">
+                {{terminationMaterialBudget.provider}}
+            </div>
+            <div class="col-md-2">
+                {{terminationMaterialBudget.description}}
+            </div>
+            <div class="col-md-1">
+                {{terminationMaterialBudget.cant}} <small>{{terminationMaterialBudget.unitOfMeasurement}}</small>
+            </div>
+            <div class="col-md-1">
+                $ {{terminationMaterialBudget.unitCost}}
+            </div>
+            <div class="col-md-1">
+                $ {{terminationMaterialBudget.cost}}
+            </div>
+            <div class="col-md-1">
+                <button class="mr-2" nbButton hero status="primary" shape="semi-round"
+                    (click)="edit(terminationMaterialBudget)">
+                    <nb-icon [icon]="'edit-2-outline'" pack="eva"></nb-icon>
+                </button>
+                <button nbButton hero status="danger" shape="semi-round"
+                    (click)="deleteManPowerBudget(terminationMaterialBudget)">
+                    <nb-icon [icon]="'trash-2-outline'" pack="eva"></nb-icon>
+                </button>
+            </div>
+        </div>
+    </nb-card-body>
+</nb-card>

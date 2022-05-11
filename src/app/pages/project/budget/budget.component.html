@@ -61,7 +61,9 @@
         </nb-tab>
         <nb-tab tabTitle="Materiales Gruesos"></nb-tab>
         <nb-tab tabTitle="Materiales de Instalaciones"></nb-tab>
-        <nb-tab tabTitle=" Materiales de Terminación"></nb-tab>
+        <nb-tab tabTitle=" Materiales de Terminación">
+            <ngx-budget-termination-material [budget]=budget></ngx-budget-termination-material>
+        </nb-tab>
         <nb-tab tabTitle=" ArqInm SRL"></nb-tab>
     </nb-tabset>
 
@@ -100,13 +102,29 @@
                                 <span><strong>Mano de Obra</strong></span>
                             </nb-card-header>
                             <nb-card-body class="text-right">
-                                <div *ngFor="let cost of budget[0].arrayCosts; let i = index;">
+                                <div *ngFor="let cost of budget[0].arrayCostsManPower; let i = index;">
                                     <small>{{budget[0].arrayManPowers[i]}}: $ {{cost}}</small>
                                 </div>
                             </nb-card-body>
                             <nb-card-footer class="text-right">
                                 <hr>
                                 <span>$ {{budget[0].totalCostManPower}}</span>
+                            </nb-card-footer>
+                        </nb-card>
+                    </div>
+                    <div class="col-sm-2">
+                        <nb-card status="primary">
+                            <nb-card-header>
+                                <span><strong>Materiales de Terminación</strong></span>
+                            </nb-card-header>
+                            <nb-card-body class="text-right">
+                                <div *ngFor="let cost of budget[0].arrayCostsTerminationMaterial; let i = index;">
+                                    <small>{{budget[0].arrayTerminationMaterial[i]}}: $ {{cost}}</small>
+                                </div>
+                            </nb-card-body>
+                            <nb-card-footer class="text-right">
+                                <hr>
+                                <span>$ {{budget[0].totalCostTerminationMaterial}}</span>
                             </nb-card-footer>
                         </nb-card>
                     </div>

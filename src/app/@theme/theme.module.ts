@@ -29,6 +29,7 @@ import { ErrorBlockComponent } from './components/error-block/error-block.compon
 import { BudgetProfessionalComponent } from './components/budget-professionals/budget-professionals.component';
 import { BudgetConstructionSupportComponent } from './components/budget-construction-support/budget-construction-support.component';
 import { BudgetManPowerComponent } from './components/budget-man-power/budget-man-power.component';
+import { BudgetTerminationMaterialComponent } from './components/budget-termination-material/budget-termination-material.component';
 
 
 const ANGULAR_MODULES = [CommonModule, FormsModule, RouterModule, ReactiveFormsModule, ClipboardModule ];
@@ -74,6 +75,7 @@ const COMPONENTS = [
   BudgetProfessionalComponent,
   BudgetConstructionSupportComponent,
   BudgetManPowerComponent,
+  BudgetTerminationMaterialComponent,
 ];
 
 const DIRECTIVE = [
