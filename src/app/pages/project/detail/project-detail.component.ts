@@ -25,9 +25,6 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
   input$ = new Subject<string>();
   loading = false;
   readOnly = false;
-  day: number;
-  month: number;
-  year: number;
 
   constructor(public formBuilder: FormBuilder,
     public projectsService: ProjectsService,
@@ -46,9 +43,6 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
     this.mapData();
     this.clients$ = this.clientsService.listClients();
     this.loadClients();
-    this.day = new Date().getDate();
-    this.month = new Date().getMonth() + 1;
-    this.year = new Date().getFullYear();
   }
 
   loadClients() {
