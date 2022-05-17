@@ -8,9 +8,12 @@ export interface Budget extends BaseEntity {
     totalCostConstructionSupport: number;
     totalCostManPower: number;
     totalCostTerminationMaterial: number;
+    totalCostThickMaterial: number;
     project: Project;
     arrayCostsManPower?: Array<number>;
     arrayManPowers?: Array<string>;
+    arrayCostsThickMaterial?: Array<number>;
+    arrayThickMaterial?: Array<string>;
     arrayCostsTerminationMaterial?: Array<number>;
     arrayTerminationMaterial?: Array<string>;
 

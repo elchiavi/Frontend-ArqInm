@@ -17,3 +17,6 @@ export * from './man-power-budget.model';
 export * from './termination-material.model';
 export * from './termination-material-detail.model';
 export * from './termination-material-budget.model';
+export * from './thick-material.model';
+export * from './thick-material-detail.model';
+export * from './thick-material-budget.model';

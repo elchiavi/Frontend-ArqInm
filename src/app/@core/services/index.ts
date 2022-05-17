@@ -14,3 +14,6 @@ export * from './manPowerBudgets.service';
 export * from './terminationMaterials.service';
 export * from './terminationMaterialDetails.service';
 export * from './terminationMaterialBudgets.service';
+export * from './thickMaterials.service';
+export * from './thickMaterialDetails.service';
+export * from './thickMaterialBudgets.service';

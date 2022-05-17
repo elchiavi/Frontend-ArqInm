@@ -59,7 +59,9 @@
         <nb-tab tabTitle="Mano de Obra">
             <ngx-budget-man-power [budget]=budget></ngx-budget-man-power>
         </nb-tab>
-        <nb-tab tabTitle="Materiales Gruesos"></nb-tab>
+        <nb-tab tabTitle="Materiales Gruesos">
+            <ngx-budget-thick-material [budget]=budget></ngx-budget-thick-material>
+        </nb-tab>
         <nb-tab tabTitle="Materiales de Instalaciones"></nb-tab>
         <nb-tab tabTitle=" Materiales de Terminación">
             <ngx-budget-termination-material [budget]=budget></ngx-budget-termination-material>
@@ -109,6 +111,22 @@
                             </nb-card-body>
                             <nb-card-footer class="text-right">
                                 <span>$ {{budget[0].totalCostManPower}}</span>
+                            </nb-card-footer>
+                        </nb-card>
+                    </div>
+                    <div class="col-sm-4">
+                        <nb-card status="primary" size="tiny">
+                            <nb-card-header>
+                                <span><strong>Materiales Gruesos</strong></span>
+                            </nb-card-header>
+                            <nb-card-body *ngIf="budget[0].arrayCostsThickMaterial.length > 0" class="text-right">
+                                <div *ngFor="let cost of budget[0].arrayCostsThickMaterial; let i = index;">
+                                    <small>{{budget[0].arrayThickMaterial[i]}}: $ {{cost}}</small>
+                                </div>
+                                <hr>
+                            </nb-card-body>
+                            <nb-card-footer class="text-right">
+                                <span>$ {{budget[0].totalCostThickMaterial}}</span>
                             </nb-card-footer>
                         </nb-card>
                     </div>

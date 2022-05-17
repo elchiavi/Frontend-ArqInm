@@ -30,6 +30,7 @@ import { BudgetProfessionalComponent } from './components/budget-professionals/b
 import { BudgetConstructionSupportComponent } from './components/budget-construction-support/budget-construction-support.component';
 import { BudgetManPowerComponent } from './components/budget-man-power/budget-man-power.component';
 import { BudgetTerminationMaterialComponent } from './components/budget-termination-material/budget-termination-material.component';
+import { BudgetThickMaterialComponent } from './components/budget-thick-material/budget-thick-material.component';
 
 
 const ANGULAR_MODULES = [CommonModule, FormsModule, RouterModule, ReactiveFormsModule, ClipboardModule ];
@@ -76,6 +77,7 @@ const COMPONENTS = [
   BudgetConstructionSupportComponent,
   BudgetManPowerComponent,
   BudgetTerminationMaterialComponent,
+  BudgetThickMaterialComponent,
 ];
 
 const DIRECTIVE = [
