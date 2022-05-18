@@ -21,7 +21,7 @@ export class BudgetManPowerComponent implements OnInit, OnDestroy {
   @Input() budget: Budget;
   manPower$: Observable<ManPower[]>;
   manPowerSkills$: Observable<ManPowerSkill[]>;
-  manPowerBudgets: ManPowerBudget;
+  manPowerBudgets: ManPowerBudget[];
   preCost: number;
   update = false;
   options = [
@@ -72,7 +72,7 @@ export class BudgetManPowerComponent implements OnInit, OnDestroy {
   getManPowersBudgets(filter?: string) {
     const id = this.budget[0]._id;
     this.manPowerBudgetsService.getManPowersBudgets(id, filter, this.option).pipe(
-      untilComponentDestroy.apply(this)).subscribe((manPowerBudgets: ManPowerBudget) => {
+      untilComponentDestroy.apply(this)).subscribe((manPowerBudgets: ManPowerBudget[]) => {
         this.manPowerBudgets = manPowerBudgets;
       });
   }

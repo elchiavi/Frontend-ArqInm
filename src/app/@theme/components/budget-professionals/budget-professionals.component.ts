@@ -21,7 +21,7 @@ export class BudgetProfessionalComponent implements OnInit, OnDestroy {
   @Input() budget: Budget;
   form: FormGroup;
   professional$: Observable<Professional[]>;
-  professionalBudgets: ProfessionalBudget;
+  professionalBudgets: ProfessionalBudget[];
   preCost: number;
   update = false;
 
@@ -56,7 +56,7 @@ export class BudgetProfessionalComponent implements OnInit, OnDestroy {
   getProfessionalBudgets(filter?: string) {
     const id = this.budget[0]._id;
     this.professionalBudgetsService.getProfessionalBudgets(id, filter).pipe(
-      untilComponentDestroy.apply(this)).subscribe((professionalBudgets: ProfessionalBudget) => {
+      untilComponentDestroy.apply(this)).subscribe((professionalBudgets: ProfessionalBudget[]) => {
         this.professionalBudgets = professionalBudgets;
       });
   }

@@ -23,7 +23,7 @@ export class BudgetConstructionSupportComponent implements OnInit, OnDestroy {
   form: FormGroup;
   @Input() budget: Budget;
   constructionSupport$: Observable<ConstructionSupport[]>;
-  constructionSupportBudgets: ConstructionSupportBudget;
+  constructionSupportBudgets: ConstructionSupportBudget[];
   preCost: number;
   update = false;
 
@@ -58,7 +58,7 @@ export class BudgetConstructionSupportComponent implements OnInit, OnDestroy {
   getConstructionSupportBudgets(filter?: string) {
     const id = this.budget[0]._id;
     this.constructionSupportBudgetsService.getConstructionSupportsBudgets(id, filter).pipe(
-      untilComponentDestroy.apply(this)).subscribe((constructionSupportBudgets: ConstructionSupportBudget) => {
+      untilComponentDestroy.apply(this)).subscribe((constructionSupportBudgets: ConstructionSupportBudget[]) => {
         this.constructionSupportBudgets = constructionSupportBudgets;
       });
   }

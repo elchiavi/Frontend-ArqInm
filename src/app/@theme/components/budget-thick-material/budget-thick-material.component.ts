@@ -23,11 +23,11 @@ export class BudgetThickMaterialComponent implements OnInit, OnDestroy {
     @Input() budget: Budget;
     thickMaterial$: Observable<ThickMaterial[]>;
     thickMaterialDetail$: Observable<ThickMaterialDetail[]>;
-    thickMaterialBudget: ThickMaterialBudget;
+    thickMaterialBudget: ThickMaterialBudget[];
     preCost: number;
     update = false;
     options = [
-        { value: 'thickMaterial', label: 'Material grueso' },
+        { value: 'thickMaterial', label: 'Material Grueso' },
         { value: 'provider', label: 'Proveedor' },
     ];
     option = 'thickMaterial';
@@ -76,7 +76,7 @@ export class BudgetThickMaterialComponent implements OnInit, OnDestroy {
     getThickMaterialBudgets(filter?: string) {
         const id = this.budget[0]._id;
         this.thickMaterialBudgetsService.getThickMaterialBudgets(id, filter, this.option).pipe(
-            untilComponentDestroy.apply(this)).subscribe((thickMaterialBudget: ThickMaterialBudget) => {
+            untilComponentDestroy.apply(this)).subscribe((thickMaterialBudget: ThickMaterialBudget[]) => {
                 this.thickMaterialBudget = thickMaterialBudget;
             });
     }

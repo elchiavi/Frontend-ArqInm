@@ -24,11 +24,11 @@ export class BudgetTerminationMaterialComponent implements OnInit, OnDestroy {
   @Input() budget: Budget;
   terminationMaterial$: Observable<TerminationMaterial[]>;
   terminationMaterialDetail$: Observable<TerminationMaterialDetail[]>;
-  terminationMaterialBudget: TerminationMaterialBudget;
+  terminationMaterialBudget: TerminationMaterialBudget[];
   preCost: number;
   update = false;
   options = [
-    { value: 'terminationMaterial', label: 'Material de terminación' },
+    { value: 'terminationMaterial', label: 'Material de Terminación' },
     { value: 'provider', label: 'Proveedor' },
   ];
   option = 'terminationMaterial';
@@ -77,7 +77,7 @@ export class BudgetTerminationMaterialComponent implements OnInit, OnDestroy {
   getTerminationMaterialBudgets(filter?: string) {
     const id = this.budget[0]._id;
     this.terminationMaterialBudgetsService.getTerminationMaterialBudgets(id, filter, this.option).pipe(
-      untilComponentDestroy.apply(this)).subscribe((terminationMaterialBudget: TerminationMaterialBudget) => {
+      untilComponentDestroy.apply(this)).subscribe((terminationMaterialBudget: TerminationMaterialBudget[]) => {
         this.terminationMaterialBudget = terminationMaterialBudget;
       });
   }
