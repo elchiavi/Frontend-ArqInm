@@ -62,11 +62,15 @@
         <nb-tab tabTitle="Materiales Gruesos">
             <ngx-budget-thick-material [budget]=budget></ngx-budget-thick-material>
         </nb-tab>
-        <nb-tab tabTitle="Materiales de Instalaciones"></nb-tab>
+        <nb-tab tabTitle="Materiales de Instalaciones">
+            <ngx-budget-installation-material [budget]=budget></ngx-budget-installation-material>
+        </nb-tab>
         <nb-tab tabTitle=" Materiales de Terminación">
             <ngx-budget-termination-material [budget]=budget></ngx-budget-termination-material>
         </nb-tab>
-        <nb-tab tabTitle=" ArqInm SRL"></nb-tab>
+        <nb-tab tabTitle=" ArqInm SRL">
+            <ngx-budget-arqinm [budget]=budget></ngx-budget-arqinm>
+        </nb-tab>
     </nb-tabset>
 
     <div class="col-sm-12">
@@ -77,8 +81,60 @@
                 </div>
             </nb-card-header>
             <nb-card-body>
-                <div class="row">
-                    <div class="col-sm-4">
+                <div>
+                    <span><strong>Profesionales y Otros</strong></span><br>
+                    <div class="text-sm-right">
+                        <span>Sub Total: $ {{budget[0].totalCostProfessional}}</span>
+                    </div>
+                    <hr>
+                    <span><strong>Soporte de Obra</strong></span><br>
+                    <div class="text-sm-right">
+                        <span>Sub Total: $ {{budget[0].totalCostConstructionSupport}}</span>
+                    </div>
+                    <strong>
+                        <hr>
+                    </strong>
+                    <span><strong>Mano de Obra</strong></span><br>
+                    <div class="text-sm-right">
+                        <div *ngFor="let cost of budget[0].arrayCostsManPower; let i = index;">
+                            <small>{{budget[0].arrayManPowers[i]}}: $ {{cost}}</small>
+                        </div>
+                        <br>
+                        <span>Sub Total: $ {{budget[0].totalCostManPower}}</span>
+                    </div>
+                    <hr>
+                    <span><strong>Materiales Gruesos</strong></span><br>
+                    <div class="text-sm-right">
+                        <div *ngFor="let cost of budget[0].arrayCostsThickMaterial; let i = index;">
+                            <small>{{budget[0].arrayThickMaterial[i]}}: $ {{cost}}</small>
+                        </div>
+                        <br>
+                        <span>Sub Total: $ {{budget[0].totalCostThickMaterial}}</span>
+                    </div>
+                    <hr>
+                    <span><strong>Materiales de Instalación</strong></span><br>
+                    <div class="text-sm-right">
+                        <div *ngFor="let cost of budget[0].arrayCostsInstallationMaterial; let i = index;">
+                            <small>{{budget[0].arrayInstallationMaterial[i]}}: $ {{cost}}</small>
+                        </div>
+                        <br>
+                        <span>Sub Total: $ {{budget[0].totalCostInstallationMaterial}}</span>
+                    </div>
+                    <hr>
+                    <span><strong>Materiales de Terminación</strong></span><br>
+                    <div class="text-sm-right">
+                        <div *ngFor="let cost of budget[0].arrayCostsTerminationMaterial; let i = index;">
+                            <small>{{budget[0].arrayTerminationMaterial[i]}}: $ {{cost}}</small>
+                        </div>
+                        <br>
+                        <span>Sub Total: $ {{budget[0].totalCostTerminationMaterial}}</span>
+                    </div>
+                    <hr>
+                    <span><strong>ArqInm SRL</strong></span><br>
+                    <div class="text-sm-right">
+                        <span>Sub Total: $ {{budget[0].totalCostArqInm}}</span>
+                    </div>
+                    <!-- <div class="col-sm-4">
                         <nb-card status="primary">
                             <nb-card-header>
                                 <span><strong>Profesionales y Otros</strong></span>
@@ -129,6 +185,22 @@
                                 <span>$ {{budget[0].totalCostThickMaterial}}</span>
                             </nb-card-footer>
                         </nb-card>
+                    </div> -->
+                    <!-- <div class="col-sm-4">
+                        <nb-card status="primary">
+                            <nb-card-header>
+                                <span><strong>Materiales de Instalación</strong></span>
+                            </nb-card-header>
+                            <nb-card-body *ngIf="budget[0].arrayCostsInstallationMaterial.length > 0" class="text-right">
+                                <div *ngFor="let cost of budget[0].arrayCostsInstallationMaterial; let i = index;">
+                                    <small>{{budget[0].arrayInstallationMaterial[i]}}: $ {{cost}}</small>
+                                </div>
+                                <hr>
+                            </nb-card-body>
+                            <nb-card-footer class="text-right">
+                                <span>$ {{budget[0].totalCostInstallationMaterial}}</span>
+                            </nb-card-footer>
+                        </nb-card>
                     </div>
                     <div class="col-sm-4">
                         <nb-card status="primary">
@@ -145,8 +217,8 @@
                                 <span>$ {{budget[0].totalCostTerminationMaterial}}</span>
                             </nb-card-footer>
                         </nb-card>
-                    </div>
-                </div>               
+                    </div> -->
+                </div>
             </nb-card-body>
             <nb-card-footer class="text-sm-right">
                 <hr>

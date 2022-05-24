@@ -31,6 +31,8 @@ import { BudgetConstructionSupportComponent } from './components/budget-construc
 import { BudgetManPowerComponent } from './components/budget-man-power/budget-man-power.component';
 import { BudgetTerminationMaterialComponent } from './components/budget-termination-material/budget-termination-material.component';
 import { BudgetThickMaterialComponent } from './components/budget-thick-material/budget-thick-material.component';
+import { BudgetInstallationMaterialComponent } from './components/budget-installation-material/budget-installation-material.component';
+import { BudgetArqinmComponent } from './components/budget-arqinm/budget-arqinm.component';
 
 
 const ANGULAR_MODULES = [CommonModule, FormsModule, RouterModule, ReactiveFormsModule, ClipboardModule ];
@@ -78,6 +80,8 @@ const COMPONENTS = [
   BudgetManPowerComponent,
   BudgetTerminationMaterialComponent,
   BudgetThickMaterialComponent,
+  BudgetInstallationMaterialComponent,
+  BudgetArqinmComponent,
 ];
 
 const DIRECTIVE = [

@@ -17,3 +17,6 @@ export * from './terminationMaterialBudgets.service';
 export * from './thickMaterials.service';
 export * from './thickMaterialDetails.service';
 export * from './thickMaterialBudgets.service';
+export * from './installationMaterials.service';
+export * from './installationMaterialDetails.service';
+export * from './installationMaterialBudgets.service';

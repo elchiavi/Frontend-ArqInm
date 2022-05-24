@@ -1,0 +1,83 @@
+<nb-card>
+    <nb-card-body>
+        <form class="row" [formGroup]="form">
+                <div class="col-sm-4">
+                    <nb-card status="primary">
+                        <nb-card-header>
+                            <span><strong>Profesionales y Otros</strong></span>
+                        </nb-card-header>
+                        <nb-card-body class="text-right">
+                            <span>$ {{budget[0].totalCostProfessional}}</span>
+                        </nb-card-body>
+                    </nb-card>
+                </div>
+                <div class="col-sm-4">
+                    <nb-card status="primary">
+                        <nb-card-header>
+                            <span><strong>Soporte de Obra</strong></span>
+                        </nb-card-header>
+                        <nb-card-body class="text-right">
+                            <span>$ {{budget[0].totalCostConstructionSupport}}</span>
+                        </nb-card-body>
+                    </nb-card>
+                </div>
+                <div class="col-sm-4">
+                    <nb-card status="primary">
+                        <nb-card-header>
+                            <span><strong>Mano de Obra</strong></span>
+                        </nb-card-header>
+                        <nb-card-footer class="text-right">
+                            <span>$ {{budget[0].totalCostManPower}}</span>
+                        </nb-card-footer>
+                    </nb-card>
+                </div>
+                <div class="col-sm-4">
+                    <nb-card status="primary">
+                        <nb-card-header>
+                            <span><strong>Materiales Gruesos</strong></span>
+                        </nb-card-header>
+                        <nb-card-footer class="text-right">
+                            <span>$ {{budget[0].totalCostThickMaterial}}</span>
+                        </nb-card-footer>
+                    </nb-card>
+                </div>
+                <div class="col-sm-4">
+                    <nb-card status="primary">
+                        <nb-card-header>
+                            <span><strong>Materiales de Instalación</strong></span>
+                        </nb-card-header>
+                        <nb-card-footer class="text-right">
+                            <span>$ {{budget[0].totalCostInstallationMaterial}}</span>
+                        </nb-card-footer>
+                    </nb-card>
+                </div>
+                <div class="col-sm-4">
+                    <nb-card status="primary">
+                        <nb-card-header>
+                            <span><strong>Materiales de Terminación</strong></span>
+                        </nb-card-header>
+                        <nb-card-footer class="text-right">
+                            <span>$ {{budget[0].totalCostTerminationMaterial}}</span>
+                        </nb-card-footer>
+                    </nb-card>
+                </div>
+                <div class="col-sm-2">
+                    <label for="inputCost">Valor</label>
+                    <input type="number" id="inputCost" class="form-control" [min]="1"
+                        [class.is-invalid]="formHelperService.canShowFieldErrors(form.get('cost'))"
+                        formControlName="cost">
+                </div>                        
+                <div class="col-sm-4 mt-2">
+                    <ngx-error-field [field]="form.get('cost')"></ngx-error-field>
+                    <button class="mr-2" nbButton hero status="primary" shape="semi-round" (click)="save()">
+                        <nb-icon [icon]="'save-outline'" pack="eva"></nb-icon>
+                        <span class="d-none d-md-block">Aceptar</span>
+                    </button>
+                    <button nbButton hero status="danger" shape="semi-round" (click)="resetForm()">
+                        <nb-icon [icon]="'close-outline'" pack="eva"></nb-icon>
+                        <span class="d-none d-md-block">Cancelar</span>
+                    </button>
+                </div>
+        </form>
+    </nb-card-body>
+</nb-card>

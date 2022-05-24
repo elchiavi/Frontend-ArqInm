@@ -20,3 +20,6 @@ export * from './termination-material-budget.model';
 export * from './thick-material.model';
 export * from './thick-material-detail.model';
 export * from './thick-material-budget.model';
+export * from './installation-material.model';
+export * from './installation-material-detail.model';
+export * from './installation-material-budget.model';
