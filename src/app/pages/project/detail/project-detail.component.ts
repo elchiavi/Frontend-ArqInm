@@ -42,17 +42,6 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
     this.createForm();
     this.mapData();
     this.clients$ = this.clientsService.listClients();
-    this.loadClients();
-  }
-
-  loadClients() {
-    this.clientsService.listClients().pipe(
-      untilComponentDestroy.apply(this)).subscribe((clients: Client[]) => {
-        clients.forEach((client: Client) => {
-          client.surname = client.surname.concat(', ' + client.name);
-        });
-        this.clients = clients;
-      });
   }
 
   save() {
@@ -90,6 +79,7 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
       termDays: [null, Validators.required],
       typeProject: [null, Validators.required],
       type: [null, Validators.required],
+      typeConstruction: [null, Validators.required],
       totalArea: [],
       lengthArea: [],
       widthArea: [],
@@ -107,6 +97,52 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
       dnmPartTwo: [null, Validators.required],
       heightPartOne: [null, Validators.required],
       heightPartTwo: [null, Validators.required],
+      lowLevel: [],
+      levels: [],
+      living: [],
+      livingDining: [],
+      dining: [],
+      semiLiving: [],
+      kitchen: [],
+      diningKitchen: [],
+      semiKitchen: [],
+      ambienceDetail: [],
+      masterBedroomWithSuiteAndDressing: [],
+      masterBedroomWithSuite: [],
+      masterBedroom: [],
+      secondaryBedroom: [],
+      secondaryBedroomAndDressing: [],
+      flexSpace: [],
+      bedRoomDetail: [],
+      laundry: [],
+      laundryPantry: [],
+      pantry: [],
+      deposit: [],
+      serviceYard: [],
+      variousDetail: [],
+      bathroom: [],
+      bathroomWithRestroom: [],
+      bathService: [],
+      outsideBathroom: [],
+      bathroomDetail: [],
+      coveredGarage: [],
+      semiCoveredGarage: [],
+      openGarage: [],
+      entraceWall: [],
+      entraceHall: [],
+      garageDetail: [],
+      blindGallery: [],
+      translucentGallery: [],
+      pergola: [],
+      coveredLight: [],
+      uncoveredLight: [],
+      galleryDetail: [],
+      fiberWaterMirror: [],
+      concreteWaterMirror: [],
+      quincho: [],
+      grill: [],
+      grillWithBar: [],
+      mirrorDetail: [],
     });
   }
 
