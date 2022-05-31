@@ -5,8 +5,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Page, Project } from '../../../@core/models';
 import { NbDialogService } from '@nebular/theme';
 import { ProjectsService } from '../../../@core/services';
-import { ToastService } from '../../../@theme/utils/toast.service';
+import { Action, ToastService } from '../../../@theme/utils/toast.service';
 import { SortEvent, NgxSortableHeaderDirective, Sortable } from '../../../@theme/directives/sortable-header.directive';
+import { ModalConfirmComponent } from '../../../@theme/components';
 
 @Component({
     selector: 'ngx-project-list',
@@ -65,6 +66,25 @@ export class ProjectListComponent implements OnInit, OnDestroy, Sortable {
             inputSearch.value = '';
             this.pageChange();
         }
+    }
+
+    cloneProject(project: Project) {
+        const modalRef = this.dialogService.open(ModalConfirmComponent, { closeOnBackdropClick: false });
+        const description = `Se clonará el Proyecto de Obra "${project.name}" y se generará un proyecto de Construcción de Obra`;
+        modalRef.componentRef.instance.title = 'Confirmación';
+        modalRef.componentRef.instance.message = `${description} ¿Desea continuar?`;
+        modalRef.onClose.subscribe((userResponse) => {
+            if (userResponse) {
+                this.projectsService.cloneProject(project).pipe(
+                    untilComponentDestroy.apply(this)).subscribe(() => {
+                        const action: Action = this.new ? 'create' : 'update';
+                        this.toastService.showToast('El proyecto', action, 'success');
+                        this.pageChange();
+                    }, () => {
+                        this.toastService.error('Error inesperado, contactar a su administrador.');
+                    });
+            }
+        });
     }
 
     ngOnDestroy() { }

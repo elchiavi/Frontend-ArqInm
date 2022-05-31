@@ -19,4 +19,8 @@ export class ProjectsService extends BaseService<Project> {
         const project: Project = form.getRawValue();
         return isNew ? this.add(project) : this.update(project);
     }
+
+    cloneProject(project: Project): Observable<Project> {
+        return this.httpClient.post<Project>(`${this.fullPath}/clone`, project);
+    }
 }

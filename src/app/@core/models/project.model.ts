@@ -22,6 +22,7 @@ export interface Project extends BaseEntity {
     typeProject: string;
     type: string;
     typeConstruction: string;
+    cloned: boolean;
     lengthArea: number;
     widthArea: number;
     totalArea?: number;
