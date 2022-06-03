@@ -767,7 +767,7 @@
                             </nb-card>
                         </nb-card-body>
                     </nb-card>
-                    <div class="row">
+                    <div class="row" *ngIf="!readOnly">
                         <div class="col-12 text-right">
                             <button class="mt-1" nbButton hero status="danger" shape="semi-round"
                                 [routerLink]="['/pages/projects']">

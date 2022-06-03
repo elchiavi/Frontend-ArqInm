@@ -10,7 +10,7 @@
         </nb-form-field>
     </div>
 </div>
-<nb-card class="mt-2">
+<nb-card class="mt-2" *ngIf="budget[0].project.state === 'Iniciado'">
     <nb-card-body>
         <form class="row mt-2" [formGroup]="form">
             <div class="col-12">
@@ -60,7 +60,7 @@
             <div class="col-md-4">
                 Costo
             </div>
-            <div class="col-md-4">
+            <div class="col-md-4" *ngIf="budget[0].project.state === 'Iniciado'">
                 Acciones
             </div>
         </div>

@@ -36,7 +36,7 @@ export class NbAuthJWTInterceptor implements HttpInterceptor {
             return next.handle(req).pipe(catchError((errorResponse: any) => {
               if (errorResponse instanceof HttpErrorResponse) {
                 if (FormUtils.handleFormValidationErrors(errorResponse.error)) {
-                  if (errorResponse.status === 401 && errorResponse.error.code === 'TOKEN_EXPIRED') {
+                  if (errorResponse.status === 401) {
                     this.router.navigate(['/auth/logout']);
                   }
                 }

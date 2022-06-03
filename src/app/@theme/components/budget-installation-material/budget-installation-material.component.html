@@ -16,7 +16,7 @@
         </nb-form-field>
     </div>
 </div>
-<nb-card class="mt-2">
+<nb-card class="mt-2" *ngIf="budget[0].project.state === 'Iniciado'">
     <nb-card-body>
         <form class="row mt-2" [formGroup]="form">
             <div class="col-12">
@@ -54,7 +54,7 @@
                             <ngx-error-field [field]="form.get('provider')"></ngx-error-field>
                         </div>
                     </div>
-                    <div class="col-sm-3 mt-4 mb-2">
+                    <div class="col-sm-3 mt-4 mb-2" *ngIf="budget[0].project.state === 'Iniciado'">
                         <button class="mr-2 mt-2" size="small" nbButton hero status="primary" shape="semi-round" (click)="save()">
                             <nb-icon [icon]="'save-outline'" pack="eva"></nb-icon>
                             <span class="d-none d-md-block">Aceptar</span>
@@ -131,7 +131,7 @@
             <div class="col-md-1">
                 Valor
             </div>
-            <div class="col-md-2">
+            <div class="col-md-2" *ngIf="budget[0].project.state === 'Iniciado'">
                 Acciones
             </div>
         </div>

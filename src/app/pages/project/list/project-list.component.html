@@ -48,23 +48,32 @@
     <nb-card *ngFor="let project of projectPage?.docs; let i = index;" class="mb-1">
         <nb-card-body class="form-inline text-center">
             <div class="row col-12">
-                <span class="col-md-2"><nb-icon *ngIf="project.additionalProject" [icon]="'layers'" style="color: #ec8e82" title="Es adicional" pack="eva"></nb-icon> {{ project.name }}</span> 
+                <span class="col-md-2">
+                    <nb-icon *ngIf="project.additionalProject" [icon]="'layers'" style="color: #ec8e82"
+                        title="Es adicional" pack="eva"></nb-icon> {{ project.name }}
+                </span>
                 <span class="col-md-2">{{ project.client.name }} {{ project.client.surname }}</span>
                 <span class="col-md-2">{{ project.typeProject }}</span>
                 <span class="col-md-2">{{ project.startDate | date: 'dd/MM/yyyy' }}</span>
                 <span class="col-md-1">{{ project.termDays }} días</span>
                 <span class="col-md-2">{{ project.state }}</span>
                 <div class="col-md-1">
-                    <nb-icon style="color: #F3B1A1" class="mr-1 pointer" [icon]="'file-outline'" title="Presupuesto" pack="eva"
-                        [routerLink]="['/pages/projects', project._id, 'budget']"></nb-icon>
-                    <nb-icon style="color: #F3B1A1" class="mr-1 pointer" [icon]="'edit-outline'" title="Editar" pack="eva"
-                        [routerLink]="['/pages/projects', project._id]"></nb-icon>
+                    <nb-icon style="color: #F3B1A1" class="mr-1 pointer" [icon]="'file-outline'" title="Presupuesto"
+                        pack="eva" [routerLink]="['/pages/projects', project._id, 'budget']"></nb-icon>
+                    <nb-icon *ngIf="project.state === 'Finalizado'" style="color: #F3B1A1" class="mr-1 pointer" [icon]="'search-outline'" title="Ver Detalle"
+                        pack="eva" [routerLink]="['/pages/projects', project._id]"></nb-icon>
+                    <nb-icon *ngIf="project.state === 'Iniciado'" style="color: #F3B1A1" class="mr-1 pointer" [icon]="'edit-outline'" title="Editar"
+                        pack="eva" [routerLink]="['/pages/projects', project._id]"></nb-icon>
                     <a href={{project.linkDrive}} target="_blank" style="color: #F3B1A1;">
                         <nb-icon class="mr-1 pointer" [icon]="'attach-outline'" title="Ir a los adjuntos" pack="eva">
                         </nb-icon>
                     </a>
-                    <nb-icon *ngIf="project.typeProject === 'Proyecto de Obra' && !project.cloned" style="color: #F3B1A1" class="mr-1 pointer" [icon]="'copy-outline'" title="Generar Construcción de Obra" pack="eva"
-                    (click)="cloneProject(project)"></nb-icon>
+                    <nb-icon *ngIf="project.state === 'Iniciado'" style="color: #F3B1A1" class="mr-1 pointer"
+                        [icon]="'checkmark-square-outline'" title="Finalizar Proyecto" pack="eva"
+                        (click)="closeProject(project)"></nb-icon>
+                    <nb-icon *ngIf="project.typeProject === 'Proyecto de Obra' && !project.cloned"
+                        style="color: #F3B1A1" class="mr-1 pointer" [icon]="'copy-outline'"
+                        title="Generar Construcción de Obra" pack="eva" (click)="cloneProject(project)"></nb-icon>
                 </div>
             </div>
         </nb-card-body>

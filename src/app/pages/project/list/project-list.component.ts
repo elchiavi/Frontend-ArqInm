@@ -87,6 +87,26 @@ export class ProjectListComponent implements OnInit, OnDestroy, Sortable {
         });
     }
 
+    closeProject(project: Project) {
+        const modalRef = this.dialogService.open(ModalConfirmComponent, { closeOnBackdropClick: false });
+        const description = `Se finalizará la Obra "${project.name}"`;
+        modalRef.componentRef.instance.title = 'Confirmación';
+        modalRef.componentRef.instance.message = `${description} ¿Desea continuar?`;
+        modalRef.onClose.subscribe((userResponse) => {
+            if (userResponse) {
+                project.state = 'Finalizado';
+                project.client = project.client._id;
+                this.projectsService.update(project).pipe(
+                    untilComponentDestroy.apply(this)).subscribe(() => {
+                        this.toastService.success('La Obra ha sido finalizado correctamente');
+                        this.pageChange();
+                    }, () => {
+                        this.toastService.error('Error inesperado, contactar a su administrador.');
+                    });
+            }
+        });
+    }
+
     ngOnDestroy() { }
 
 }

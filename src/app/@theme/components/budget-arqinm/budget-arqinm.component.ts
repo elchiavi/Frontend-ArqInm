@@ -32,6 +32,9 @@ export class BudgetArqinmComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.createForm();
     this.form.patchValue({ ['cost']: this.budget[0].totalCostArqInm });
+    if (this.budget[0].project.state === 'Finalizado') {
+      this.form.get('cost').disable();
+    }
   }
 
   resetForm() {

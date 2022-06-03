@@ -67,7 +67,7 @@
                         [class.is-invalid]="formHelperService.canShowFieldErrors(form.get('cost'))"
                         formControlName="cost">
                 </div>                        
-                <div class="col-sm-4 mt-2">
+                <div class="col-sm-4 mt-2" *ngIf="budget[0].project.state === 'Iniciado'">
                     <ngx-error-field [field]="form.get('cost')"></ngx-error-field>
                     <button class="mr-2" nbButton hero status="primary" shape="semi-round" (click)="save()">
                         <nb-icon [icon]="'save-outline'" pack="eva"></nb-icon>

@@ -38,7 +38,6 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.project = this.activatedRoute.snapshot.data['project'];
     this.new = !this.project;
-    this.readOnly = !this.new;
     this.createForm();
     this.mapData();
     this.clients$ = this.clientsService.listClients();
@@ -150,6 +149,10 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
     if (!this.new) {
       this.form.reset(this.project);
       this.form.patchValue({['client']: this.project.client._id});
+      if (this.project.state === 'Finalizado') {
+        this.readOnly = true;
+        this.form.disable();
+      }
     }
   }
 
