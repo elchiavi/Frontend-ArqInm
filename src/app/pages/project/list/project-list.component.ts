@@ -36,6 +36,7 @@ export class ProjectListComponent implements OnInit, OnDestroy, Sortable {
         this.projectsService.getPage(pageNumber, filter).pipe(
             untilComponentDestroy.apply(this)).subscribe((projectPage: Page<Project>) => {
                 this.projectPage = projectPage;
+                this.projectPage.docs = this.projectPage.docs.filter(item => item.multiFamilyProject === null);
             });
     }
 

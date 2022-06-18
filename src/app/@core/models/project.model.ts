@@ -1,10 +1,12 @@
 import { BaseEntity } from './base-entity.model';
 import { Client } from './client.model';
+import { MultiProject } from './multi-project.model';
 
 export interface Project extends BaseEntity {
     name: string;
     client: Client;
     linkDrive: string;
+    multiFamilyProject: MultiProject;
     state: string;
     departure: string;
     circ: string;

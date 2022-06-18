@@ -1,0 +1,87 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="row mb-3">
+                <div class="col-sm-6">
+                    <h5 class="title">{{name}}</h5>
+                </div>
+
+                <div class="col-sm-6 text-sm-right">
+                    <button size="small" nbButton hero outline shape="semi-round"
+                        [routerLink]="['/pages/multiProjects']">
+                        <nb-icon [icon]="'arrow-back-outline'" pack="eva"></nb-icon>
+                        <span class="d-none d-md-block text-dark">Regresar</span>
+                    </button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <nb-card class="card-border-oval">
+                        <nb-card-header>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <h6>Unidades Funcionales</h6>
+                                </div>
+                                <div class="col-6 text-right">
+                                    <button nbButton hero status="primary" shape="semi-round" (click)="openModal()">
+                                        <nb-icon [icon]="'folder-add-outline'" pack="eva"></nb-icon>
+                                        <span class="d-none d-md-block">Nueva UF</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </nb-card-header>
+                        <nb-card-body>
+                            <nb-card accent="info" class="mb-2 d-none d-md-block table-header">
+                                <nb-card-header class="form-inline">
+                                    <div class="row col-12 text-center">
+                                        <span class="col-md-2">Nombre</span>
+                                        <span class="col-md-2">Cliente</span>
+                                        <span class="col-md-2">Tipo</span>
+                                        <span class="col-md-2">Fecha Inicio</span>
+                                        <span class="col-md-1">Plazo</span>
+                                        <span class="col-md-2">Estado</span>
+                                        <span class="col-md-1">Acciones</span>
+                                    </div>
+                                </nb-card-header>
+                            </nb-card>
+                            
+                            <nb-card *ngFor="let project of projects; let i = index;" class="mb-1">
+                                <nb-card-body class="form-inline text-center">
+                                    <div class="row col-12">
+                                        <span class="col-md-2">
+                                            <nb-icon *ngIf="project.additionalProject" [icon]="'layers'" style="color: #ec8e82"
+                                                title="Es adicional" pack="eva"></nb-icon> {{ project.name }}
+                                        </span>
+                                        <span class="col-md-2">{{ project.client.name }} {{ project.client.surname }}</span>
+                                        <span class="col-md-2">{{ project.typeProject }}</span>
+                                        <span class="col-md-2">{{ project.startDate | date: 'dd/MM/yyyy' }}</span>
+                                        <span class="col-md-1">{{ project.termDays }} días</span>
+                                        <span class="col-md-2">{{ project.state }}</span>
+                                        <div class="col-md-1">
+                                            <nb-icon style="color: #F3B1A1" class="mr-1 pointer" [icon]="'file-outline'" title="Presupuesto"
+                                                pack="eva" [routerLink]="['/pages/projects', project._id, 'budget']"></nb-icon>
+                                            <nb-icon *ngIf="project.state === 'Finalizado'" style="color: #F3B1A1" class="mr-1 pointer" [icon]="'search-outline'" title="Ver Detalle"
+                                                pack="eva" [routerLink]="['/pages/projects', project._id]"></nb-icon>
+                                            <nb-icon *ngIf="project.state === 'Iniciado'" style="color: #F3B1A1" class="mr-1 pointer" [icon]="'edit-outline'" title="Editar"
+                                                pack="eva" [routerLink]="['/pages/projects', project._id]"></nb-icon>
+                                            <a href={{project.linkDrive}} target="_blank" style="color: #F3B1A1;">
+                                                <nb-icon class="mr-1 pointer" [icon]="'attach-outline'" title="Ir a los adjuntos" pack="eva">
+                                                </nb-icon>
+                                            </a>
+                                            <nb-icon *ngIf="project.state === 'Iniciado'" style="color: #F3B1A1" class="mr-1 pointer"
+                                                [icon]="'checkmark-square-outline'" title="Finalizar Proyecto" pack="eva"
+                                                (click)="closeProject(project)"></nb-icon>
+                                            <nb-icon *ngIf="project.typeProject === 'Proyecto de Obra' && !project.cloned"
+                                                style="color: #F3B1A1" class="mr-1 pointer" [icon]="'copy-outline'"
+                                                title="Generar Construcción de Obra" pack="eva" (click)="cloneProject(project)"></nb-icon>
+                                        </div>
+                                    </div>
+                                </nb-card-body>
+                            </nb-card>
+                        </nb-card-body>
+                    </nb-card>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

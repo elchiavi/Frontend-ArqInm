@@ -20,3 +20,4 @@ export * from './thickMaterialBudgets.service';
 export * from './installationMaterials.service';
 export * from './installationMaterialDetails.service';
 export * from './installationMaterialBudgets.service';
+export * from './multiProjects.service';

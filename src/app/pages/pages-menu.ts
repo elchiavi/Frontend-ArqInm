@@ -7,7 +7,12 @@ export const MENU_ITEMS: NbMenuItem[] = [
     link: '/pages/clients',
   },
   {
-    title: 'Proyectos',
+    title: 'Multi Familiar',
+    icon: 'film',
+    link: '/pages/multiProjects',
+  },
+  {
+    title: 'Uni Familar',
     icon: 'home',
     link: '/pages/projects',
     home: true,

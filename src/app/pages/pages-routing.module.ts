@@ -17,6 +17,15 @@ const routes: Routes = [{
         .then(m => m.ProjectModule),
     },
     {
+      path: 'multiProjects',
+      data: {
+        permission: 'view',
+        resource: 'multiProjects',
+      },
+      loadChildren: () => import('./multi-project/multi-project.module')
+        .then(m => m.MultiProjectModule),
+    },
+    {
       path: 'users',
       data: {
         permission: 'view',

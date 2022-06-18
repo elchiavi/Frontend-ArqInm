@@ -3,3 +3,4 @@ export * from './userId.resolver';
 export * from './client.resolver';
 export * from './project.resolver';
 export * from './budget.resolver';
+export * from './multiProject.resolver';

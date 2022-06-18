@@ -5,7 +5,7 @@
                 <h4>Presupuesto {{project.name}}</h4>
             </div>
             <div class="col-sm-6 mb-3 text-sm-right">
-                <button size="small" nbButton hero outline shape="semi-round" [routerLink]="['/pages/projects']">
+                <button size="small" nbButton hero outline shape="semi-round" (click)="return()">
                     <nb-icon [icon]="'arrow-back'" pack="eva"></nb-icon>
                     <span class="d-none d-md-block text-dark">Regresar</span>
                 </button>

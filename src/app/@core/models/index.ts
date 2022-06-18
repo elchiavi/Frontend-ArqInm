@@ -23,3 +23,4 @@ export * from './thick-material-budget.model';
 export * from './installation-material.model';
 export * from './installation-material-detail.model';
 export * from './installation-material-budget.model';
+export * from './multi-project.model';

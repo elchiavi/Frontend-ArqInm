@@ -7,6 +7,7 @@ import { PagesRoutingModule } from './pages-routing.module';
 import { MiscellaneousModule } from './miscellaneous/miscellaneous.module';
 import { UserModule } from './user/user.module';
 import { ClientModule } from './client/client.module';
+import { MultiProjectModule } from './multi-project/multi-project.module';
 
 @NgModule({
   imports: [
@@ -16,6 +17,7 @@ import { ClientModule } from './client/client.module';
     MiscellaneousModule,
     UserModule,
     ClientModule,
+    MultiProjectModule,
   ],
   declarations: [
     PagesComponent,
