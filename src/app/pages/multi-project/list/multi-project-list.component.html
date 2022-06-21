@@ -31,15 +31,14 @@
     <nb-card accent="info" class="mb-2 d-none d-md-block table-header">
         <nb-card-header class="form-inline">
             <div class="row col-12 text-center">
-                <span class="col-md-2 pointer" ngxSortable="name" (sort)="onSort($event)"
+                <span class="col-md-3 pointer" ngxSortable="name" (sort)="onSort($event)"
                     [ngxEnabled]="multiProjectPage?.docs.length !== 0">Nombre
                     <i class="fas" [class]="multiProjectsService.sortDirectionIcon('name')"></i>
                 </span>
-                <span class="col-md-3">Tipo</span>
                 <span class="col-md-3">Fecha Inicio</span>
-                <span class="col-md-1">Plazo</span>
+                <span class="col-md-2">Plazo</span>
                 <span class="col-md-2">Estado</span>
-                <span class="col-md-1">Acciones</span>
+                <span class="col-md-2">Acciones</span>
             </div>
         </nb-card-header>
     </nb-card>
@@ -47,15 +46,14 @@
     <nb-card *ngFor="let project of multiProjectPage?.docs; let i = index;" class="mb-1">
         <nb-card-body class="form-inline text-center">
             <div class="row col-12">
-                <span class="col-md-2">
+                <span class="col-md-3">
                     <nb-icon *ngIf="project.additionalProject" [icon]="'layers'" style="color: #ec8e82"
                         title="Es adicional" pack="eva"></nb-icon> {{ project.name }}
                 </span>
-                <span class="col-md-3">{{ project.typeProject }}</span>
                 <span class="col-md-3">{{ project.startDate | date: 'dd/MM/yyyy' }}</span>
-                <span class="col-md-1">{{ project.termDays }} días</span>
+                <span class="col-md-2">{{ project.termDays }} días</span>
                 <span class="col-md-2">{{ project.state }}</span>
-                <div class="col-md-1">
+                <div class="col-md-2">
                     <nb-icon style="color: #F3B1A1" class="mr-1 pointer" [icon]="'edit-outline'" title="Editar"
                         pack="eva" [routerLink]="['/pages/multiProjects', project._id]"></nb-icon>
                     <nb-icon style="color: #F3B1A1" class="mr-1 pointer" [icon]="'search-outline'" title="Unidades"

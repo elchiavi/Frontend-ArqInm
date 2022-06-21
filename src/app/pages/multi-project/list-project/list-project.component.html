@@ -78,6 +78,13 @@
                                     </div>
                                 </nb-card-body>
                             </nb-card>
+                            <nb-card *ngIf="projects?.length === 0" class="mb-1">
+                                <nb-card-body class="form-inline pointer">
+                                    <div class="row col-12">
+                                        <span class="col-12 text-center">No se obtuvieron resultados</span>
+                                    </div>
+                                </nb-card-body>
+                            </nb-card>
                         </nb-card-body>
                     </nb-card>
                 </div>

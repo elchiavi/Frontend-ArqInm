@@ -27,6 +27,15 @@
                             <div class="row">
                                 <div class="col-md-3">
                                     <div class="form-group">
+                                        <label for="inputName">Nombre</label>
+                                        <input type="text" id="inputName" class="form-control"
+                                            [class.is-invalid]="formHelperService.canShowFieldErrors(form.get('name'))"
+                                            formControlName="name">
+                                        <ngx-error-field [field]="form.get('name')"></ngx-error-field>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
                                         <label for="inputStartDate">Fecha Inicio</label>
                                         <input type="text" id="inputStartDate" class="form-control" ngbDatepicker
                                             #startDate="ngbDatepicker" placement="bottom" firstDayOfWeek="7"
@@ -34,15 +43,6 @@
                                             [class.is-invalid]="formHelperService.canShowFieldErrors(form.get('startDate'))"
                                             formControlName="startDate" (click)="startDate.toggle()">
                                         <ngx-error-field [field]="form.get('startDate')"></ngx-error-field>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <label for="inputName">Nombre</label>
-                                        <input type="text" id="inputName" class="form-control"
-                                            [class.is-invalid]="formHelperService.canShowFieldErrors(form.get('name'))"
-                                            formControlName="name">
-                                        <ngx-error-field [field]="form.get('name')"></ngx-error-field>
                                     </div>
                                 </div>
                             </div>

@@ -809,7 +809,7 @@
                             <div class="row" *ngIf="!readOnly">
                                 <div class="col-12 text-right">
                                     <button class="mt-1" nbButton hero status="danger" shape="semi-round"
-                                        [routerLink]="['/pages/projects']">
+                                        (click)="return()">
                                         Cancelar
                                     </button>
                                     <button class="mt-1 ml-2" nbButton hero status="primary" shape="semi-round"

@@ -2,9 +2,9 @@ import { Component, OnDestroy, OnInit, QueryList, ViewChildren } from '@angular/
 import { UnsubscribeOnDestroy, untilComponentDestroy } from '../../../@core/decorators/unsubscribe/on-destroy';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Project } from '../../../@core/models';
+import { MultiProject, Project } from '../../../@core/models';
 import { NbDialogService } from '@nebular/theme';
-import { ProjectsService } from '../../../@core/services';
+import { MultiProjectsService, ProjectsService } from '../../../@core/services';
 import { Action, ToastService } from '../../../@theme/utils/toast.service';
 import { SortEvent, NgxSortableHeaderDirective, Sortable } from '../../../@theme/directives/sortable-header.directive';
 import { ModalProjectComponent } from '../../../@theme/components';
@@ -20,16 +20,20 @@ export class ListProjectComponent implements OnInit, OnDestroy {
     @ViewChildren(NgxSortableHeaderDirective) headers: QueryList<NgxSortableHeaderDirective>;
     projects: Project[];
     name: string;
-    inModal = false;
 
     constructor(public toastService: ToastService,
         public projectsService: ProjectsService,
+        public multiProjectsService: MultiProjectsService,
         public formBuilder: FormBuilder,
         public activatedRoute: ActivatedRoute,
         public router: Router,
         public dialogService: NbDialogService) { }
 
     ngOnInit() {
+        this.multiProjectsService.get(this.activatedRoute.snapshot.params.id).pipe(
+            untilComponentDestroy.apply(this)).subscribe((multiProject: MultiProject) => {
+                this.name = multiProject.name;
+            });
         this.loadProjects();
     }
 
@@ -41,7 +45,6 @@ export class ListProjectComponent implements OnInit, OnDestroy {
     }
 
     openModal() {
-        this.inModal = true;
         const modalRef = this.dialogService.open(ModalProjectComponent, { hasScroll: false });
         modalRef.componentRef.instance.idMultiProject = this.activatedRoute.snapshot.params.id;
     }
