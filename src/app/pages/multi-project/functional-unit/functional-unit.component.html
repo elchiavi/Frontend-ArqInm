@@ -5,8 +5,14 @@
                 <div class="col-12">
                     <div class="row mb-3">
                         <div class="col-sm-6">
-                            <h5 class="title" *ngIf="!new">Editar Proyecto</h5>
-                            <h5 class="title" *ngIf="new">Nuevo Proyecto</h5>
+                            <h5 class="title" *ngIf="new">Nueva Unidad Funcional</h5>
+                        </div>
+                        <div class="col-sm-6 text-sm-right">
+                            <button size="small" nbButton hero outline shape="semi-round"
+                                (click)="return()">
+                                <nb-icon [icon]="'arrow-back-outline'" pack="eva"></nb-icon>
+                                <span class="d-none d-md-block text-dark">Regresar</span>
+                            </button>
                         </div>
                     </div>
                     <form class="row" [formGroup]="form">
@@ -15,7 +21,7 @@
                                 <nb-card-header>
                                     <div class="row">
                                         <div class="col-sm-6">
-                                            <h6>Generales del proyecto</h6>
+                                            <h6>Generalidades</h6>
                                         </div>
                                     </div>
                                 </nb-card-header>
@@ -802,7 +808,7 @@
                             <div class="row" *ngIf="!readOnly">
                                 <div class="col-12 text-right">
                                     <button class="mt-1" nbButton hero status="danger" shape="semi-round"
-                                        (click)="ref.close(true)">
+                                        (click)="return()">
                                         Cancelar
                                     </button>
                                     <button class="mt-1 ml-2" nbButton hero status="primary" shape="semi-round"

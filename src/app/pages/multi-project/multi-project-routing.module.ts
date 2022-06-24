@@ -5,6 +5,7 @@ import { MultiProjectListComponent } from './list/multi-project-list.component';
 import { MultiProjectDetailComponent } from './detail/multi-project-detail.component';
 import { MultiProjectResolver } from '../../@core/resolvers';
 import { ListProjectComponent } from './list-project/list-project.component';
+import { FunctionalUnitComponent } from './functional-unit/functional-unit.component';
 
 
 const routes: Routes = [
@@ -26,6 +27,10 @@ const routes: Routes = [
       {
         path: ':id/list',
         component: ListProjectComponent,
+      },
+      {
+        path: ':id/uf',
+        component: FunctionalUnitComponent,
       },
       {
         path: '',

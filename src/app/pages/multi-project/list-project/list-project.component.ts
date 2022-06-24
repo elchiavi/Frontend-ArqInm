@@ -5,9 +5,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MultiProject, Project } from '../../../@core/models';
 import { NbDialogService } from '@nebular/theme';
 import { MultiProjectsService, ProjectsService } from '../../../@core/services';
-import { Action, ToastService } from '../../../@theme/utils/toast.service';
-import { SortEvent, NgxSortableHeaderDirective, Sortable } from '../../../@theme/directives/sortable-header.directive';
-import { ModalProjectComponent } from '../../../@theme/components';
+import { ToastService } from '../../../@theme/utils/toast.service';
+import { NgxSortableHeaderDirective } from '../../../@theme/directives/sortable-header.directive';
 
 @Component({
     selector: 'ngx-multi-project-list',
@@ -20,6 +19,7 @@ export class ListProjectComponent implements OnInit, OnDestroy {
     @ViewChildren(NgxSortableHeaderDirective) headers: QueryList<NgxSortableHeaderDirective>;
     projects: Project[];
     name: string;
+    multiProjectId: string;
 
     constructor(public toastService: ToastService,
         public projectsService: ProjectsService,
@@ -30,7 +30,8 @@ export class ListProjectComponent implements OnInit, OnDestroy {
         public dialogService: NbDialogService) { }
 
     ngOnInit() {
-        this.multiProjectsService.get(this.activatedRoute.snapshot.params.id).pipe(
+        this.multiProjectId = this.activatedRoute.snapshot.params.id;
+        this.multiProjectsService.get(this.multiProjectId).pipe(
             untilComponentDestroy.apply(this)).subscribe((multiProject: MultiProject) => {
                 this.name = multiProject.name;
             });
@@ -42,11 +43,6 @@ export class ListProjectComponent implements OnInit, OnDestroy {
             untilComponentDestroy.apply(this)).subscribe((projects: Project[]) => {
                 this.projects = projects;
             });
-    }
-
-    openModal() {
-        const modalRef = this.dialogService.open(ModalProjectComponent, { hasScroll: false });
-        modalRef.componentRef.instance.idMultiProject = this.activatedRoute.snapshot.params.id;
     }
 
     cloneProject(project: Project) {

@@ -23,7 +23,7 @@
                                     <h6>Unidades Funcionales</h6>
                                 </div>
                                 <div class="col-6 text-right">
-                                    <button nbButton hero status="primary" shape="semi-round" (click)="openModal()">
+                                    <button nbButton hero status="primary" shape="semi-round" [routerLink]="['/pages/multiProjects', multiProjectId, 'uf']">
                                         <nb-icon [icon]="'folder-add-outline'" pack="eva"></nb-icon>
                                         <span class="d-none d-md-block">Nueva UF</span>
                                     </button>

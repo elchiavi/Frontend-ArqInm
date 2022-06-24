@@ -1,7 +1,7 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NbDateService, NbDialogRef } from '@nebular/theme';
+import { NbDateService } from '@nebular/theme';
 import { Location } from '@angular/common';
 import { Observable, Subject } from 'rxjs';
 import { UnsubscribeOnDestroy, untilComponentDestroy } from '../../../@core/decorators/unsubscribe/on-destroy';
@@ -11,16 +11,15 @@ import { Action, ToastService } from '../../../@theme/utils';
 import { SharedFormService } from '../../../@theme/utils/form.service';
 
 @Component({
-  selector: 'ngx-modal-project',
-  templateUrl: './modal-project.component.html',
-  styleUrls: ['./modal-project.component.scss'],
+  selector: 'ngx-functional-unit',
+  templateUrl: './functional-unit.component.html',
 })
 @UnsubscribeOnDestroy()
-export class ModalProjectComponent implements OnInit, OnDestroy {
+export class FunctionalUnitComponent implements OnInit, OnDestroy {
 
   form: FormGroup;
   new = false;
-  @Input() idMultiProject;
+  multiProjectId: string;
   project: Project;
   clients$: Observable<Client[]>;
   clients: Client[];
@@ -36,16 +35,16 @@ export class ModalProjectComponent implements OnInit, OnDestroy {
     public formHelperService: SharedFormService,
     private location: Location,
     protected dateService: NbDateService<Date>,
-    public ref: NbDialogRef<ModalProjectComponent>,
     public router: Router) { }
 
   ngOnInit() {
+    this.multiProjectId = this.activatedRoute.snapshot.params.id;
     this.project = this.activatedRoute.snapshot.data['project'];
     this.new = !this.project;
     this.createForm();
     this.mapData();
     this.clients$ = this.clientsService.listClients();
-    this.form.patchValue({['multiFamilyProject']: this.idMultiProject});
+    this.form.patchValue({ ['multiFamilyProject']: this.multiProjectId });
   }
 
   save() {
@@ -54,8 +53,8 @@ export class ModalProjectComponent implements OnInit, OnDestroy {
       this.projectsService.save(this.new, this.form).pipe(
         untilComponentDestroy.apply(this)).subscribe(() => {
           const action: Action = this.new ? 'create' : 'update';
-          this.toastService.showToast('El proyecto', action, 'success');
-          this.ref.close();
+          this.toastService.showToast('La unidad funcional', action, 'success');
+          this.return();
         }, () => {
           this.toastService.error('Error inesperado, contactar a su administrador.');
         });
@@ -154,8 +153,8 @@ export class ModalProjectComponent implements OnInit, OnDestroy {
   mapData() {
     if (!this.new) {
       this.form.reset(this.project);
-      this.form.patchValue({['client']: this.project.client._id});
-      this.form.patchValue({['multiFamilyProject']: this.idMultiProject});
+      this.form.patchValue({ ['client']: this.project.client._id });
+      this.form.patchValue({ ['multiFamilyProject']: this.multiProjectId });
       if (this.project.state === 'Finalizado') {
         this.readOnly = true;
         this.form.disable();
@@ -165,11 +164,11 @@ export class ModalProjectComponent implements OnInit, OnDestroy {
 
   public compareFn(a, b): boolean {
     return a === b;
-}
+  }
 
-return() {
-  this.location.back();
-}
+  return() {
+    this.location.back();
+  }
 
   ngOnDestroy() { }
 }
