@@ -1,0 +1,91 @@
+<nb-card class="btn-modal">
+    <nb-card-header class="text-center">
+        <h4>{{title}}</h4>
+    </nb-card-header>
+    <nb-card-body>
+        <h5 class="text-center">{{message}}</h5>
+        <form class="row" [formGroup]="form">
+            <nb-card>
+                <nb-card-body>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="inputName">Nombre</label>
+                                <input type="text" id="inputName" class="form-control"
+                                    [class.is-invalid]="formHelperService.canShowFieldErrors(form.get('name'))"
+                                    formControlName="name">
+                                <ngx-error-field [field]="form.get('name')"></ngx-error-field>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="inputSelectedClient">Cliente</label>
+                                <select class="form-control" formControlName="client"
+                                    [class.is-invalid]="formHelperService.canShowFieldErrors(form.get('client'))">
+                                    <option *ngFor="let client of clients$ | async"
+                                        [value]="client._id">
+                                        {{client.fullName}}</option>
+                                </select>
+                                <ngx-error-field [field]="form.get('client')"></ngx-error-field>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="inputLinkDrive">Link Drive</label>
+                                <input type="text" id="inputLinkDrive" class="form-control"
+                                    [class.is-invalid]="formHelperService.canShowFieldErrors(form.get('linkDrive'))"
+                                    formControlName="linkDrive">
+                                <ngx-error-field [field]="form.get('linkDrive')"></ngx-error-field>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="inputStartDate">Fecha Inicio</label>
+                                <input type="text" id="inputStartDate" class="form-control" ngbDatepicker
+                                    #startDate="ngbDatepicker" placement="bottom" firstDayOfWeek="7"
+                                    outsideDays="hidden" container="body"
+                                    [class.is-invalid]="formHelperService.canShowFieldErrors(form.get('startDate'))"
+                                    formControlName="startDate" (click)="startDate.toggle()">
+                                <ngx-error-field [field]="form.get('startDate')"></ngx-error-field>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="inputTermDays">Plazo de Obra</label>
+                                <input type="number" id="inputTermDays" class="form-control" [min]="1"
+                                    [class.is-invalid]="formHelperService.canShowFieldErrors(form.get('termDays'))"
+                                    formControlName="termDays">
+                                <ngx-error-field [field]="form.get('termDays')"></ngx-error-field>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="inputStreetNumber">Número</label>
+                                <input type="number" id="inputStreetNumber" class="form-control"
+                                    [min]="1"
+                                    [class.is-invalid]="formHelperService.canShowFieldErrors(form.get('streetNumber'))"
+                                    formControlName="streetNumber">
+                                <ngx-error-field [field]="form.get('streetNumber')"></ngx-error-field>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label for="inputFloor">Piso/Dpto</label>
+                                <input type="text" id="inputFloor" class="form-control"
+                                    [class.is-invalid]="formHelperService.canShowFieldErrors(form.get('floor'))"
+                                    formControlName="floor">
+                                <ngx-error-field [field]="form.get('floor')"></ngx-error-field>
+                            </div>
+                        </div>
+                    </div>
+                </nb-card-body>
+
+            </nb-card>
+
+        </form>
+    </nb-card-body>
+    <nb-card-footer class="text-right">
+        <button nbButton hero status="danger" shape="semi-round" (click)="ref.close(false)">No</button>
+        <button class="ml-2" nbButton hero status="primary" shape="semi-round" (click)="cloneFunctionalUnit()">Sí</button>
+    </nb-card-footer>
+</nb-card>

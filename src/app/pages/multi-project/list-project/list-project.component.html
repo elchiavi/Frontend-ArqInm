@@ -71,9 +71,8 @@
                                             <nb-icon *ngIf="project.state === 'Iniciado'" style="color: #F3B1A1" class="mr-1 pointer"
                                                 [icon]="'checkmark-square-outline'" title="Finalizar Proyecto" pack="eva"
                                                 (click)="closeProject(project)"></nb-icon>
-                                            <nb-icon *ngIf="project.typeProject === 'Proyecto de Obra' && !project.cloned"
-                                                style="color: #F3B1A1" class="mr-1 pointer" [icon]="'copy-outline'"
-                                                title="Generar Construcción de Obra" pack="eva" (click)="cloneProject(project)"></nb-icon>
+                                            <nb-icon style="color: #F3B1A1" class="mr-1 pointer" [icon]="'copy-outline'"
+                                                title="Clonar Unidad Funcional" pack="eva" (click)="cloneFunctionalUnit(project)"></nb-icon>
                                         </div>
                                     </div>
                                 </nb-card-body>

@@ -24,6 +24,10 @@ export class ProjectsService extends BaseService<Project> {
         return this.httpClient.post<Project>(`${this.fullPath}/clone`, project);
     }
 
+    cloneFunctionalUnit(project: Project) {
+        return this.httpClient.post(`${this.fullPath}/cloneFunctionaUnit`, project);
+    }
+
     getMultiProject(id: string): Observable<Project> {
         const options = {
             params: new HttpParams().set('id', id.toString())

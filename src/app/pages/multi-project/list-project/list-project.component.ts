@@ -5,8 +5,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MultiProject, Project } from '../../../@core/models';
 import { NbDialogService } from '@nebular/theme';
 import { MultiProjectsService, ProjectsService } from '../../../@core/services';
-import { ToastService } from '../../../@theme/utils/toast.service';
+import { Action, ToastService } from '../../../@theme/utils/toast.service';
 import { NgxSortableHeaderDirective } from '../../../@theme/directives/sortable-header.directive';
+import { ModalCloneFunctionalUnitComponent } from '../../../@theme/components/modal-clone-functional-unit/modal-clone-functional-unit.component';
 
 @Component({
     selector: 'ngx-multi-project-list',
@@ -45,24 +46,19 @@ export class ListProjectComponent implements OnInit, OnDestroy {
             });
     }
 
-    cloneProject(project: Project) {
-        // const modalRef = this.dialogService.open(ModalConfirmComponent, { closeOnBackdropClick: false });
-        // const description = `Se clonará el Proyecto de Obra "${project.name}"
-        // y se generará un proyecto de Construcción de Obra`;
-        // modalRef.componentRef.instance.title = 'Confirmación';
-        // modalRef.componentRef.instance.message = `${description} ¿Desea continuar?`;
-        // modalRef.onClose.subscribe((userResponse) => {
-        //     if (userResponse) {
-        //         this.projectsService.cloneProject(project).pipe(
-        //             untilComponentDestroy.apply(this)).subscribe(() => {
-        //                 const action: Action = this.new ? 'create' : 'update';
-        //                 this.toastService.showToast('El proyecto', action, 'success');
-        //                 this.pageChange();
-        //             }, () => {
-        //                 this.toastService.error('Error inesperado, contactar a su administrador.');
-        //             });
-        //     }
-        // });
+    cloneFunctionalUnit(project: Project) {
+        const modalRef = this.dialogService.open(ModalCloneFunctionalUnitComponent, { closeOnBackdropClick: false });
+        const description = 'Se clonará la Unidad Funcional';
+        modalRef.componentRef.instance.title = 'Confirmación';
+        modalRef.componentRef.instance.message = `${description} ¿Desea continuar?`;
+        modalRef.componentRef.instance.project = project;
+        modalRef.onClose.subscribe((userResponse) => {
+            if (userResponse) {
+                const action: Action = 'create';
+                this.toastService.showToast('La unidad funcional', action, 'success');
+                this.loadProjects();
+            }
+        });
     }
 
     closeProject(project: Project) {
