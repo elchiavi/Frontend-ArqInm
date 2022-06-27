@@ -52,7 +52,7 @@ export class ProjectDetailComponent implements OnInit, OnDestroy {
         untilComponentDestroy.apply(this)).subscribe(() => {
           const action: Action = this.new ? 'create' : 'update';
           this.toastService.showToast('El proyecto', action, 'success');
-          this.router.navigate(['/pages/projects']);
+          this.return();
         }, () => {
           this.toastService.error('Error inesperado, contactar a su administrador.');
         });
