@@ -14,7 +14,6 @@ import { Budget, Project } from '../../../@core/models';
 export class BudgetComponent implements OnInit, OnDestroy {
 
   budget: Budget;
-  budget2: Budget;
   project: Project;
 
   constructor(public activatedRoute: ActivatedRoute,

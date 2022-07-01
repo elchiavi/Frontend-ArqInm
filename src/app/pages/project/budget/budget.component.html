@@ -10,6 +10,18 @@
                     <span class="d-none d-md-block text-dark">Regresar</span>
                 </button>
             </div>
+            <div class="col-sm-12 mb-3 text-sm-right">
+                <button nbButton hero status="primary" shape="semi-round" class="mr-2"
+                [routerLink]="['/pages/projects', budget[0]._id, 'paymentList']">
+                <nb-icon class="text-white" [icon]="'diagonal-arrow-left-down-outline'" pack="eva"></nb-icon>
+                <span class="d-none d-md-block text-white">Ingresos</span>
+            </button>
+            <button nbButton hero status="primary" shape="semi-round"
+                [routerLink]="['/pages/projects', budget[0]._id, 'payment']">
+                <nb-icon class="text-white" [icon]="'diagonal-arrow-right-up-outline'" pack="eva"></nb-icon>
+                <span class="d-none d-md-block text-white">Egresos</span>
+            </button>
+            </div>
 
             <div class="col-sm-6">
                 <nb-card status="primary">
@@ -31,8 +43,10 @@
             <div class="col-sm-6">
                 <nb-card status="primary">
                     <nb-card-header>
-                        <div class="col-sm-6">
-                            <span><strong>Proyecto</strong></span>
+                        <div class="col-sm-">
+                            <span class="mr-4"><strong>Proyecto</strong></span>
+                        </div>
+                        <div class="col-sm-4">
                         </div>
                     </nb-card-header>
                     <nb-card-body class="card-border-oval">

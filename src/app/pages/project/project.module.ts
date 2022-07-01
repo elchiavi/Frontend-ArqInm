@@ -5,8 +5,9 @@ import { ProjectDetailComponent } from './detail/project-detail.component';
 import { ProjectComponent } from './project.component';
 import { ProjectRoutingModule } from './project-routing.module';
 import { BudgetComponent } from './budget/budget.component';
+import { ListPaymentComponent } from './list-payment/list-payment.component';
 import { NbTabsetModule } from '@nebular/theme';
-
+import { DetailPaymentComponent } from './detail-payment/detail-payment.component';
 @NgModule({
   imports: [
     ThemeModule,
@@ -18,6 +19,8 @@ import { NbTabsetModule } from '@nebular/theme';
       ProjectListComponent,
       ProjectDetailComponent,
       BudgetComponent,
+      ListPaymentComponent,
+      DetailPaymentComponent,
   ],
 })
 export class ProjectModule { }

@@ -2,9 +2,9 @@ import { Component, OnDestroy, OnInit, QueryList, ViewChildren } from '@angular/
 import { UnsubscribeOnDestroy, untilComponentDestroy } from '../../../@core/decorators/unsubscribe/on-destroy';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Page, Project } from '../../../@core/models';
+import { Budget, Page, Project } from '../../../@core/models';
 import { NbDialogService } from '@nebular/theme';
-import { ProjectsService } from '../../../@core/services';
+import { BudgetsService, ProjectsService } from '../../../@core/services';
 import { Action, ToastService } from '../../../@theme/utils/toast.service';
 import { SortEvent, NgxSortableHeaderDirective, Sortable } from '../../../@theme/directives/sortable-header.directive';
 import { ModalConfirmComponent } from '../../../@theme/components';
@@ -20,9 +20,11 @@ export class ProjectListComponent implements OnInit, OnDestroy, Sortable {
     @ViewChildren(NgxSortableHeaderDirective) headers: QueryList<NgxSortableHeaderDirective>;
     projectPage: Page<Project>;
     new = false;
+    budgetId: string;
 
     constructor(public toastService: ToastService,
         public projectsService: ProjectsService,
+        public budgetsService: BudgetsService,
         public formBuilder: FormBuilder,
         public activatedRoute: ActivatedRoute,
         public router: Router,
@@ -37,6 +39,14 @@ export class ProjectListComponent implements OnInit, OnDestroy, Sortable {
             untilComponentDestroy.apply(this)).subscribe((projectPage: Page<Project>) => {
                 this.projectPage = projectPage;
                 this.projectPage.docs = this.projectPage.docs.filter(item => item.multiFamilyProject === null);
+            });
+    }
+
+    goPaymentPage(project: Project) {
+        this.budgetsService.getBudget(project._id).pipe(
+            untilComponentDestroy.apply(this)).subscribe((budget: Budget) => {
+                this.budgetId = budget[0]._id;
+
             });
     }
 

@@ -24,3 +24,4 @@ export * from './installation-material.model';
 export * from './installation-material-detail.model';
 export * from './installation-material-budget.model';
 export * from './multi-project.model';
+export * from './payment.model';

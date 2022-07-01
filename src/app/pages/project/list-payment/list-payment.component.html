@@ -1,0 +1,98 @@
+<div class="section-header">
+    <div class="action">
+        <div class="row">
+            <div class="col-8">
+                <h2 class="title">Ingresos</h2>
+            </div>
+            <div class="col-sm-4 mb-3 mt-2 text-sm-right">
+                <button size="small" nbButton hero outline shape="semi-round" (click)="return()">
+                    <nb-icon [icon]="'arrow-back'" pack="eva"></nb-icon>
+                    <span class="d-none d-md-block text-dark">Regresar</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-8">
+            <!-- <nb-form-field class="row col mb-2">
+                <input nbInput fieldSize="large" #inputSearch (keyup.enter)="search(inputSearch.value)"
+                    placeholder="Buscar por Período...">
+                <button nbSuffix nbButton ghost (click)="clear(inputSearch)">
+                    <nb-icon [icon]="'close-outline'" pack="eva" [title]="'Borrar filtro'">
+                    </nb-icon>
+                </button>
+            </nb-form-field> -->
+        </div>
+
+        <div class="col-4 mb-2 text-right">
+            <button nbButton hero status="primary" shape="semi-round" [routerLink]="['/pages/projects', budgetId, 'payment', 'new']">
+                <nb-icon [icon]="'folder-add-outline'" pack="eva"></nb-icon>
+                <span class="d-none d-md-block">Nuevo Ingreso</span>
+            </button>
+        </div>
+    </div>
+
+
+    <nb-card accent="info" class="mb-2 d-none d-md-block table-header">
+        <nb-card-header class="form-inline">
+            <div class="row col-12 text-center">
+                <span class="col-md-2 pointer" ngxSortable="name" (sort)="onSort($event)"
+                    [ngxEnabled]="paymentPage?.docs.length !== 0">Período
+                    <i class="fas" [class]="paymentsService.sortDirectionIcon('period')"></i>
+                </span>
+                <span class="col-md-2">Fecha</span>
+                <span class="col-md-2">Monto</span>
+                <span class="col-md-2">Tipo de pago</span>
+                <span class="col-md-2">Detalle</span>
+                <span class="col-md-2">Acciones</span>
+            </div>
+        </nb-card-header>
+    </nb-card>
+
+    <nb-card *ngFor="let payment of paymentPage?.docs; let i = index;" class="mb-1">
+        <nb-card-body class="form-inline text-center">
+            <div class="row col-12">
+                <span class="col-md-2">{{ payment.period }}</span>
+                <span class="col-md-2">{{ payment.payDate | date: 'dd/MM/yyyy' }}</span>
+                <span class="col-md-2">${{ payment.amount }}</span>
+                <span class="col-md-2">{{ payment.typePayment }}</span>
+                <span class="col-md-2">{{ payment.description }}</span>
+                <div class="col-md-2">
+                    <!-- <nb-icon style="color: #F3B1A1" class="mr-1 pointer" [icon]="'file-outline'" title="Presupuesto"
+                        pack="eva" [routerLink]="['/pages/projects', project._id, 'budget']"></nb-icon>
+                    <nb-icon *ngIf="project.state === 'Finalizado'" style="color: #F3B1A1" class="mr-1 pointer" [icon]="'search-outline'" title="Ver Detalle"
+                        pack="eva" [routerLink]="['/pages/projects', project._id]"></nb-icon>
+                    <nb-icon *ngIf="project.state === 'Iniciado'" style="color: #F3B1A1" class="mr-1 pointer" [icon]="'edit-outline'" title="Editar"
+                        pack="eva" [routerLink]="['/pages/projects', project._id]"></nb-icon>
+                    <a href={{project.linkDrive}} target="_blank" style="color: #F3B1A1;">
+                        <nb-icon class="mr-1 pointer" [icon]="'attach-outline'" title="Ir a los adjuntos" pack="eva">
+                        </nb-icon>
+                    </a>
+                    <nb-icon *ngIf="project.state === 'Iniciado'" style="color: #F3B1A1" class="mr-1 pointer"
+                        [icon]="'checkmark-square-outline'" title="Finalizar Proyecto" pack="eva"
+                        (click)="closeProject(project)"></nb-icon>
+                    <nb-icon *ngIf="project.typeProject === 'Proyecto de Obra'"
+                        style="color: #F3B1A1" class="mr-1 pointer" [icon]="'copy-outline'"
+                        title="Generar Construcción de Obra" pack="eva" (click)="cloneProject(project)"></nb-icon> -->
+                </div>
+            </div>
+        </nb-card-body>
+    </nb-card>
+
+    <nb-card *ngIf="paymentPage?.docs.length === 0" class="mb-1">
+        <nb-card-body class="form-inline pointer">
+            <div class="row col-12">
+                <span class="col-12 text-center">No se obtuvieron resultados</span>
+            </div>
+        </nb-card-body>
+    </nb-card>
+
+    <nb-card *ngIf="paymentPage?.totalPages > 1">
+        <nb-card-footer class="col-12 pb-0">
+            <ngb-pagination class="d-flex justify-content-center" [collectionSize]="paymentPage?.totalDocs"
+                [page]="paymentPage?.limit - 1" [pageSize]="paymentsService.pageSize" (pageChange)="pageChange($event)"
+                [maxSize]="5" [rotate]="true" [boundaryLinks]="true">
+            </ngb-pagination>
+        </nb-card-footer>
+    </nb-card>
