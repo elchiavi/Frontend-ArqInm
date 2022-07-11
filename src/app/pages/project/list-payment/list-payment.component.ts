@@ -5,10 +5,12 @@ import { Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Page } from '../../../@core/models';
 import { NbDialogService } from '@nebular/theme';
-import { PaymentsService, ProjectsService } from '../../../@core/services';
+import { BudgetsService, PaymentsService } from '../../../@core/services';
 import { ToastService } from '../../../@theme/utils/toast.service';
 import { SortEvent, NgxSortableHeaderDirective, Sortable } from '../../../@theme/directives/sortable-header.directive';
 import { Payment } from '../../../@core/models/payment.model';
+import { Budget } from '../../../@core/models/budget.model';
+import { ModalConfirmComponent } from '../../../@theme/components';
 
 @Component({
     selector: 'ngx-project-list',
@@ -22,8 +24,11 @@ export class ListPaymentComponent implements OnInit, OnDestroy, Sortable {
     paymentPage: Page<Payment>;
     new = false;
     budgetId: string;
+    budget: Budget;
+    sumPayment = 0;
 
     constructor(public toastService: ToastService,
+        public budgetsService: BudgetsService,
         public paymentsService: PaymentsService,
         public formBuilder: FormBuilder,
         private location: Location,
@@ -33,7 +38,23 @@ export class ListPaymentComponent implements OnInit, OnDestroy, Sortable {
 
     ngOnInit() {
         this.budgetId = this.activatedRoute.snapshot.params.id;
+        this.getBudget();
+        this.getSumPayment();
         this.pageChange();
+    }
+
+    getBudget() {
+        this.budgetsService.getBudgetForId(this.budgetId).pipe(
+            untilComponentDestroy.apply(this)).subscribe((budget: Budget) => {
+                this.budget = budget;
+            });
+    }
+
+    getSumPayment() {
+        this.paymentsService.getSumPayment(this.budgetId).pipe(
+            untilComponentDestroy.apply(this)).subscribe((totalPayment: number) => {
+                this.sumPayment = totalPayment;
+            });
     }
 
     pageChange(pageNumber?: number, filter?: string) {
@@ -74,7 +95,25 @@ export class ListPaymentComponent implements OnInit, OnDestroy, Sortable {
 
     return() {
         this.location.back();
-      }
+    }
+
+    deletePayment(id: string) {
+        const modalRef = this.dialogService.open(ModalConfirmComponent, { closeOnBackdropClick: false });
+        const description = 'Se eliminará el ingreso';
+        modalRef.componentRef.instance.title = 'Confirmación';
+        modalRef.componentRef.instance.message = `${description} ¿Desea continuar?`;
+        modalRef.onClose.subscribe((userResponse) => {
+          if (userResponse) {
+            this.paymentsService.delete(id).pipe(
+                untilComponentDestroy.apply(this)).subscribe(() => {
+                    this.getSumPayment();
+                    this.pageChange();
+              }, () => {
+                this.toastService.error('Error Inesperado, contacte a su administrador');
+              });
+          }
+        });
+    }
 
     ngOnDestroy() { }
 

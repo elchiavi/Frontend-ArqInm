@@ -5,10 +5,11 @@ import { NbDateService } from '@nebular/theme';
 import { Location } from '@angular/common';
 import { Observable, Subject } from 'rxjs';
 import { UnsubscribeOnDestroy, untilComponentDestroy } from '../../../@core/decorators/unsubscribe/on-destroy';
-import { Client, Payment } from '../../../@core/models';
+import { Client, Payment, Project } from '../../../@core/models';
 import { Action, ToastService } from '../../../@theme/utils';
 import { SharedFormService } from '../../../@theme/utils/form.service';
 import { PaymentsService } from '../../../@core/services/paymets.service';
+import { ProjectsService } from '../../../@core/services';
 
 @Component({
   selector: 'ngx-detail-payment',
@@ -22,6 +23,7 @@ export class DetailPaymentComponent implements OnInit, OnDestroy {
   new = false;
   payment: Payment;
   budgetId: string;
+  project: Project;
   clients: Client[];
   input$ = new Subject<string>();
   loading = false;
@@ -29,6 +31,7 @@ export class DetailPaymentComponent implements OnInit, OnDestroy {
 
   constructor(public formBuilder: FormBuilder,
     public paymentsService: PaymentsService,
+    public projectsService: ProjectsService,
     public toastService: ToastService,
     public activatedRoute: ActivatedRoute,
     public formHelperService: SharedFormService,
@@ -41,8 +44,16 @@ export class DetailPaymentComponent implements OnInit, OnDestroy {
     this.payment = this.activatedRoute.snapshot.data['payment'];
     this.new = !this.payment;
     this.createForm();
+    this.getProjectName();
     this.mapData();
   }
+
+  getProjectName() {
+    this.projectsService.getProjectName(this.budgetId).pipe(
+        untilComponentDestroy.apply(this)).subscribe((project: Project) => {
+            this.project = project;
+        });
+}
 
   save() {
     this.form.patchValue({ ['budget']: this.budgetId });

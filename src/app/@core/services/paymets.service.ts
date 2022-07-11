@@ -23,6 +23,10 @@ export class PaymentsService extends BaseService<Payment> {
 
     getPageObj(id: string): Observable<Payment> {
         return this.httpClient.get<Payment>(`${this.fullPath}/${id}`);
-      }
+    }
+
+    getSumPayment(id: string): Observable<number> {
+        return this.httpClient.get<number>(`${this.fullPath}/sumPayment/${id}`);
+    }
 
 }

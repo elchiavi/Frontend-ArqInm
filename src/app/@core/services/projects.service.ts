@@ -31,9 +31,13 @@ export class ProjectsService extends BaseService<Project> {
     getMultiProject(id: string): Observable<Project> {
         const options = {
             params: new HttpParams().set('id', id.toString())
-              .set('size', this.pageSize.toString()),
-          };
+                .set('size', this.pageSize.toString()),
+        };
         return this.httpClient.get<Project>(`${this.fullPath}`, options);
+    }
+
+    getProjectName(id: string) {
+        return this.httpClient.get(`${this.fullPath}/project/${id}`);
     }
 
 }

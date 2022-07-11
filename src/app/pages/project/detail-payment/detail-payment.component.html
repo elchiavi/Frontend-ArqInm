@@ -5,8 +5,8 @@
                 <nb-card-header>
                     <div class="row">
                         <div class="col-sm-6">
-                            <h5 class="title" *ngIf="!new">Editar Ingreso</h5>
-                            <h5 class="title" *ngIf="new">Nuevo Ingreso</h5>
+                            <h5 class="title" *ngIf="project?.multiFamilyProject">{{project?.multiFamilyProject.name}} - <small> {{project?.name}}</small></h5>
+                            <h5 class="title" *ngIf="!project?.multiFamilyProject">{{project?.name}}</h5>
                         </div>
                         <div class="col-sm-6 text-sm-right">
                             <button size="small" nbButton hero outline shape="semi-round" (click)="return()">
