@@ -22,3 +22,4 @@ export * from './installationMaterialDetails.service';
 export * from './installationMaterialBudgets.service';
 export * from './multiProjects.service';
 export * from './paymets.service';
+export * from './installationMaterialElectrics.service';

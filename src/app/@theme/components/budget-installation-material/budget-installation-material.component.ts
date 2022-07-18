@@ -2,7 +2,10 @@ import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { UnsubscribeOnDestroy, untilComponentDestroy } from '../../../@core/decorators/unsubscribe/on-destroy';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Budget, InstallationMaterial, InstallationMaterialBudget, InstallationMaterialDetail } from '../../../@core/models';
+import {
+    Budget, InstallationMaterial, InstallationMaterialBudget, InstallationMaterialDetail,
+    InstallationMaterialDetailElectric,
+} from '../../../@core/models';
 import { NbDialogService } from '@nebular/theme';
 import { Action, ToastService } from '../../../@theme/utils/toast.service';
 import {
@@ -12,6 +15,7 @@ import {
 import { Observable } from 'rxjs';
 import { SharedFormService } from '../../../@theme/utils/form.service';
 import { ModalConfirmComponent } from '../../../@theme/components';
+import { InstallationMaterialElectricsService } from '../../../@core/services/installationMaterialElectrics.service';
 
 @Component({
     selector: 'ngx-budget-installation-material',
@@ -24,9 +28,11 @@ export class BudgetInstallationMaterialComponent implements OnInit, OnDestroy {
     @Input() budget: Budget;
     installationMaterial$: Observable<InstallationMaterial[]>;
     installationMaterialDetail$: Observable<InstallationMaterialDetail[]>;
+    installationMaterialElectrics$: Observable<InstallationMaterialDetailElectric[]>;
     installationMaterialBudget: InstallationMaterialBudget[];
     preCost: number;
     update = false;
+    isElectric = false;
     options = [
         { value: 'installationMaterial', label: 'Material de Instalación' },
         { value: 'provider', label: 'Proveedor' },
@@ -39,6 +45,7 @@ export class BudgetInstallationMaterialComponent implements OnInit, OnDestroy {
         public installationMaterialsService: InstallationMaterialsService,
         public installationMaterialDetailsService: InstallationMaterialDetailsService,
         public installationMaterialBudgetsService: InstallationMaterialBudgetsService,
+        public installationMaterialElectricsService: InstallationMaterialElectricsService,
         public formBuilder: FormBuilder,
         public activatedRoute: ActivatedRoute,
         public formHelperService: SharedFormService,
@@ -55,8 +62,10 @@ export class BudgetInstallationMaterialComponent implements OnInit, OnDestroy {
         this.update = false;
         this.form.get('installationMaterial').enable();
         this.form.get('installationMaterialDetail').enable();
+        this.form.get('installationMaterialDetailElectric').enable();
         this.form.patchValue({ ['installationMaterial']: '' });
         this.form.patchValue({ ['installationMaterialDetail']: '' });
+        this.form.patchValue({ ['installationMaterialDetailElectric']: '' });
         this.form.patchValue({ ['provider']: '' });
         this.form.patchValue({ ['unitOfMeasurement']: '' });
         this.form.patchValue({ ['description']: '' });
@@ -73,6 +82,15 @@ export class BudgetInstallationMaterialComponent implements OnInit, OnDestroy {
         const installationMatId = this.form.get('installationMaterial').value;
         this.installationMaterialDetail$ =
             this.installationMaterialDetailsService.listInstallationMaterialDetail(installationMatId);
+        installationMatId === '62852d777858c8cd0453a06e' ? this.isElectric = true : this.isElectric = false;
+    }
+
+    changeElectric() {
+        if (this.isElectric) {
+            const matElectricId = this.form.get('installationMaterialDetail').value;
+            this.installationMaterialElectrics$ =
+                this.installationMaterialElectricsService.listInstallationMaterialElectric(matElectricId);
+        }
     }
 
     getInstallationMaterialBudgets(filter?: string) {
@@ -95,6 +113,7 @@ export class BudgetInstallationMaterialComponent implements OnInit, OnDestroy {
             _id: [],
             installationMaterial: ['', Validators.required],
             installationMaterialDetail: ['', Validators.required],
+            installationMaterialDetailElectric: [''],
             provider: ['', Validators.required],
             cant: ['', Validators.required],
             unitOfMeasurement: ['', Validators.required],
@@ -172,8 +191,19 @@ export class BudgetInstallationMaterialComponent implements OnInit, OnDestroy {
         this.change();
         this.form.get('installationMaterialDetail')
             .patchValue(installationMaterialBudget.installationMaterialDetail._id);
-        this.form.get('installationMaterial').disable();
+        if (installationMaterialBudget.installationMaterial._id === '62852d777858c8cd0453a06e') {
+            this.changeElectric();
+            this.installationMaterialElectricsService.getWithOtherId(installationMaterialBudget
+                .installationMaterialDetailElectric).pipe(
+                    untilComponentDestroy.apply(this))
+                .subscribe((materialElectric: InstallationMaterialDetailElectric) => {
+                    this.form.get('installationMaterialDetailElectric')
+                        .patchValue(materialElectric._id);
+                });
+            this.form.get('installationMaterial').disable();
+        }
         this.form.get('installationMaterialDetail').disable();
+        this.form.get('installationMaterialDetailElectric').disable();
     }
 
     onlyInteger(event: any) {
